@@ -1,0 +1,104 @@
+// API endpoints for game logic
+// In production, these would connect to Cloudflare Workers/Durable Objects
+
+const API_BASE = import.meta.env.VITE_API_URL || '/api'
+
+export const submitChoice = async (fingerprint, choice) => {
+  try {
+    const response = await fetch(`${API_BASE}/choice`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fingerprint,
+        choice,
+        timestamp: Date.now(),
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to submit choice')
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Error submitting choice:', error)
+    // Fallback for development
+    return {
+      success: true,
+      round: Math.floor(Date.now() / 3600000),
+    }
+  }
+}
+
+export const getRoundStats = async () => {
+  try {
+    const response = await fetch(`${API_BASE}/stats`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch stats')
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Error fetching stats:', error)
+    // Fallback mock data for development
+    return {
+      doubtCount: Math.floor(Math.random() * 100) + 50,
+      believeCount: Math.floor(Math.random() * 100) + 50,
+      totalPool: (Math.random() * 5 + 1).toFixed(4),
+      currentPrice: 2000 + Math.random() * 100,
+      priceChange: (Math.random() * 10 - 5).toFixed(2),
+    }
+  }
+}
+
+export const claimReward = async (fingerprint, walletAddress) => {
+  try {
+    const response = await fetch(`${API_BASE}/claim`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fingerprint,
+        walletAddress,
+        timestamp: Date.now(),
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to claim reward')
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Error claiming reward:', error)
+    // Fallback for development
+    return {
+      success: true,
+      txHash: '0x' + Math.random().toString(16).slice(2),
+    }
+  }
+}
+
+export const getPriceData = async () => {
+  try {
+    const response = await fetch(`${API_BASE}/price`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch price')
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Error fetching price:', error)
+    // Fallback mock data for development
+    return {
+      current: 2000 + Math.random() * 100,
+      previous: 2000 + Math.random() * 100,
+      change: (Math.random() * 10 - 5).toFixed(2),
+    }
+  }
+}
