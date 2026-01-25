@@ -139,11 +139,11 @@ const Whitepaper = ({ onClose }) => {
                 transition={{ delay: 0.3 }}
                 style={{
                   fontSize: 'clamp(3rem, 8vw, 6rem)',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.2em',
+                  fontFamily: 'Bungee, monospace',
+                  letterSpacing: '0.1em',
                   marginBottom: '2rem',
                   color: '#fff',
-                  textShadow: '0 0 30px rgba(255,255,255,0.5)',
+                  textShadow: '0 0 30px rgba(255,255,255,0.3)',
                 }}
               >
                 WHITEPAPER
@@ -153,10 +153,11 @@ const Whitepaper = ({ onClose }) => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5 }}
                 style={{
-                  fontSize: '1.2rem',
-                  color: '#ccc',
-                  letterSpacing: '0.1em',
+                  fontSize: '1.1rem',
+                  color: '#999',
+                  letterSpacing: '0.15em',
                   lineHeight: '2',
+                  fontWeight: 'normal',
                 }}
               >
                 The manifesto of conviction. Where doubt meets belief in the ultimate test of faith.
@@ -169,16 +170,16 @@ const Whitepaper = ({ onClose }) => {
         <motion.section style={{ opacity: opacity2 }}>
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
-              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
-                1. CONCEPT
+              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
+                CONCEPT
               </h2>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', marginBottom: '2rem' }}>
                 DOUBT & BELIEF is an interactive PvP experience that transforms crypto market
                 volatility into a social game. Players choose between two philosophies:
                 <strong style={{ color: '#fff' }}> DOUBT</strong> (betting on price decline) or <strong style={{ color: '#fff' }}>BELIEF</strong> (betting
                 on price growth). Every hour, the market decides the winner.
               </p>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc' }}>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa' }}>
                 This is not gambling—it's a philosophical experiment. Your choice reflects your market conviction,
                 and your rewards reflect the accuracy of that conviction.
               </p>
@@ -190,16 +191,16 @@ const Whitepaper = ({ onClose }) => {
         <motion.section style={{ opacity: opacity3 }}>
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
-              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
-                2. GAME MECHANICS
+              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
+                GAME MECHANICS
               </h2>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Hourly Rounds</h3>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '0.1em' }}>Hourly Rounds</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', marginBottom: '2rem' }}>
                 Each round lasts exactly one hour. Players must make their choice before the round
                 ends. Once the hour concludes, the price is compared to the previous hour's closing price.
               </p>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Outcome Logic</h3>
-              <ul style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', paddingLeft: '2rem' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '0.1em' }}>Outcome Logic</h3>
+              <ul style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', paddingLeft: '2rem' }}>
                 <li>If the price increases → <strong style={{ color: '#fff' }}>BELIEVERS win</strong></li>
                 <li>If the price decreases → <strong style={{ color: '#fff' }}>DOUBTERS win</strong></li>
                 <li>If the price is unchanged → Round is void, fees returned</li>
@@ -212,21 +213,21 @@ const Whitepaper = ({ onClose }) => {
         <motion.section style={{ opacity: opacity4 }}>
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
-              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
-                3. ECONOMIC MODEL
+              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
+                ECONOMIC MODEL
               </h2>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Entry Fee</h3>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '0.1em' }}>Entry Fee</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', marginBottom: '2rem' }}>
                 All participants pay a fixed gas fee to enter each round. This fee is denominated in
                 ETH and contributes to the prize pool.
               </p>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Distribution</h3>
-              <ul style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', paddingLeft: '2rem', marginBottom: '2rem' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '0.1em' }}>Distribution</h3>
+              <ul style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', paddingLeft: '2rem', marginBottom: '2rem' }}>
                 <li><strong style={{ color: '#fff' }}>95%</strong> of all fees → Distributed to winners</li>
                 <li><strong style={{ color: '#fff' }}>5%</strong> of all fees → Marketing and development</li>
               </ul>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Payout Calculation</h3>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '0.1em' }}>Payout Calculation</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa' }}>
                 Winners share the pool proportionally. If 100 people play DOUBT and 50 play BELIEVE,
                 and DOUBT wins, each DOUBTER receives: (Total Pool × 0.95) / 100
               </p>
@@ -238,15 +239,15 @@ const Whitepaper = ({ onClose }) => {
         <motion.section style={{ opacity: opacity5 }}>
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
-              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
-                4. PRICE ORACLE
+              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
+                PRICE ORACLE
               </h2>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', marginBottom: '2rem' }}>
                 We use Chainlink Price Feeds for tamper-proof, decentralized price data. The oracle
                 records the closing price at the top of each hour (XX:00:00 UTC).
               </p>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Verification</h3>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc' }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '0.1em' }}>Verification</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa' }}>
                 All price data is publicly verifiable on-chain. Users can independently verify results
                 using block explorers and Chainlink's public feeds.
               </p>
@@ -258,26 +259,26 @@ const Whitepaper = ({ onClose }) => {
         <motion.section style={{ opacity: opacity6 }}>
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
-              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
-                5. TRANSPARENCY
+              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
+                TRANSPARENCY
               </h2>
-              <ul style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', paddingLeft: '2rem', marginBottom: '4rem' }}>
+              <ul style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', paddingLeft: '2rem', marginBottom: '4rem' }}>
                 <li>All smart contracts are open-source and verified on Etherscan</li>
                 <li>Round results are provably fair via on-chain data</li>
                 <li>Distribution math is publicly auditable</li>
                 <li>No hidden fees or manipulation possible</li>
               </ul>
 
-              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#f00', letterSpacing: '0.2em' }}>
-                6. RISK DISCLOSURE
+              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
+                RISK DISCLOSURE
               </h2>
-              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '4rem' }}>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#aaa', marginBottom: '4rem' }}>
                 This is a game of chance based on market volatility. Players should only participate
                 with funds they can afford to lose. Past performance does not guarantee future results.
                 The game is designed for entertainment, not as an investment vehicle.
               </p>
 
-              <div style={{ marginTop: '4rem', textAlign: 'center', color: '#888', fontSize: '0.9rem', paddingBottom: '4rem' }}>
+              <div style={{ marginTop: '4rem', textAlign: 'center', color: '#666', fontSize: '0.9rem', paddingBottom: '4rem' }}>
                 <p>For questions or support, contact us at: [email protected]</p>
                 <p style={{ marginTop: '1rem' }}>
                   Smart contract address: [To be deployed]
