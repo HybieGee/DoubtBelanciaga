@@ -37,10 +37,10 @@ const LoadingScreen = () => {
         justifyContent: 'center',
         zIndex: 9999,
         overflow: 'hidden',
-        background: '#808080',
+        background: 'linear-gradient(to right, #000 0%, #000 50%, #fff 50%, #fff 100%)',
       }}
     >
-      {/* Layer 4 (back): Static Background */}
+      {/* Layer 4 (back): Static Background - Half black, half white split */}
       <div
         style={{
           position: 'absolute',
@@ -49,19 +49,9 @@ const LoadingScreen = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
+          background: 'url(/background.png) center center / cover no-repeat',
         }}
-      >
-        <img
-          src="/background.png"
-          alt=""
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-        />
-      </div>
+      />
 
       {/* Layer 3: Falling Crosses */}
       <div
