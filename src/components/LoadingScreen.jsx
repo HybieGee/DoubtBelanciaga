@@ -63,14 +63,16 @@ const LoadingScreen = () => {
         }}
       />
 
-      {/* Loading Bar Container */}
+      {/* Loading Elements */}
       <div
         style={{
-          position: 'relative',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           zIndex: 10,
           textAlign: 'center',
-          width: '80%',
-          maxWidth: '600px',
+          width: '100%',
         }}
       >
         {/* Loading Symbols */}
@@ -94,10 +96,11 @@ const LoadingScreen = () => {
         {/* Progress Bar Background */}
         <div
           style={{
-            width: '100%',
-            height: '4px',
-            background: 'rgba(255,255,255,0.2)',
-            border: '1px solid rgba(255,255,255,0.3)',
+            width: '50vw',
+            maxWidth: '500px',
+            margin: '0 auto',
+            height: '2px',
+            background: 'transparent',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -108,8 +111,8 @@ const LoadingScreen = () => {
             animate={{ width: `${progress}%` }}
             style={{
               height: '100%',
-              background: 'linear-gradient(90deg, rgba(255,255,255,0.5), rgba(255,255,255,0.9))',
-              boxShadow: '0 0 20px rgba(255,255,255,0.5)',
+              background: 'rgba(255,255,255,0.9)',
+              boxShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5)',
             }}
           />
         </div>
@@ -117,12 +120,13 @@ const LoadingScreen = () => {
         {/* Percentage */}
         <div
           style={{
-            marginTop: '1rem',
-            fontSize: '1rem',
+            marginTop: '1.5rem',
+            fontSize: '0.9rem',
             color: '#fff',
-            letterSpacing: '0.3em',
+            letterSpacing: '0.5em',
             textShadow: '0 0 10px rgba(255,255,255,0.8)',
             fontFamily: 'monospace',
+            opacity: 0.7,
           }}
         >
           {progress}%
