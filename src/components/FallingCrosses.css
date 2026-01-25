@@ -8,27 +8,68 @@
   pointer-events: none;
 }
 
-.crosses-layer-seamless {
+/* Left side container - Normal crosses */
+.crosses-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Right side container - Upside down crosses */
+.crosses-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Normal crosses layer - Rising upward */
+.cross-normal-layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
-  will-change: background-position;
-  background-image: url('/crosses-extended.png');
+  height: 100%;
+  background-image: url('/cross-normal.png');
   background-size: cover;
-  background-position: center top;
+  background-position: center bottom;
   background-repeat: repeat-y;
-  animation: slowScroll 20s linear infinite;
+  animation: riseUp 20s linear infinite;
   opacity: 0.7;
 }
 
-.crosses-layer-seamless img {
-  display: none;
+/* Upside down crosses layer - Falling downward */
+.cross-upside-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/cross-upside.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: repeat-y;
+  animation: fallDown 20s linear infinite;
+  opacity: 0.7;
 }
 
-/* Slow, smooth scrolling animation - perfectly seamless */
-@keyframes slowScroll {
+/* Rising upward animation - starts from top of image */
+@keyframes riseUp {
+  0% {
+    background-position: center 100%;
+  }
+  100% {
+    background-position: center 0%;
+  }
+}
+
+/* Falling downward animation - starts from bottom */
+@keyframes fallDown {
   0% {
     background-position: center 0%;
   }

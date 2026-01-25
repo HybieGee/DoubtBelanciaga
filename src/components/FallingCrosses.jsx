@@ -3,9 +3,14 @@ import './FallingCrosses.css'
 const FallingCrosses = () => {
   return (
     <div className="falling-crosses-container">
-      {/* Single seamless loop layer */}
-      <div className="crosses-layer-seamless">
-        <img src="/crosses-extended.png" alt="" />
+      {/* Left side - Normal crosses rising upward */}
+      <div className="crosses-left">
+        <div className="cross-normal-layer"></div>
+      </div>
+
+      {/* Right side - Upside down crosses falling downward */}
+      <div className="crosses-right">
+        <div className="cross-upside-layer"></div>
       </div>
     </div>
   )
