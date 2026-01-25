@@ -24,10 +24,11 @@ const ChoicePrompt = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: '15%',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: '0',
+          right: '0',
+          margin: '0 auto',
           fontSize: 'clamp(2rem, 6vw, 4rem)',
           fontWeight: 'bold',
           letterSpacing: '0.3em',
@@ -52,10 +53,10 @@ const ChoicePrompt = () => {
         whileTap={{ scale: 0.95 }}
         onClick={() => handleChoice('doubt')}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: '50%',
-          left: '25%',
-          transform: 'translate(-50%, -50%)',
+          left: 'calc(25% - 12.5vw)',
+          transform: 'translateY(-50%)',
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
@@ -86,10 +87,10 @@ const ChoicePrompt = () => {
         whileTap={{ scale: 0.95 }}
         onClick={() => handleChoice('believe')}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: '50%',
-          left: '75%',
-          transform: 'translate(-50%, -50%)',
+          left: 'calc(75% - 12.5vw)',
+          transform: 'translateY(-50%)',
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
@@ -117,10 +118,11 @@ const ChoicePrompt = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           bottom: '15%',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: '0',
+          right: '0',
+          margin: '0 auto',
           fontSize: 'clamp(0.9rem, 2vw, 1.2rem)',
           color: '#fff',
           letterSpacing: '0.2em',
