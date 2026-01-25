@@ -1,11 +1,18 @@
 import { motion } from 'framer-motion'
-import { Canvas } from '@react-three/fiber'
-import Scene from './Scene'
+import { useEffect, useRef } from 'react'
 import UI from './UI/UI'
 import { useGameStore } from '../store/gameStore'
 
 const MainExperience = () => {
   const gamePhase = useGameStore((state) => state.gamePhase)
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    // Set video playback speed to 0.33x (1/3 speed)
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.33
+    }
+  }, [])
 
   return (
     <motion.div
@@ -17,19 +24,46 @@ const MainExperience = () => {
         width: '100vw',
         height: '100vh',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      {/* 3D Canvas */}
-      <Canvas
-        camera={{ position: [0, 2, 8], fov: 50 }}
-        style={{ background: 'transparent' }}
-        gl={{ antialias: true, alpha: true }}
+      {/* Background video */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 1,
+        }}
       >
-        <Scene />
-      </Canvas>
+        <source src="/possible.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlay for better UI readability */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 2,
+        }}
+      />
 
       {/* UI Overlay */}
-      <UI />
+      <div style={{ position: 'relative', zIndex: 3, width: '100%', height: '100%' }}>
+        <UI />
+      </div>
     </motion.div>
   )
 }
