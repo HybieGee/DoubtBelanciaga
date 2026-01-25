@@ -28,7 +28,7 @@
   overflow: hidden;
 }
 
-/* Normal crosses layer - Rising upward */
+/* Normal crosses layer - Falling downward */
 .cross-normal-layer {
   position: absolute;
   top: 0;
@@ -37,13 +37,13 @@
   height: 100%;
   background-image: url('/cross-normal.png');
   background-size: 100% auto;
-  background-position: center bottom;
+  background-position: center top;
   background-repeat: repeat-y;
-  animation: riseUp 20s linear infinite;
+  animation: fallDown 20s linear infinite;
   opacity: 0.7;
 }
 
-/* Upside down crosses layer - Falling downward */
+/* Upside down crosses layer - Rising upward */
 .cross-upside-layer {
   position: absolute;
   top: 0;
@@ -52,9 +52,9 @@
   height: 100%;
   background-image: url('/cross-upside.png');
   background-size: 100% auto;
-  background-position: center top;
+  background-position: center bottom;
   background-repeat: repeat-y;
-  animation: fallDown 20s linear infinite;
+  animation: riseUp 20s linear infinite;
   opacity: 0.7;
 }
 
