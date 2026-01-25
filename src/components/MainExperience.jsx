@@ -17,10 +17,9 @@ const MainExperience = () => {
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
-        background: 'linear-gradient(to right, #000 0%, #000 50%, #fff 50%, #fff 100%)',
       }}
     >
-      {/* Layer 4 (back): Static Background - Half black, half white split */}
+      {/* LAYER 4 (BACK): Split Black/White Background */}
       <div
         style={{
           position: 'absolute',
@@ -29,11 +28,11 @@ const MainExperience = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          background: 'url(/background.png) center center / cover no-repeat',
+          background: 'linear-gradient(to right, #000 50%, #fff 50%)',
         }}
       />
 
-      {/* Layer 3: Falling Crosses Animation */}
+      {/* LAYER 3: Animated Crosses (on top of background) */}
       <div
         style={{
           position: 'absolute',
@@ -47,7 +46,7 @@ const MainExperience = () => {
         <FallingCrosses />
       </div>
 
-      {/* Layer 2: Center Character */}
+      {/* LAYER 2: Center Character (on top of crosses) */}
       <div
         style={{
           position: 'absolute',
@@ -65,20 +64,26 @@ const MainExperience = () => {
           src="/character.png"
           alt=""
           style={{
+            height: '100vh',
             width: 'auto',
-            height: '100%',
-            maxWidth: '100%',
             objectFit: 'contain',
             display: 'block',
           }}
         />
       </div>
 
-      {/* Layer 1 (front): UI Overlay */}
-      <div style={{ position: 'absolute', top: 0, left: 0, zIndex: 4, width: '100%', height: '100%', pointerEvents: 'none' }}>
-        <div style={{ pointerEvents: 'auto' }}>
-          <UI />
-        </div>
+      {/* LAYER 1 (FRONT): UI Overlay (buttons, text, etc) */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 4,
+        }}
+      >
+        <UI />
       </div>
     </motion.div>
   )

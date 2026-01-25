@@ -37,10 +37,9 @@ const LoadingScreen = () => {
         justifyContent: 'center',
         zIndex: 9999,
         overflow: 'hidden',
-        background: 'linear-gradient(to right, #000 0%, #000 50%, #fff 50%, #fff 100%)',
       }}
     >
-      {/* Layer 4 (back): Static Background - Half black, half white split */}
+      {/* LAYER 4 (BACK): Split Black/White Background */}
       <div
         style={{
           position: 'absolute',
@@ -49,11 +48,11 @@ const LoadingScreen = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          background: 'url(/background.png) center center / cover no-repeat',
+          background: 'linear-gradient(to right, #000 50%, #fff 50%)',
         }}
       />
 
-      {/* Layer 3: Falling Crosses */}
+      {/* LAYER 3: Animated Crosses */}
       <div
         style={{
           position: 'absolute',
@@ -67,7 +66,7 @@ const LoadingScreen = () => {
         <FallingCrosses />
       </div>
 
-      {/* Layer 2: Center Character */}
+      {/* LAYER 2: Center Character */}
       <div
         style={{
           position: 'absolute',
@@ -85,47 +84,47 @@ const LoadingScreen = () => {
           src="/character.png"
           alt=""
           style={{
+            height: '100vh',
             width: 'auto',
-            height: '100%',
-            maxWidth: '100%',
             objectFit: 'contain',
             display: 'block',
           }}
         />
       </div>
 
-      {/* Layer 1 (front): Content overlay */}
-      <div style={{ position: 'relative', width: '100%', textAlign: 'center', zIndex: 4 }}>
-        {/* Title text */}
-        <h1
-          style={{
-            fontSize: 'clamp(2rem, 8vw, 6rem)',
-            fontWeight: 'bold',
-            letterSpacing: '0.1em',
-            color: '#fff',
-            WebkitTextStroke: '2px #000',
-            textShadow: '0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.3)',
-            marginBottom: '2rem',
-          }}
-        >
-          {text}
-        </h1>
+      {/* LAYER 1 (FRONT): Content overlay */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          {/* Title text */}
+          <h1
+            style={{
+              fontSize: 'clamp(2rem, 8vw, 6rem)',
+              fontWeight: 'bold',
+              letterSpacing: '0.1em',
+              color: '#fff',
+              WebkitTextStroke: '2px #000',
+              textShadow: '0 0 20px rgba(0,0,0,0.8)',
+              marginBottom: '2rem',
+            }}
+          >
+            {text}
+          </h1>
 
-        {/* Loading animation */}
-        <motion.div
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          style={{
-            marginTop: '2rem',
-            fontSize: '1rem',
-            letterSpacing: '0.3em',
-            color: '#fff',
-            WebkitTextStroke: '1px #000',
-            textShadow: '0 0 10px rgba(0,0,0,0.8)',
-          }}
-        >
-          LOADING
-        </motion.div>
+          {/* Loading animation */}
+          <motion.div
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            style={{
+              fontSize: '1rem',
+              letterSpacing: '0.3em',
+              color: '#fff',
+              WebkitTextStroke: '1px #000',
+              textShadow: '0 0 10px rgba(0,0,0,0.8)',
+            }}
+          >
+            LOADING
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   )

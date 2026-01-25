@@ -9,7 +9,6 @@ const ChoicePrompt = () => {
   const handleChoice = async (choice) => {
     makeChoice(choice)
 
-    // Submit choice to backend
     try {
       await submitChoice(fingerprint, choice)
     } catch (error) {
@@ -19,17 +18,16 @@ const ChoicePrompt = () => {
 
   return (
     <>
-      {/* Title centered on screen */}
+      {/* Title - centered on entire screen */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
         style={{
-          position: 'fixed',
-          top: '20%',
+          position: 'absolute',
+          top: '15%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: 50,
+          transform: 'translateX(-50%)',
           fontSize: 'clamp(2rem, 6vw, 4rem)',
           fontWeight: 'bold',
           letterSpacing: '0.3em',
@@ -37,14 +35,15 @@ const ChoicePrompt = () => {
           WebkitTextStroke: '2px #000',
           textShadow: '0 0 20px rgba(0,0,0,0.5)',
           textAlign: 'center',
-          pointerEvents: 'none',
           whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+          zIndex: 100,
         }}
       >
         PICK A FAITH
       </motion.h2>
 
-      {/* DOUBT button - centered in left section */}
+      {/* DOUBT button - centered in left half */}
       <motion.button
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -53,17 +52,17 @@ const ChoicePrompt = () => {
         whileTap={{ scale: 0.95 }}
         onClick={() => handleChoice('doubt')}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: '50%',
           left: '25%',
           transform: 'translate(-50%, -50%)',
-          zIndex: 50,
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
           padding: 0,
-          width: 'clamp(200px, 25vw, 350px)',
+          width: 'clamp(200px, 25vw, 400px)',
           height: 'auto',
+          zIndex: 100,
         }}
       >
         <img
@@ -78,7 +77,7 @@ const ChoicePrompt = () => {
         />
       </motion.button>
 
-      {/* BELIEVE button - centered in right section */}
+      {/* BELIEVE button - centered in right half */}
       <motion.button
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -87,17 +86,17 @@ const ChoicePrompt = () => {
         whileTap={{ scale: 0.95 }}
         onClick={() => handleChoice('believe')}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: '50%',
           left: '75%',
           transform: 'translate(-50%, -50%)',
-          zIndex: 50,
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
           padding: 0,
-          width: 'clamp(200px, 25vw, 350px)',
+          width: 'clamp(200px, 25vw, 400px)',
           height: 'auto',
+          zIndex: 100,
         }}
       >
         <img
@@ -112,25 +111,25 @@ const ChoicePrompt = () => {
         />
       </motion.button>
 
-      {/* Subtitle with better readability */}
+      {/* Subtitle */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
         style={{
-          position: 'fixed',
-          bottom: '20%',
+          position: 'absolute',
+          bottom: '15%',
           left: '50%',
           transform: 'translateX(-50%)',
-          zIndex: 50,
           fontSize: 'clamp(0.9rem, 2vw, 1.2rem)',
           color: '#fff',
           letterSpacing: '0.2em',
           textAlign: 'center',
           WebkitTextStroke: '1px #000',
-          textShadow: '0 0 10px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.5)',
+          textShadow: '0 0 10px rgba(0,0,0,0.8)',
           pointerEvents: 'none',
           maxWidth: '90%',
+          zIndex: 100,
         }}
       >
         Choose wisely. Your conviction determines your fate.
