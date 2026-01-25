@@ -10,6 +10,9 @@ function App() {
   const setFingerprint = useGameStore((state) => state.setFingerprint)
 
   useEffect(() => {
+    // Version marker to confirm deployment
+    console.log('%c🚀 DOUBT & BELIEF v2.0 - Build: 2026-01-25-21:10', 'background: #000; color: #0f0; font-size: 14px; padding: 5px;')
+
     // Initialize fingerprint on load
     initFingerprint().then((fp) => {
       setFingerprint(fp)

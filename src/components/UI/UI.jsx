@@ -93,6 +93,25 @@ const UI = () => {
           zIndex: 1,
         }}
       />
+
+      {/* Version indicator */}
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '10px',
+          right: '10px',
+          padding: '4px 8px',
+          background: 'rgba(0, 255, 0, 0.1)',
+          border: '1px solid rgba(0, 255, 0, 0.3)',
+          color: '#0f0',
+          fontSize: '10px',
+          fontFamily: 'monospace',
+          zIndex: 9999,
+          opacity: 0.7,
+        }}
+      >
+        v2.0
+      </div>
     </>
   )
 }
