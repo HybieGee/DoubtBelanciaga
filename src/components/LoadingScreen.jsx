@@ -63,16 +63,17 @@ const LoadingScreen = () => {
         }}
       />
 
-      {/* Loading Elements */}
+      {/* Loading Elements - Positioned within monitor screen */}
       <div
         style={{
           position: 'fixed',
-          top: '50%',
+          top: '42%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           zIndex: 10,
           textAlign: 'center',
-          width: '100%',
+          width: '40vw',
+          maxWidth: '600px',
         }}
       >
         {/* Loading Symbols */}
@@ -80,12 +81,12 @@ const LoadingScreen = () => {
           animate={{ opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 2, repeat: Infinity }}
           style={{
-            fontSize: 'clamp(1.5rem, 4vw, 3rem)',
-            color: '#fff',
-            textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5)',
+            fontSize: 'clamp(1rem, 2.5vw, 2rem)',
+            color: '#000',
+            textShadow: '0 0 10px rgba(0,0,0,0.3)',
             letterSpacing: '0.2em',
-            marginBottom: '2rem',
-            height: '4rem',
+            marginBottom: '1.5rem',
+            height: '3rem',
             overflow: 'hidden',
             fontFamily: 'monospace',
           }}
@@ -96,8 +97,7 @@ const LoadingScreen = () => {
         {/* Progress Bar Background */}
         <div
           style={{
-            width: '50vw',
-            maxWidth: '500px',
+            width: '100%',
             margin: '0 auto',
             height: '2px',
             background: 'transparent',
@@ -111,8 +111,8 @@ const LoadingScreen = () => {
             animate={{ width: `${progress}%` }}
             style={{
               height: '100%',
-              background: 'rgba(255,255,255,0.9)',
-              boxShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5)',
+              background: '#000',
+              boxShadow: '0 0 10px rgba(0,0,0,0.5)',
             }}
           />
         </div>
@@ -120,13 +120,13 @@ const LoadingScreen = () => {
         {/* Percentage */}
         <div
           style={{
-            marginTop: '1.5rem',
-            fontSize: '0.9rem',
-            color: '#fff',
-            letterSpacing: '0.5em',
-            textShadow: '0 0 10px rgba(255,255,255,0.8)',
+            marginTop: '1rem',
+            fontSize: '0.8rem',
+            color: '#000',
+            letterSpacing: '0.4em',
+            textShadow: '0 0 5px rgba(0,0,0,0.3)',
             fontFamily: 'monospace',
-            opacity: 0.7,
+            opacity: 0.8,
           }}
         >
           {progress}%
