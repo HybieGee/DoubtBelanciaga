@@ -6,12 +6,12 @@ const Whitepaper = ({ onClose }) => {
   const { scrollYProgress } = useScroll({ container: containerRef })
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-  const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const opacity2 = useTransform(scrollYProgress, [0.15, 0.35], [0, 1])
-  const opacity3 = useTransform(scrollYProgress, [0.3, 0.5], [0, 1])
-  const opacity4 = useTransform(scrollYProgress, [0.45, 0.65], [0, 1])
-  const opacity5 = useTransform(scrollYProgress, [0.6, 0.8], [0, 1])
-  const opacity6 = useTransform(scrollYProgress, [0.75, 0.95], [0, 1])
+  const opacity1 = useTransform(scrollYProgress, [0, 0.1, 0.18, 0.25], [1, 1, 1, 0])
+  const opacity2 = useTransform(scrollYProgress, [0.12, 0.2, 0.35, 0.42], [0, 1, 1, 0])
+  const opacity3 = useTransform(scrollYProgress, [0.3, 0.38, 0.52, 0.59], [0, 1, 1, 0])
+  const opacity4 = useTransform(scrollYProgress, [0.47, 0.55, 0.68, 0.75], [0, 1, 1, 0])
+  const opacity5 = useTransform(scrollYProgress, [0.63, 0.71, 0.83, 0.90], [0, 1, 1, 0])
+  const opacity6 = useTransform(scrollYProgress, [0.78, 0.86, 0.95, 1], [0, 1, 1, 0])
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -131,7 +131,7 @@ const Whitepaper = ({ onClose }) => {
           style={{ opacity: opacity1 }}
           className="whitepaper-section"
         >
-          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px', textAlign: 'center' }}>
               <motion.h1
                 initial={{ y: 50, opacity: 0 }}
@@ -168,7 +168,7 @@ const Whitepaper = ({ onClose }) => {
 
         {/* Section 1: Concept */}
         <motion.section style={{ opacity: opacity2 }}>
-          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
               <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
                 CONCEPT
@@ -189,7 +189,7 @@ const Whitepaper = ({ onClose }) => {
 
         {/* Section 2: Game Mechanics */}
         <motion.section style={{ opacity: opacity3 }}>
-          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
               <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
                 GAME MECHANICS
@@ -211,7 +211,7 @@ const Whitepaper = ({ onClose }) => {
 
         {/* Section 3: Economic Model */}
         <motion.section style={{ opacity: opacity4 }}>
-          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
               <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
                 ECONOMIC MODEL
@@ -237,7 +237,7 @@ const Whitepaper = ({ onClose }) => {
 
         {/* Section 4: Price Oracle */}
         <motion.section style={{ opacity: opacity5 }}>
-          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
               <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
                 PRICE ORACLE
@@ -257,7 +257,7 @@ const Whitepaper = ({ onClose }) => {
 
         {/* Section 5: Transparency & Risk */}
         <motion.section style={{ opacity: opacity6 }}>
-          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
             <div style={{ maxWidth: '800px' }}>
               <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '2rem', color: '#fff', letterSpacing: '0.15em', fontFamily: 'Bungee, monospace' }}>
                 TRANSPARENCY
