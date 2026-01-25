@@ -36,7 +36,7 @@
   width: 100%;
   height: 100%;
   background-image: url('/cross-normal.png');
-  background-size: cover;
+  background-size: 100% auto;
   background-position: center bottom;
   background-repeat: repeat-y;
   animation: riseUp 20s linear infinite;
@@ -51,7 +51,7 @@
   width: 100%;
   height: 100%;
   background-image: url('/cross-upside.png');
-  background-size: cover;
+  background-size: 100% auto;
   background-position: center top;
   background-repeat: repeat-y;
   animation: fallDown 20s linear infinite;

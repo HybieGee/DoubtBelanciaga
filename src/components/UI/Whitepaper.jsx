@@ -62,9 +62,9 @@ const Whitepaper = ({ onClose }) => {
             1. CONCEPT
           </h2>
           <p style={{ lineHeight: '1.8', color: '#ccc' }}>
-            DOUBT vs BELIEVE is an interactive PvP experience that transforms crypto market
+            DOUBT & BELIEF is an interactive PvP experience that transforms crypto market
             volatility into a social game. Players choose between two philosophies:
-            <strong> DOUBT</strong> (betting on price decline) or <strong>BELIEVE</strong> (betting
+            <strong> DOUBT</strong> (betting on price decline) or <strong>BELIEF</strong> (betting
             on price growth). Every hour, the market decides the winner.
           </p>
         </section>

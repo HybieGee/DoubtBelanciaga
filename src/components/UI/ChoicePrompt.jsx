@@ -19,7 +19,7 @@ const ChoicePrompt = () => {
 
   return (
     <>
-      {/* Title centered */}
+      {/* Title centered on screen */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -28,7 +28,7 @@ const ChoicePrompt = () => {
           position: 'fixed',
           top: '20%',
           left: '50%',
-          transform: 'translateX(-50%)',
+          transform: 'translate(-50%, -50%)',
           zIndex: 50,
           fontSize: 'clamp(2rem, 6vw, 4rem)',
           fontWeight: 'bold',
@@ -38,12 +38,13 @@ const ChoicePrompt = () => {
           textShadow: '0 0 20px rgba(0,0,0,0.5)',
           textAlign: 'center',
           pointerEvents: 'none',
+          whiteSpace: 'nowrap',
         }}
       >
         PICK A FAITH
       </motion.h2>
 
-      {/* DOUBT button - positioned in left half */}
+      {/* DOUBT button - centered in left section */}
       <motion.button
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -61,7 +62,7 @@ const ChoicePrompt = () => {
           border: 'none',
           cursor: 'pointer',
           padding: 0,
-          width: 'clamp(250px, 30vw, 400px)',
+          width: 'clamp(200px, 25vw, 350px)',
           height: 'auto',
         }}
       >
@@ -77,7 +78,7 @@ const ChoicePrompt = () => {
         />
       </motion.button>
 
-      {/* BELIEVE button - positioned in right half */}
+      {/* BELIEVE button - centered in right section */}
       <motion.button
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -95,7 +96,7 @@ const ChoicePrompt = () => {
           border: 'none',
           cursor: 'pointer',
           padding: 0,
-          width: 'clamp(250px, 30vw, 400px)',
+          width: 'clamp(200px, 25vw, 350px)',
           height: 'auto',
         }}
       >

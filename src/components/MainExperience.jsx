@@ -17,10 +17,10 @@ const MainExperience = () => {
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
-        background: '#000',
+        background: 'linear-gradient(to right, #000 50%, #fff 50%)',
       }}
     >
-      {/* Layer 1: Static Background */}
+      {/* Layer 4 (back): Static Background Image */}
       <div
         style={{
           position: 'absolute',
@@ -29,19 +29,12 @@ const MainExperience = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
+          backgroundImage: 'url(/background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
-      >
-        <img
-          src="/background.png"
-          alt=""
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-        />
-      </div>
+      />
 
       {/* Layer 2: Falling Crosses Animation */}
       <div

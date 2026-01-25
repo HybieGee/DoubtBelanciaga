@@ -37,8 +37,8 @@ const UI = () => {
             }}
           >
             <span style={{ color: '#fff' }}>DOUBT</span>
-            <span style={{ color: '#666' }}> vs </span>
-            <span style={{ color: '#fff' }}>BELIEVE</span>
+            <span style={{ color: '#666' }}> & </span>
+            <span style={{ color: '#fff' }}>BELIEF</span>
           </h1>
           <button
             onClick={() => setShowWhitepaper(true)}

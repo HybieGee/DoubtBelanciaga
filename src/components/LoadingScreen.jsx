@@ -4,7 +4,7 @@ import FallingCrosses from './FallingCrosses'
 
 const LoadingScreen = () => {
   const [text, setText] = useState('')
-  const fullText = 'DOUBT vs BELIEVE'
+  const fullText = 'DOUBT & BELIEF'
 
   useEffect(() => {
     let index = 0
