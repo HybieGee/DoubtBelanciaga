@@ -8,7 +8,7 @@
   pointer-events: none;
 }
 
-/* Left side container - Normal crosses */
+/* Left side container - Upside down crosses */
 .crosses-left {
   position: absolute;
   top: 0;
@@ -18,7 +18,7 @@
   overflow: hidden;
 }
 
-/* Right side container - Upside down crosses */
+/* Right side container - Normal crosses */
 .crosses-right {
   position: absolute;
   top: 0;

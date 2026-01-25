@@ -3,14 +3,14 @@ import './FallingCrosses.css'
 const FallingCrosses = () => {
   return (
     <div className="falling-crosses-container">
-      {/* Left side - Normal crosses rising upward */}
+      {/* Left side - Upside down crosses rising upward */}
       <div className="crosses-left">
-        <div className="cross-normal-layer"></div>
+        <div className="cross-upside-layer"></div>
       </div>
 
-      {/* Right side - Upside down crosses falling downward */}
+      {/* Right side - Normal crosses falling downward */}
       <div className="crosses-right">
-        <div className="cross-upside-layer"></div>
+        <div className="cross-normal-layer"></div>
       </div>
     </div>
   )
