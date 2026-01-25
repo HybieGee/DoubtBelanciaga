@@ -288,8 +288,33 @@ const Whitepaper = ({ onClose }) => {
           </div>
         </motion.section>
 
-        {/* Scroll indicator at bottom */}
-        <div style={{ height: '20vh' }} />
+        {/* Social Links at bottom */}
+        <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <motion.a
+            href="https://twitter.com/doubtandbelief"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              display: 'block',
+              width: '100px',
+              height: '100px',
+              cursor: 'pointer',
+            }}
+          >
+            <img
+              src="/x-logo.png"
+              alt="Twitter/X"
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'block',
+                filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
+              }}
+            />
+          </motion.a>
+        </div>
       </div>
     </motion.div>
   )
