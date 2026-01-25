@@ -39,7 +39,8 @@ const ChoicePrompt = () => {
           marginBottom: '3rem',
           letterSpacing: '0.3em',
           color: '#fff',
-          textShadow: '0 0 20px rgba(255,255,255,0.5)',
+          WebkitTextStroke: '2px #000',
+          textShadow: '0 0 20px rgba(0,0,0,0.5)',
         }}
       >
         PICK A FAITH
@@ -51,6 +52,7 @@ const ChoicePrompt = () => {
           gap: '4rem',
           justifyContent: 'center',
           pointerEvents: 'all',
+          flexWrap: 'wrap',
         }}
       >
         {/* DOUBT button */}
@@ -62,36 +64,22 @@ const ChoicePrompt = () => {
           whileTap={{ scale: 0.95 }}
           onClick={() => handleChoice('doubt')}
           style={{
-            padding: '2rem 3rem',
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            letterSpacing: '0.2em',
-            background: 'linear-gradient(135deg, #000 0%, #333 100%)',
-            color: '#fff',
-            border: '3px solid #fff',
+            background: 'transparent',
+            border: 'none',
             cursor: 'pointer',
-            position: 'relative',
-            overflow: 'hidden',
-            boxShadow: '0 0 30px rgba(255,0,0,0.3)',
+            padding: 0,
+            width: 'clamp(250px, 30vw, 400px)',
+            height: 'auto',
           }}
         >
-          <span style={{ position: 'relative', zIndex: 1 }}>DOUBT</span>
-          <motion.div
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
+          <img
+            src="/button-doubt.png"
+            alt="DOUBT"
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: 'radial-gradient(circle, #f00 0%, transparent 70%)',
-              zIndex: 0,
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.5))',
             }}
           />
         </motion.button>
@@ -105,36 +93,22 @@ const ChoicePrompt = () => {
           whileTap={{ scale: 0.95 }}
           onClick={() => handleChoice('believe')}
           style={{
-            padding: '2rem 3rem',
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            letterSpacing: '0.2em',
-            background: 'linear-gradient(135deg, #fff 0%, #ddd 100%)',
-            color: '#000',
-            border: '3px solid #000',
+            background: 'transparent',
+            border: 'none',
             cursor: 'pointer',
-            position: 'relative',
-            overflow: 'hidden',
-            boxShadow: '0 0 30px rgba(255,255,255,0.5)',
+            padding: 0,
+            width: 'clamp(250px, 30vw, 400px)',
+            height: 'auto',
           }}
         >
-          <span style={{ position: 'relative', zIndex: 1 }}>BELIEVE</span>
-          <motion.div
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
+          <img
+            src="/button-believe.png"
+            alt="BELIEVE"
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: 'radial-gradient(circle, #fff 0%, transparent 70%)',
-              zIndex: 0,
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
             }}
           />
         </motion.button>
