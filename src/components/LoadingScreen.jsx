@@ -1,24 +1,32 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import FallingCrosses from './FallingCrosses'
 
 const LoadingScreen = () => {
-  const [text, setText] = useState('')
-  const fullText = 'DOUBT & BELIEF'
+  const [progress, setProgress] = useState(0)
+  const symbols = ['✟', '✝', '†', '☥', '✞', '✚', '⚰', '☠', '⛧', '⸸']
 
   useEffect(() => {
-    let index = 0
     const interval = setInterval(() => {
-      if (index <= fullText.length) {
-        setText(fullText.slice(0, index))
-        index++
-      } else {
-        clearInterval(interval)
-      }
-    }, 100)
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval)
+          return 100
+        }
+        return prev + 1
+      })
+    }, 30)
 
     return () => clearInterval(interval)
   }, [])
+
+  const getLoadingSymbols = () => {
+    const symbolCount = Math.floor((progress / 100) * 30)
+    let result = ''
+    for (let i = 0; i < symbolCount; i++) {
+      result += symbols[Math.floor(Math.random() * symbols.length)]
+    }
+    return result
+  }
 
   return (
     <motion.div
@@ -37,9 +45,10 @@ const LoadingScreen = () => {
         justifyContent: 'center',
         zIndex: 9999,
         overflow: 'hidden',
+        background: '#000',
       }}
     >
-      {/* LAYER 4 (BACK): Split Black/White Background */}
+      {/* Background Image */}
       <div
         style={{
           position: 'absolute',
@@ -47,83 +56,76 @@ const LoadingScreen = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          zIndex: 1,
-          background: 'linear-gradient(to right, #000 50%, #fff 50%)',
+          backgroundImage: 'url(/loading-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.8,
         }}
       />
 
-      {/* LAYER 3: Animated Crosses */}
+      {/* Loading Bar Container */}
       <div
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 2,
+          position: 'relative',
+          zIndex: 10,
+          textAlign: 'center',
+          width: '80%',
+          maxWidth: '600px',
         }}
       >
-        <FallingCrosses />
-      </div>
-
-      {/* LAYER 2: Center Character */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 3,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <img
-          src="/character.png"
-          alt=""
+        {/* Loading Symbols */}
+        <motion.div
+          animate={{ opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 2, repeat: Infinity }}
           style={{
-            height: '100vh',
-            width: 'auto',
-            objectFit: 'contain',
-            display: 'block',
+            fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+            color: '#fff',
+            textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5)',
+            letterSpacing: '0.2em',
+            marginBottom: '2rem',
+            height: '4rem',
+            overflow: 'hidden',
+            fontFamily: 'monospace',
           }}
-        />
-      </div>
+        >
+          {getLoadingSymbols()}
+        </motion.div>
 
-      {/* LAYER 1 (FRONT): Content overlay */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center' }}>
-          {/* Title text */}
-          <h1
-            style={{
-              fontSize: 'clamp(2rem, 8vw, 6rem)',
-              fontWeight: 'bold',
-              letterSpacing: '0.1em',
-              color: '#fff',
-              WebkitTextStroke: '2px #000',
-              textShadow: '0 0 20px rgba(0,0,0,0.8)',
-              marginBottom: '2rem',
-            }}
-          >
-            {text}
-          </h1>
-
-          {/* Loading animation */}
+        {/* Progress Bar Background */}
+        <div
+          style={{
+            width: '100%',
+            height: '4px',
+            background: 'rgba(255,255,255,0.2)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Progress Bar Fill */}
           <motion.div
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            initial={{ width: '0%' }}
+            animate={{ width: `${progress}%` }}
             style={{
-              fontSize: '1rem',
-              letterSpacing: '0.3em',
-              color: '#fff',
-              WebkitTextStroke: '1px #000',
-              textShadow: '0 0 10px rgba(0,0,0,0.8)',
+              height: '100%',
+              background: 'linear-gradient(90deg, rgba(255,255,255,0.5), rgba(255,255,255,0.9))',
+              boxShadow: '0 0 20px rgba(255,255,255,0.5)',
             }}
-          >
-            LOADING
-          </motion.div>
+          />
+        </div>
+
+        {/* Percentage */}
+        <div
+          style={{
+            marginTop: '1rem',
+            fontSize: '1rem',
+            color: '#fff',
+            letterSpacing: '0.3em',
+            textShadow: '0 0 10px rgba(255,255,255,0.8)',
+            fontFamily: 'monospace',
+          }}
+        >
+          {progress}%
         </div>
       </div>
     </motion.div>
