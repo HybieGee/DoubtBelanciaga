@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
+import FallingCrosses from './FallingCrosses'
 
 const LoadingScreen = () => {
   const [text, setText] = useState('')
   const fullText = 'DOUBT vs BELIEVE'
-  const videoRef = useRef(null)
 
   useEffect(() => {
     let index = 0
@@ -18,13 +18,6 @@ const LoadingScreen = () => {
     }, 100)
 
     return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    // Set video playback speed to 0.33x (1/3 speed)
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.33
-    }
   }, [])
 
   return (
@@ -44,29 +37,10 @@ const LoadingScreen = () => {
         justifyContent: 'center',
         zIndex: 9999,
         overflow: 'hidden',
+        background: '#000',
       }}
     >
-      {/* Background video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          zIndex: 1,
-        }}
-      >
-        <source src="/possible.mp4" type="video/mp4" />
-      </video>
-
-      {/* Dark overlay for better text readability */}
+      {/* Layer 1: Static Background */}
       <div
         style={{
           position: 'absolute',
@@ -74,13 +48,63 @@ const LoadingScreen = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          background: 'rgba(0, 0, 0, 0.3)',
+          zIndex: 1,
+        }}
+      >
+        <img
+          src="/background.png"
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+      </div>
+
+      {/* Layer 2: Falling Crosses */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
           zIndex: 2,
         }}
-      />
+      >
+        <FallingCrosses />
+      </div>
+
+      {/* Layer 3: Center Character */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 3,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img
+          src="/character.png"
+          alt=""
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+            display: 'block',
+          }}
+        />
+      </div>
 
       {/* Content overlay */}
-      <div style={{ position: 'relative', width: '100%', textAlign: 'center', zIndex: 3 }}>
+      <div style={{ position: 'relative', width: '100%', textAlign: 'center', zIndex: 4 }}>
         {/* Title text */}
         <h1
           style={{

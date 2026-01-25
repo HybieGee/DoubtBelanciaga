@@ -1,18 +1,10 @@
 import { motion } from 'framer-motion'
-import { useEffect, useRef } from 'react'
 import UI from './UI/UI'
+import FallingCrosses from './FallingCrosses'
 import { useGameStore } from '../store/gameStore'
 
 const MainExperience = () => {
   const gamePhase = useGameStore((state) => state.gamePhase)
-  const videoRef = useRef(null)
-
-  useEffect(() => {
-    // Set video playback speed to 0.33x (1/3 speed)
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.33
-    }
-  }, [])
 
   return (
     <motion.div
@@ -25,29 +17,10 @@ const MainExperience = () => {
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
+        background: '#000',
       }}
     >
-      {/* Background video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          zIndex: 1,
-        }}
-      >
-        <source src="/possible.mp4" type="video/mp4" />
-      </video>
-
-      {/* Dark overlay for better UI readability */}
+      {/* Layer 1: Static Background */}
       <div
         style={{
           position: 'absolute',
@@ -55,13 +28,63 @@ const MainExperience = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          background: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 1,
+        }}
+      >
+        <img
+          src="/background.png"
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+      </div>
+
+      {/* Layer 2: Falling Crosses Animation */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
           zIndex: 2,
         }}
-      />
+      >
+        <FallingCrosses />
+      </div>
 
-      {/* UI Overlay */}
-      <div style={{ position: 'relative', zIndex: 3, width: '100%', height: '100%' }}>
+      {/* Layer 3: Center Character */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 3,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img
+          src="/character.png"
+          alt=""
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+            display: 'block',
+          }}
+        />
+      </div>
+
+      {/* Layer 4: UI Overlay */}
+      <div style={{ position: 'relative', zIndex: 4, width: '100%', height: '100%' }}>
         <UI />
       </div>
     </motion.div>

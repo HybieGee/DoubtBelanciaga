@@ -1,0 +1,55 @@
+.falling-crosses-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.crosses-layer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+  will-change: transform;
+  animation: fallDown 15s linear infinite;
+}
+
+.crosses-layer img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0.7;
+  mix-blend-mode: normal;
+}
+
+.crosses-layer-1 {
+  animation-delay: 0s;
+}
+
+.crosses-layer-2 {
+  animation-delay: -7.5s; /* Start halfway through for seamless loop */
+}
+
+/* Slow, smooth falling animation */
+@keyframes fallDown {
+  0% {
+    transform: translateX(-50%) translateY(-100%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(100%);
+  }
+}
+
+/* Subtle variations for depth - very minimal */
+.crosses-layer-1 img {
+  opacity: 0.65;
+}
+
+.crosses-layer-2 img {
+  opacity: 0.75;
+}
