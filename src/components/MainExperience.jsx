@@ -68,6 +68,7 @@ const MainExperience = () => {
             width: 'auto',
             objectFit: 'contain',
             display: 'block',
+            transform: 'translateX(-40px)',
           }}
         />
       </div>
