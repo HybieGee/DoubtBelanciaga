@@ -1,195 +1,295 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
 
 const Whitepaper = ({ onClose }) => {
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({ container: containerRef })
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0])
+  const opacity2 = useTransform(scrollYProgress, [0.15, 0.35], [0, 1])
+  const opacity3 = useTransform(scrollYProgress, [0.3, 0.5], [0, 1])
+  const opacity4 = useTransform(scrollYProgress, [0.45, 0.65], [0, 1])
+  const opacity5 = useTransform(scrollYProgress, [0.6, 0.8], [0, 1])
+  const opacity6 = useTransform(scrollYProgress, [0.75, 0.95], [0, 1])
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'rgba(0,0,0,0.95)',
-        zIndex: 1000,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
-        overflowY: 'auto',
+        background: '#000',
+        zIndex: 10000,
+        overflow: 'hidden',
       }}
     >
+      {/* Animated floating symbols background */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden', opacity: 0.08 }}>
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{
+              y: [0, -100, 0],
+              x: [0, Math.sin(i) * 50, 0],
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: 10 + i * 2,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            style={{
+              position: 'absolute',
+              left: `${(i * 7) % 100}%`,
+              top: `${(i * 13) % 100}%`,
+              fontSize: '4rem',
+              color: '#fff',
+            }}
+          >
+            {['✟', '✝', '†', '☥'][i % 4]}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Mouse-following parallax layer */}
       <motion.div
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        onClick={(e) => e.stopPropagation()}
+        animate={{ x: mousePosition.x, y: mousePosition.y }}
+        transition={{ type: 'spring', stiffness: 50, damping: 20 }}
         style={{
-          background: '#000',
-          border: '2px solid #fff',
-          padding: '3rem',
-          maxWidth: '800px',
-          maxHeight: '90vh',
-          overflowY: 'auto',
+          position: 'absolute',
+          top: '10%',
+          right: '10%',
+          fontSize: '10rem',
           color: '#fff',
+          opacity: 0.05,
+          pointerEvents: 'none',
         }}
       >
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute',
-            top: '1rem',
-            right: '1rem',
-            background: 'transparent',
-            border: '2px solid #fff',
-            color: '#fff',
-            padding: '0.5rem 1rem',
-            cursor: 'pointer',
-            fontSize: '1rem',
-          }}
-        >
-          ✕ CLOSE
-        </button>
-
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '2rem', letterSpacing: '0.2em' }}>
-          WHITEPAPER
-        </h1>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            1. CONCEPT
-          </h2>
-          <p style={{ lineHeight: '1.8', color: '#ccc' }}>
-            DOUBT & BELIEF is an interactive PvP experience that transforms crypto market
-            volatility into a social game. Players choose between two philosophies:
-            <strong> DOUBT</strong> (betting on price decline) or <strong>BELIEF</strong> (betting
-            on price growth). Every hour, the market decides the winner.
-          </p>
-        </section>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            2. GAME MECHANICS
-          </h2>
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Hourly Rounds
-          </h3>
-          <p style={{ lineHeight: '1.8', color: '#ccc', marginBottom: '1rem' }}>
-            Each round lasts exactly one hour. Players must make their choice before the round
-            ends. Once the hour concludes, the price is compared to the previous hour's closing
-            price.
-          </p>
-
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Outcome Logic
-          </h3>
-          <ul style={{ lineHeight: '1.8', color: '#ccc', paddingLeft: '2rem' }}>
-            <li>If the price increases → <strong>BELIEVERS win</strong></li>
-            <li>If the price decreases → <strong>DOUBTERS win</strong></li>
-            <li>If the price is unchanged → Round is void, fees returned</li>
-          </ul>
-        </section>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            3. ECONOMIC MODEL
-          </h2>
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Entry Fee
-          </h3>
-          <p style={{ lineHeight: '1.8', color: '#ccc', marginBottom: '1rem' }}>
-            All participants pay a fixed gas fee to enter each round. This fee is denominated in
-            ETH and contributes to the prize pool.
-          </p>
-
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Distribution
-          </h3>
-          <ul style={{ lineHeight: '1.8', color: '#ccc', paddingLeft: '2rem' }}>
-            <li><strong>95%</strong> of all fees → Distributed to winners</li>
-            <li><strong>5%</strong> of all fees → Marketing and development</li>
-          </ul>
-
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', marginTop: '1rem', color: '#fff' }}>
-            Payout Calculation
-          </h3>
-          <p style={{ lineHeight: '1.8', color: '#ccc' }}>
-            Winners share the pool proportionally. If 100 people play DOUBT and 50 play BELIEVE,
-            and DOUBT wins, each DOUBTER receives: (Total Pool × 0.95) / 100
-          </p>
-        </section>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            4. PRICE ORACLE
-          </h2>
-          <p style={{ lineHeight: '1.8', color: '#ccc', marginBottom: '1rem' }}>
-            We use Chainlink Price Feeds for tamper-proof, decentralized price data. The oracle
-            records the closing price at the top of each hour (XX:00:00 UTC).
-          </p>
-
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Verification
-          </h3>
-          <p style={{ lineHeight: '1.8', color: '#ccc' }}>
-            All price data is publicly verifiable on-chain. Users can independently verify results
-            using block explorers and Chainlink's public feeds.
-          </p>
-        </section>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            5. ANTI-ABUSE MEASURES
-          </h2>
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Fingerprinting
-          </h3>
-          <p style={{ lineHeight: '1.8', color: '#ccc', marginBottom: '1rem' }}>
-            Users are identified via browser fingerprinting (IP + device signature). This prevents
-            multi-accounting without requiring registration.
-          </p>
-
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>
-            Wallet Verification
-          </h3>
-          <p style={{ lineHeight: '1.8', color: '#ccc' }}>
-            Rewards can only be claimed once per wallet per round. Claiming requires wallet
-            connection and transaction signature, preventing abuse while maintaining privacy.
-          </p>
-        </section>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            6. TRANSPARENCY
-          </h2>
-          <ul style={{ lineHeight: '1.8', color: '#ccc', paddingLeft: '2rem' }}>
-            <li>All smart contracts are open-source and verified on Etherscan</li>
-            <li>Round results are provably fair via on-chain data</li>
-            <li>Distribution math is publicly auditable</li>
-            <li>No hidden fees or manipulation possible</li>
-          </ul>
-        </section>
-
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#0f0' }}>
-            7. RISK DISCLOSURE
-          </h2>
-          <p style={{ lineHeight: '1.8', color: '#ccc' }}>
-            This is a game of chance based on market volatility. Players should only participate
-            with funds they can afford to lose. Past performance does not guarantee future results.
-            The game is designed for entertainment, not as an investment vehicle.
-          </p>
-        </section>
-
-        <div style={{ marginTop: '3rem', textAlign: 'center', color: '#888', fontSize: '0.9rem' }}>
-          <p>For questions or support, contact us at: [email protected]</p>
-          <p style={{ marginTop: '1rem' }}>
-            Smart contract address: [To be deployed]
-          </p>
-        </div>
+        ⸸
       </motion.div>
+
+      {/* Close button */}
+      <motion.button
+        whileHover={{ scale: 1.1, rotate: 90 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={onClose}
+        style={{
+          position: 'fixed',
+          top: '2rem',
+          right: '2rem',
+          background: 'transparent',
+          border: '2px solid #fff',
+          color: '#fff',
+          padding: '1rem',
+          cursor: 'pointer',
+          fontSize: '1.5rem',
+          zIndex: 10001,
+          width: '50px',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        ✕
+      </motion.button>
+
+      {/* Scrollable content */}
+      <div
+        ref={containerRef}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          scrollBehavior: 'smooth',
+        }}
+      >
+        {/* Hero Section */}
+        <motion.section
+          style={{ opacity: opacity1 }}
+          className="whitepaper-section"
+        >
+          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            <div style={{ maxWidth: '800px', textAlign: 'center' }}>
+              <motion.h1
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                style={{
+                  fontSize: 'clamp(3rem, 8vw, 6rem)',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.2em',
+                  marginBottom: '2rem',
+                  color: '#fff',
+                  textShadow: '0 0 30px rgba(255,255,255,0.5)',
+                }}
+              >
+                WHITEPAPER
+              </motion.h1>
+              <motion.p
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                style={{
+                  fontSize: '1.2rem',
+                  color: '#ccc',
+                  letterSpacing: '0.1em',
+                  lineHeight: '2',
+                }}
+              >
+                The manifesto of conviction. Where doubt meets belief in the ultimate test of faith.
+              </motion.p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Section 1: Concept */}
+        <motion.section style={{ opacity: opacity2 }}>
+          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            <div style={{ maxWidth: '800px' }}>
+              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
+                1. CONCEPT
+              </h2>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+                DOUBT & BELIEF is an interactive PvP experience that transforms crypto market
+                volatility into a social game. Players choose between two philosophies:
+                <strong style={{ color: '#fff' }}> DOUBT</strong> (betting on price decline) or <strong style={{ color: '#fff' }}>BELIEF</strong> (betting
+                on price growth). Every hour, the market decides the winner.
+              </p>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc' }}>
+                This is not gambling—it's a philosophical experiment. Your choice reflects your market conviction,
+                and your rewards reflect the accuracy of that conviction.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Section 2: Game Mechanics */}
+        <motion.section style={{ opacity: opacity3 }}>
+          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            <div style={{ maxWidth: '800px' }}>
+              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
+                2. GAME MECHANICS
+              </h2>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Hourly Rounds</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+                Each round lasts exactly one hour. Players must make their choice before the round
+                ends. Once the hour concludes, the price is compared to the previous hour's closing price.
+              </p>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Outcome Logic</h3>
+              <ul style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', paddingLeft: '2rem' }}>
+                <li>If the price increases → <strong style={{ color: '#fff' }}>BELIEVERS win</strong></li>
+                <li>If the price decreases → <strong style={{ color: '#fff' }}>DOUBTERS win</strong></li>
+                <li>If the price is unchanged → Round is void, fees returned</li>
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Section 3: Economic Model */}
+        <motion.section style={{ opacity: opacity4 }}>
+          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            <div style={{ maxWidth: '800px' }}>
+              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
+                3. ECONOMIC MODEL
+              </h2>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Entry Fee</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+                All participants pay a fixed gas fee to enter each round. This fee is denominated in
+                ETH and contributes to the prize pool.
+              </p>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Distribution</h3>
+              <ul style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', paddingLeft: '2rem', marginBottom: '2rem' }}>
+                <li><strong style={{ color: '#fff' }}>95%</strong> of all fees → Distributed to winners</li>
+                <li><strong style={{ color: '#fff' }}>5%</strong> of all fees → Marketing and development</li>
+              </ul>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Payout Calculation</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc' }}>
+                Winners share the pool proportionally. If 100 people play DOUBT and 50 play BELIEVE,
+                and DOUBT wins, each DOUBTER receives: (Total Pool × 0.95) / 100
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Section 4: Price Oracle */}
+        <motion.section style={{ opacity: opacity5 }}>
+          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            <div style={{ maxWidth: '800px' }}>
+              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
+                4. PRICE ORACLE
+              </h2>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '2rem' }}>
+                We use Chainlink Price Feeds for tamper-proof, decentralized price data. The oracle
+                records the closing price at the top of each hour (XX:00:00 UTC).
+              </p>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Verification</h3>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc' }}>
+                All price data is publicly verifiable on-chain. Users can independently verify results
+                using block explorers and Chainlink's public feeds.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Section 5: Transparency & Risk */}
+        <motion.section style={{ opacity: opacity6 }}>
+          <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            <div style={{ maxWidth: '800px' }}>
+              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#0f0', letterSpacing: '0.2em' }}>
+                5. TRANSPARENCY
+              </h2>
+              <ul style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', paddingLeft: '2rem', marginBottom: '4rem' }}>
+                <li>All smart contracts are open-source and verified on Etherscan</li>
+                <li>Round results are provably fair via on-chain data</li>
+                <li>Distribution math is publicly auditable</li>
+                <li>No hidden fees or manipulation possible</li>
+              </ul>
+
+              <h2 style={{ fontSize: '3rem', marginBottom: '2rem', color: '#f00', letterSpacing: '0.2em' }}>
+                6. RISK DISCLOSURE
+              </h2>
+              <p style={{ fontSize: '1.1rem', lineHeight: '2', color: '#ccc', marginBottom: '4rem' }}>
+                This is a game of chance based on market volatility. Players should only participate
+                with funds they can afford to lose. Past performance does not guarantee future results.
+                The game is designed for entertainment, not as an investment vehicle.
+              </p>
+
+              <div style={{ marginTop: '4rem', textAlign: 'center', color: '#888', fontSize: '0.9rem', paddingBottom: '4rem' }}>
+                <p>For questions or support, contact us at: [email protected]</p>
+                <p style={{ marginTop: '1rem' }}>
+                  Smart contract address: [To be deployed]
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Scroll indicator at bottom */}
+        <div style={{ height: '20vh' }} />
+      </div>
     </motion.div>
   )
 }
