@@ -17,10 +17,10 @@ const MainExperience = () => {
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
-        background: 'linear-gradient(to right, #000 50%, #fff 50%)',
+        background: '#808080',
       }}
     >
-      {/* Layer 4 (back): Static Background Image */}
+      {/* Layer 4 (back): Static Background - Untitled-3.png */}
       <div
         style={{
           position: 'absolute',
@@ -29,14 +29,21 @@ const MainExperience = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          backgroundImage: 'url(/background.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
         }}
-      />
+      >
+        <img
+          src="/background.png"
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+      </div>
 
-      {/* Layer 2: Falling Crosses Animation */}
+      {/* Layer 3: Falling Crosses Animation */}
       <div
         style={{
           position: 'absolute',
@@ -50,7 +57,7 @@ const MainExperience = () => {
         <FallingCrosses />
       </div>
 
-      {/* Layer 3: Center Character */}
+      {/* Layer 2: Center Character */}
       <div
         style={{
           position: 'absolute',
@@ -68,17 +75,20 @@ const MainExperience = () => {
           src="/character.png"
           alt=""
           style={{
+            width: 'auto',
+            height: '100%',
             maxWidth: '100%',
-            maxHeight: '100%',
             objectFit: 'contain',
             display: 'block',
           }}
         />
       </div>
 
-      {/* Layer 4: UI Overlay */}
-      <div style={{ position: 'relative', zIndex: 4, width: '100%', height: '100%' }}>
-        <UI />
+      {/* Layer 1 (front): UI Overlay */}
+      <div style={{ position: 'absolute', top: 0, left: 0, zIndex: 4, width: '100%', height: '100%', pointerEvents: 'none' }}>
+        <div style={{ pointerEvents: 'auto' }}>
+          <UI />
+        </div>
       </div>
     </motion.div>
   )

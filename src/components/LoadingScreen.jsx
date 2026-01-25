@@ -37,10 +37,10 @@ const LoadingScreen = () => {
         justifyContent: 'center',
         zIndex: 9999,
         overflow: 'hidden',
-        background: '#000',
+        background: '#808080',
       }}
     >
-      {/* Layer 1: Static Background */}
+      {/* Layer 4 (back): Static Background */}
       <div
         style={{
           position: 'absolute',
@@ -63,7 +63,7 @@ const LoadingScreen = () => {
         />
       </div>
 
-      {/* Layer 2: Falling Crosses */}
+      {/* Layer 3: Falling Crosses */}
       <div
         style={{
           position: 'absolute',
@@ -77,7 +77,7 @@ const LoadingScreen = () => {
         <FallingCrosses />
       </div>
 
-      {/* Layer 3: Center Character */}
+      {/* Layer 2: Center Character */}
       <div
         style={{
           position: 'absolute',
@@ -95,15 +95,16 @@ const LoadingScreen = () => {
           src="/character.png"
           alt=""
           style={{
+            width: 'auto',
+            height: '100%',
             maxWidth: '100%',
-            maxHeight: '100%',
             objectFit: 'contain',
             display: 'block',
           }}
         />
       </div>
 
-      {/* Content overlay */}
+      {/* Layer 1 (front): Content overlay */}
       <div style={{ position: 'relative', width: '100%', textAlign: 'center', zIndex: 4 }}>
         {/* Title text */}
         <h1
@@ -112,6 +113,7 @@ const LoadingScreen = () => {
             fontWeight: 'bold',
             letterSpacing: '0.1em',
             color: '#fff',
+            WebkitTextStroke: '2px #000',
             textShadow: '0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.3)',
             marginBottom: '2rem',
           }}
@@ -128,6 +130,7 @@ const LoadingScreen = () => {
             fontSize: '1rem',
             letterSpacing: '0.3em',
             color: '#fff',
+            WebkitTextStroke: '1px #000',
             textShadow: '0 0 10px rgba(0,0,0,0.8)',
           }}
         >
