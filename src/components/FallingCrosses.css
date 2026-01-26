@@ -35,10 +35,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/cross-normal.png'), url('/cross-normal.png');
-  background-size: 100% auto, 100% auto;
-  background-position: center 0%, center -100%;
-  background-repeat: no-repeat, no-repeat;
+  background-image: url('/cross-normal.png');
+  background-size: auto 100vh;
+  background-position: center 0;
+  background-repeat: repeat-y;
   animation: fallDown 20s linear infinite;
   opacity: 0.7;
 }
@@ -50,30 +50,30 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/cross-upside.png'), url('/cross-upside.png');
-  background-size: 100% auto, 100% auto;
-  background-position: center 0%, center 100%;
-  background-repeat: no-repeat, no-repeat;
+  background-image: url('/cross-upside.png');
+  background-size: auto 100vh;
+  background-position: center 0;
+  background-repeat: repeat-y;
   animation: riseUp 20s linear infinite;
   opacity: 0.7;
 }
 
-/* Rising upward animation - continuous scroll with two copies */
+/* Rising upward animation - continuous scroll */
 @keyframes riseUp {
   0% {
-    background-position: center 0%, center 100%;
+    background-position: center 0;
   }
   100% {
-    background-position: center -100%, center 0%;
+    background-position: center 100vh;
   }
 }
 
-/* Falling downward animation - continuous scroll with two copies */
+/* Falling downward animation - continuous scroll */
 @keyframes fallDown {
   0% {
-    background-position: center 0%, center -100%;
+    background-position: center 0;
   }
   100% {
-    background-position: center 100%, center 0%;
+    background-position: center -100vh;
   }
 }
