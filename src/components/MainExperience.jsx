@@ -28,7 +28,9 @@ const MainExperience = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          background: 'linear-gradient(to right, #000 50%, #fff 50%)',
+          backgroundImage: 'url(/background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       />
 
