@@ -1,12 +1,24 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 import { useGameStore } from '../../store/gameStore'
 import { submitChoice } from '../../api/game'
+import ParallaxGallery from '../ParallaxGallery'
 
 const ChoicePrompt = () => {
   const makeChoice = useGameStore((state) => state.makeChoice)
   const fingerprint = useGameStore((state) => state.fingerprint)
+  const [galleryOpen, setGalleryOpen] = useState(null) // 'doubt' or 'believe' or null
 
   const handleChoice = async (choice) => {
+    // Open the gallery instead of immediately making choice
+    setGalleryOpen(choice)
+  }
+
+  const handleGalleryClose = async () => {
+    // When gallery closes, submit the choice
+    const choice = galleryOpen
+    setGalleryOpen(null)
+
     makeChoice(choice)
 
     try {
@@ -18,6 +30,16 @@ const ChoicePrompt = () => {
 
   return (
     <>
+      {/* Parallax Gallery Overlay */}
+      <AnimatePresence>
+        {galleryOpen && (
+          <ParallaxGallery
+            type={galleryOpen}
+            onClose={handleGalleryClose}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Title - centered on entire screen */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
