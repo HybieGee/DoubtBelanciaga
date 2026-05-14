@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import UI from './UI/UI'
 import FallingCrosses from './FallingCrosses'
+import ClashPage from './ClashPage'
 import { useGameStore } from '../store/gameStore'
 
 const MainExperience = () => {
   const gamePhase = useGameStore((state) => state.gamePhase)
+  const showClash = useGameStore((state) => state.showClash)
 
   return (
     <motion.div
@@ -13,8 +15,8 @@ const MainExperience = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
       style={{
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: '100%',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -88,6 +90,9 @@ const MainExperience = () => {
       >
         <UI />
       </div>
+
+      {/* CLASH PAGE: full-screen overlay after joining */}
+      {showClash && <ClashPage />}
     </motion.div>
   )
 }

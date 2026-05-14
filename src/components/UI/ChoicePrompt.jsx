@@ -1,55 +1,28 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import { useGameStore } from '../../store/gameStore'
-import { submitChoice } from '../../api/game'
 import DoubtTerminal from '../DoubtTerminal'
 import BelieveTerminal from '../BelieveTerminal'
 
 const ChoicePrompt = () => {
-  const makeChoice = useGameStore((state) => state.makeChoice)
-  const fingerprint = useGameStore((state) => state.fingerprint)
   const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
   const [believeTerminalOpen, setBelieveTerminalOpen] = useState(false)
 
-  const handleChoice = async (choice) => {
-    if (choice === 'doubt') {
-      setDoubtTerminalOpen(true)
-    } else {
-      setBelieveTerminalOpen(true)
-    }
-  }
-
-  const handleDoubtClose = async () => {
-    setDoubtTerminalOpen(false)
-    makeChoice('doubt')
-    try {
-      await submitChoice(fingerprint, 'doubt')
-    } catch (error) {
-      console.error('Failed to submit choice:', error)
-    }
-  }
-
-  const handleBelieveClose = async () => {
-    setBelieveTerminalOpen(false)
-    makeChoice('believe')
-    try {
-      await submitChoice(fingerprint, 'believe')
-    } catch (error) {
-      console.error('Failed to submit choice:', error)
-    }
+  const handleChoice = (choice) => {
+    if (choice === 'doubt') setDoubtTerminalOpen(true)
+    else setBelieveTerminalOpen(true)
   }
 
   return (
     <>
       <AnimatePresence>
         {doubtTerminalOpen && (
-          <DoubtTerminal onClose={handleDoubtClose} />
+          <DoubtTerminal onClose={() => setDoubtTerminalOpen(false)} />
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {believeTerminalOpen && (
-          <BelieveTerminal onClose={handleBelieveClose} />
+          <BelieveTerminal onClose={() => setBelieveTerminalOpen(false)} />
         )}
       </AnimatePresence>
 

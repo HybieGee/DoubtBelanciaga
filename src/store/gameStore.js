@@ -24,10 +24,17 @@ export const useGameStore = create((set, get) => ({
   believeCount: 0,
   totalPool: 0,
 
+  // Join state (wallet-keyed, persisted in localStorage)
+  joinedSide: null, // 'doubt' | 'believe' | null
+  showClash: false,
+
   // Actions
   setFingerprint: (fp) => set({ fingerprint: fp }),
 
-  setWalletAddress: (address) => set({ walletAddress: address }),
+  setWalletAddress: (address) => {
+    const existing = localStorage.getItem(`joined_${address}`)
+    set({ walletAddress: address, joinedSide: existing || null })
+  },
 
   makeChoice: (choice) => set({
     userChoice: choice,
@@ -35,6 +42,14 @@ export const useGameStore = create((set, get) => ({
   }),
 
   setGamePhase: (phase) => set({ gamePhase: phase }),
+
+  setJoinedSide: (side) => {
+    const { walletAddress } = get()
+    if (walletAddress) localStorage.setItem(`joined_${walletAddress}`, side)
+    set({ joinedSide: side })
+  },
+
+  setShowClash: (v) => set({ showClash: v }),
 
   updateRoundData: (data) => set({
     currentRound: data.round,
