@@ -8,7 +8,7 @@ import './ClashPage.css'
 // One canvas renders both sides + organic boundary using ctx.clip().
 // Each side's animation is clipped to its territory — they meet exactly at the line.
 
-function initMainCanvas(canvas, getPct) {
+function initMainCanvas(canvas, getPct, getTimerEl) {
   const ctx = canvas.getContext('2d')
 
   const resize = () => {
@@ -245,6 +245,10 @@ function initMainCanvas(canvas, getPct) {
     ctx.stroke()
     ctx.shadowBlur = 0
 
+    // Drive timer position directly from smoothPct — no React re-render lag
+    const timerEl = getTimerEl()
+    if (timerEl) timerEl.style.left = `${smoothPct}%`
+
     t += 0.006
     animId = requestAnimationFrame(draw)
   }
@@ -268,6 +272,7 @@ const ClashPage = () => {
 
   const mainCanvasRef = useRef(null)
   const doubtPctRef   = useRef(50)
+  const timerRef      = useRef(null)
 
   const [stats,    setStats]    = useState({ doubtCount: 0, believeCount: 0 })
   const [timeLeft, setTimeLeft] = useState('--:--:--')
@@ -311,7 +316,7 @@ const ClashPage = () => {
   useEffect(() => {
     const canvas = mainCanvasRef.current
     if (!canvas) return
-    return initMainCanvas(canvas, () => doubtPctRef.current)
+    return initMainCanvas(canvas, () => doubtPctRef.current, () => timerRef.current)
   }, [])
 
   return (
@@ -350,8 +355,8 @@ const ClashPage = () => {
         </div>
       </div>
 
-      {/* Timer sits at the boundary proportion point */}
-      <div className="clash-boundary-timer" style={{ left: `${doubtPct}%` }}>
+      {/* Timer — position driven each frame by the canvas smoothPct */}
+      <div ref={timerRef} className="clash-boundary-timer" style={{ left: '50%' }}>
         {timeLeft}
       </div>
 
