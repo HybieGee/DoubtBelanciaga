@@ -1,0 +1,271 @@
+/* ─── OVERLAY ─────────────────────────────────────────────────────────────── */
+
+.dt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dt-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dt-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.88) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── TERMINAL WINDOW ─────────────────────────────────────────────────────── */
+
+.dt-window {
+  position: relative;
+  z-index: 2;
+  width: min(780px, 94vw);
+  height: min(600px, 88vh);
+  background: rgba(3, 0, 0, 0.95);
+  border: 1px solid #6B0000;
+  box-shadow:
+    0 0 0 1px rgba(139, 0, 0, 0.15),
+    0 0 30px rgba(139, 0, 0, 0.35),
+    0 0 80px rgba(139, 0, 0, 0.12),
+    inset 0 0 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  /* CRT scanlines */
+  background-image: repeating-linear-gradient(
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.07) 3px,
+    rgba(0, 0, 0, 0.07) 4px
+  );
+  overflow: hidden;
+}
+
+/* Subtle screen flicker */
+.dt-window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(139, 0, 0, 0.018);
+  animation: screenFlicker 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes screenFlicker {
+  0%, 85%, 100% { opacity: 1; }
+  86% { opacity: 0.7; }
+  87% { opacity: 1; }
+  92% { opacity: 0.85; }
+  93% { opacity: 1; }
+}
+
+/* ─── TITLE BAR ───────────────────────────────────────────────────────────── */
+
+.dt-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem;
+  background: rgba(20, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(107, 0, 0, 0.5);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
+}
+
+.dt-traffic {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.dt-traffic-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 1px solid #333;
+}
+
+.dt-traffic-dot--active {
+  background: #6B0000;
+  border-color: #8B0000;
+  box-shadow: 0 0 6px rgba(139, 0, 0, 0.8);
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(139,0,0,0.8); }
+  50% { opacity: 0.45; box-shadow: 0 0 2px rgba(139,0,0,0.3); }
+}
+
+.dt-titlebar-text {
+  flex: 1;
+  font-size: 0.67rem;
+  color: #6B0000;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(107, 0, 0, 0.9);
+  user-select: none;
+}
+
+.dt-close {
+  background: transparent;
+  border: 1px solid #3a0000;
+  color: #6B0000;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.dt-close:hover {
+  background: #8B0000;
+  color: #000;
+  border-color: #8B0000;
+  box-shadow: 0 0 8px rgba(139, 0, 0, 0.7);
+}
+
+/* ─── MESSAGE BODY ────────────────────────────────────────────────────────── */
+
+.dt-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  position: relative;
+  z-index: 11;
+}
+
+.dt-body::-webkit-scrollbar { width: 3px; }
+.dt-body::-webkit-scrollbar-track { background: transparent; }
+.dt-body::-webkit-scrollbar-thumb { background: #3a0000; border-radius: 2px; }
+
+.dt-msg {
+  display: flex;
+}
+
+/* Oracle messages */
+.dt-oracle {
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.78rem;
+  line-height: 1.75;
+  color: #c42b2b;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-shadow: 0 0 10px rgba(196, 43, 43, 0.35);
+  animation: textGlow 5s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% { text-shadow: 0 0 10px rgba(196,43,43,0.35); }
+  50% { text-shadow: 0 0 14px rgba(196,43,43,0.55), 0 0 30px rgba(139,0,0,0.15); }
+}
+
+/* User messages */
+.dt-user {
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: #444;
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+
+/* System / processing */
+.dt-msg--system {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.dt-processing {
+  font-size: 0.73rem;
+  color: #4a0000;
+  letter-spacing: 0.2em;
+  animation: blink 1.1s step-end infinite;
+}
+
+.dt-dots {
+  font-size: 0.73rem;
+  color: #4a0000;
+  letter-spacing: 0.1em;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── INPUT ROW ───────────────────────────────────────────────────────────── */
+
+.dt-inputrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 1.3rem;
+  border-top: 1px solid rgba(107, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
+}
+
+.dt-cursor {
+  color: #8B0000;
+  font-size: 0.88rem;
+  text-shadow: 0 0 8px rgba(139, 0, 0, 0.9);
+  user-select: none;
+  flex-shrink: 0;
+  animation: cursorPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes cursorPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.dt-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #c42b2b;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  caret-color: #8B0000;
+}
+
+.dt-input::placeholder {
+  color: #2e0000;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.dt-input:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

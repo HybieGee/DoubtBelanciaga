@@ -3,24 +3,36 @@ import { useState } from 'react'
 import { useGameStore } from '../../store/gameStore'
 import { submitChoice } from '../../api/game'
 import ParallaxGallery from '../ParallaxGallery'
+import DoubtTerminal from '../DoubtTerminal'
 
 const ChoicePrompt = () => {
   const makeChoice = useGameStore((state) => state.makeChoice)
   const fingerprint = useGameStore((state) => state.fingerprint)
-  const [galleryOpen, setGalleryOpen] = useState(null) // 'doubt' or 'believe' or null
+  const [galleryOpen, setGalleryOpen] = useState(null) // 'believe' or null
+  const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
 
   const handleChoice = async (choice) => {
-    // Open the gallery instead of immediately making choice
-    setGalleryOpen(choice)
+    if (choice === 'doubt') {
+      setDoubtTerminalOpen(true)
+    } else {
+      setGalleryOpen(choice)
+    }
+  }
+
+  const handleDoubtClose = async () => {
+    setDoubtTerminalOpen(false)
+    makeChoice('doubt')
+    try {
+      await submitChoice(fingerprint, 'doubt')
+    } catch (error) {
+      console.error('Failed to submit choice:', error)
+    }
   }
 
   const handleGalleryClose = async () => {
-    // When gallery closes, submit the choice
     const choice = galleryOpen
     setGalleryOpen(null)
-
     makeChoice(choice)
-
     try {
       await submitChoice(fingerprint, choice)
     } catch (error) {
@@ -30,7 +42,14 @@ const ChoicePrompt = () => {
 
   return (
     <>
-      {/* Parallax Gallery Overlay */}
+      {/* Doubt Terminal Overlay */}
+      <AnimatePresence>
+        {doubtTerminalOpen && (
+          <DoubtTerminal onClose={handleDoubtClose} />
+        )}
+      </AnimatePresence>
+
+      {/* Parallax Gallery Overlay (believe side) */}
       <AnimatePresence>
         {galleryOpen && (
           <ParallaxGallery
