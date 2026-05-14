@@ -33,9 +33,9 @@ const WalletButton = () => {
       disabled={connecting || walletAddress}
       style={{
         padding: '0.75rem 1.5rem',
-        background: walletAddress ? '#0f0' : '#fff',
-        color: walletAddress ? '#000' : '#000',
-        border: 'none',
+        background: walletAddress ? 'transparent' : '#fff',
+        color: walletAddress ? '#fff' : '#000',
+        border: walletAddress ? '1px solid #fff' : 'none',
         cursor: connecting || walletAddress ? 'default' : 'pointer',
         fontSize: '0.9rem',
         fontWeight: 'bold',

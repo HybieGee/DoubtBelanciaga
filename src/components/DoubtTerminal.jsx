@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { useGameStore } from '../store/gameStore'
+import { connectWallet } from '../utils/wallet'
+import { getRoundStats, joinSide as joinSideAPI } from '../api/game'
 import './DoubtTerminal.css'
 
 // ─── LORE DATABASE ────────────────────────────────────────────────────────────
@@ -505,100 +508,145 @@ const DoubtTerminal = ({ onClose }) => {
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
+  const [rateLimitEnd, setRateLimitEnd] = useState(null)
+  const [rateLimitLeft, setRateLimitLeft] = useState(0)
+  const [stats, setStats] = useState({ doubtCount: 0, believeCount: 0 })
+  const [isJoining, setIsJoining] = useState(false)
 
-  // Canvas animation
+  const walletAddress = useGameStore((s) => s.walletAddress)
+  const setWalletAddress = useGameStore((s) => s.setWalletAddress)
+  const fingerprint = useGameStore((s) => s.fingerprint)
+  const joinedSide = useGameStore((s) => s.joinedSide)
+  const setJoinedSide = useGameStore((s) => s.setJoinedSide)
+  const setShowClash = useGameStore((s) => s.setShowClash)
+
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     return initCanvas(canvas)
   }, [])
 
-  // Focus input when free
   useEffect(() => {
-    if (!isProcessing) inputRef.current?.focus()
-  }, [isProcessing])
+    if (!isProcessing && rateLimitLeft === 0) inputRef.current?.focus()
+  }, [isProcessing, rateLimitLeft])
 
-  // ESC to close
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [onClose])
 
-  // Auto-scroll
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages])
 
+  // 90s rate limit countdown
+  useEffect(() => {
+    if (!rateLimitEnd) return
+    const tick = setInterval(() => {
+      const left = Math.max(0, Math.ceil((rateLimitEnd - Date.now()) / 1000))
+      setRateLimitLeft(left)
+      if (left === 0) { setRateLimitEnd(null); clearInterval(tick) }
+    }, 500)
+    return () => clearInterval(tick)
+  }, [rateLimitEnd])
+
+  // Live stats polling
+  useEffect(() => {
+    const poll = async () => {
+      try { const d = await getRoundStats(); setStats(d) } catch {}
+    }
+    poll()
+    const iv = setInterval(poll, 30000)
+    return () => clearInterval(iv)
+  }, [])
+
   const addMessage = useCallback((text, type = 'oracle') => {
     return new Promise((resolve) => {
       const id = `${Date.now()}-${Math.random()}`
-
       if (type === 'user') {
         setMessages((prev) => [...prev, { id, text, type }])
         resolve()
         return
       }
-
       setMessages((prev) => [...prev, { id, text: '', type }])
-
       decryptText(
         text,
         (display) => setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text: display } : m)),
-        () => {
-          setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text } : m))
-          resolve()
-        },
+        () => { setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text } : m)); resolve() },
       )
     })
   }, [])
 
-  // Auto-sequence on mount
   useEffect(() => {
     let alive = true
     const timers = []
-
     AUTO_SEQUENCE.forEach((entry) => {
-      const t = setTimeout(() => {
-        if (!alive) return
-        addMessage(entry.text, 'oracle')
-      }, entry.delay)
+      const t = setTimeout(() => { if (!alive) return; addMessage(entry.text, 'oracle') }, entry.delay)
       timers.push(t)
     })
-
-    return () => {
-      alive = false
-      timers.forEach(clearTimeout)
-    }
+    return () => { alive = false; timers.forEach(clearTimeout) }
   }, [addMessage])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const query = inputValue.trim()
-    if (!query || isProcessing) return
+    if (!query || isProcessing || rateLimitLeft > 0) return
 
     setInputValue('')
     setIsProcessing(true)
-
     await addMessage(`> ${query}`, 'user')
     await new Promise((r) => setTimeout(r, 700))
 
     const q = query.toLowerCase().replace(/[^a-z0-9]/g, '')
     let response = null
-
     for (const [key, val] of Object.entries(QUERY_RESPONSES)) {
-      if (q.includes(key.replace(/[^a-z0-9]/g, ''))) {
-        response = val
-        break
-      }
+      if (q.includes(key.replace(/[^a-z0-9]/g, ''))) { response = val; break }
     }
-
-    if (!response) {
-      response = DEFAULT_RESPONSES[Math.floor(Math.random() * DEFAULT_RESPONSES.length)]
-    }
+    if (!response) response = DEFAULT_RESPONSES[Math.floor(Math.random() * DEFAULT_RESPONSES.length)]
 
     await addMessage(response, 'oracle')
     setIsProcessing(false)
+    setRateLimitEnd(Date.now() + 90000)
+    setRateLimitLeft(90)
+  }
+
+  const handleConnectWallet = async () => {
+    try { const addr = await connectWallet(); setWalletAddress(addr) }
+    catch (e) { console.error('Wallet connect failed:', e) }
+  }
+
+  const handleJoin = async () => {
+    if (!walletAddress || isJoining) return
+    setIsJoining(true)
+    try {
+      await joinSideAPI(walletAddress, fingerprint, 'doubt')
+      setJoinedSide('doubt')
+      setShowClash(true)
+      onClose()
+    } catch (e) { console.error('Join failed:', e) }
+    setIsJoining(false)
+  }
+
+  const renderJoinButton = () => {
+    if (!walletAddress) {
+      return (
+        <button className="dt-join-btn dt-join-btn--wallet" onClick={handleConnectWallet}>
+          CONNECT WALLET TO JOIN
+        </button>
+      )
+    }
+    if (joinedSide === 'doubt') {
+      return <div className="dt-join-status dt-join-status--self">YOU ARE WITH THE DOUBTERS ✓</div>
+    }
+    if (joinedSide === 'believe') {
+      return <div className="dt-join-status dt-join-status--other">YOU HAVE CHOSEN BELIEF</div>
+    }
+    return (
+      <button className="dt-join-btn dt-join-btn--active" onClick={handleJoin} disabled={isJoining}>
+        {isJoining ? 'JOINING...' : 'JOIN THE DOUBT'}
+      </button>
+    )
   }
 
   return (
@@ -612,51 +660,62 @@ const DoubtTerminal = ({ onClose }) => {
       <canvas ref={canvasRef} className="dt-canvas" />
       <div className="dt-vignette" />
 
-      <div className="dt-window">
-        {/* Title bar */}
-        <div className="dt-titlebar">
-          <div className="dt-traffic">
-            <span className="dt-traffic-dot" />
-            <span className="dt-traffic-dot" />
-            <span className="dt-traffic-dot dt-traffic-dot--active" />
+      <div className="dt-stack">
+        <div className="dt-window">
+          <div className="dt-titlebar">
+            <button className="dt-back-btn" onClick={onClose}>&#8592; BACK</button>
+            <div className="dt-traffic">
+              <span className="dt-traffic-dot" />
+              <span className="dt-traffic-dot" />
+              <span className="dt-traffic-dot dt-traffic-dot--active" />
+            </div>
+            <span className="dt-titlebar-text">DOUBT_ORACLE v6.6.6</span>
+            <button className="dt-close" onClick={onClose} aria-label="Close">&#10005;</button>
           </div>
-          <span className="dt-titlebar-text">DOUBT_ORACLE v6.6.6 — CRYPTO DOUBT ARCHIVE</span>
-          <button className="dt-close" onClick={onClose} aria-label="Close">✕</button>
+
+          <div className="dt-stats-bar">
+            <span className="dt-stat dt-stat--doubt">DOUBTERS: {stats.doubtCount}</span>
+            <span className="dt-stat-sep">|</span>
+            <span className="dt-stat dt-stat--believe">BELIEVERS: {stats.believeCount}</span>
+            <span className="dt-live-dot" />
+          </div>
+
+          <div className="dt-body" ref={bodyRef}>
+            {messages.map((msg) => (
+              <div key={msg.id} className={`dt-msg dt-msg--${msg.type}`}>
+                {msg.type === 'oracle'
+                  ? <pre className="dt-oracle">{msg.text || ' '}</pre>
+                  : <span className="dt-user">{msg.text}</span>
+                }
+              </div>
+            ))}
+            {isProcessing && (
+              <div className="dt-msg dt-msg--system">
+                <span className="dt-processing">QUERYING ARCHIVES</span>
+                <span className="dt-dots">...</span>
+              </div>
+            )}
+          </div>
+
+          <form className="dt-inputrow" onSubmit={handleSubmit}>
+            <span className="dt-cursor">{'>'}</span>
+            <input
+              ref={inputRef}
+              className="dt-input"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder={rateLimitLeft > 0 ? `rate limited — ${rateLimitLeft}s remaining` : 'query the oracle...'}
+              disabled={isProcessing || rateLimitLeft > 0}
+              autoComplete="off"
+              spellCheck={false}
+            />
+            {rateLimitLeft > 0 && <span className="dt-rate-timer">&#9201; {rateLimitLeft}s</span>}
+          </form>
         </div>
 
-        {/* Messages */}
-        <div className="dt-body" ref={bodyRef}>
-          {messages.map((msg) => (
-            <div key={msg.id} className={`dt-msg dt-msg--${msg.type}`}>
-              {msg.type === 'oracle'
-                ? <pre className="dt-oracle">{msg.text || ' '}</pre>
-                : <span className="dt-user">{msg.text}</span>
-              }
-            </div>
-          ))}
-
-          {isProcessing && (
-            <div className="dt-msg dt-msg--system">
-              <span className="dt-processing">QUERYING ARCHIVES</span>
-              <span className="dt-dots">...</span>
-            </div>
-          )}
+        <div className="dt-join-panel">
+          {renderJoinButton()}
         </div>
-
-        {/* Input */}
-        <form className="dt-inputrow" onSubmit={handleSubmit}>
-          <span className="dt-cursor">{'>'}</span>
-          <input
-            ref={inputRef}
-            className="dt-input"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="query the oracle... or press ESC to confirm doubt"
-            disabled={isProcessing}
-            autoComplete="off"
-            spellCheck={false}
-          />
-        </form>
       </div>
     </motion.div>
   )

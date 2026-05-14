@@ -150,38 +150,6 @@ const ChoicePrompt = () => {
         Choose wisely. Your conviction determines your fate.
       </motion.p>
 
-      {/* View Clash button — only shown after user has joined a side */}
-      {joinedSide && (
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setShowClash(true)}
-          style={{
-            position: 'fixed',
-            bottom: '5%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            background: 'transparent',
-            border: '1px solid rgba(255,255,255,0.4)',
-            color: 'rgba(255,255,255,0.7)',
-            padding: '0.55rem 1.8rem',
-            cursor: 'pointer',
-            fontSize: 'clamp(0.6rem, 1.2vw, 0.75rem)',
-            letterSpacing: '0.2em',
-            fontFamily: 'Courier New, monospace',
-            fontWeight: 'bold',
-            textShadow: '0 0 10px rgba(0,0,0,1)',
-            backdropFilter: 'blur(4px)',
-            zIndex: 100,
-            whiteSpace: 'nowrap',
-          }}
-        >
-          VIEW THE CLASH ›
-        </motion.button>
-      )}
     </>
   )
 }

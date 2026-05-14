@@ -8,7 +8,9 @@ import Whitepaper from './Whitepaper'
 import { useState } from 'react'
 
 const UI = () => {
-  const gamePhase = useGameStore((state) => state.gamePhase)
+  const gamePhase   = useGameStore((state) => state.gamePhase)
+  const joinedSide  = useGameStore((state) => state.joinedSide)
+  const setShowClash = useGameStore((state) => state.setShowClash)
   const [showWhitepaper, setShowWhitepaper] = useState(false)
 
   return (
@@ -63,6 +65,32 @@ const UI = () => {
           >
             WHITEPAPER
           </button>
+
+          {joinedSide && (
+            <button
+              onClick={() => setShowClash(true)}
+              style={{
+                padding: '0.5rem 1rem',
+                background: 'transparent',
+                border: '1px solid #fff',
+                color: '#fff',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                letterSpacing: '0.1em',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#fff'
+                e.target.style.color = '#000'
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'transparent'
+                e.target.style.color = '#fff'
+              }}
+            >
+              VIEW CLASH
+            </button>
+          )}
         </div>
 
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
