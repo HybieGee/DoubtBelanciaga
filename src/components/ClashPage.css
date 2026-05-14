@@ -6,94 +6,36 @@
   position: fixed;
   inset: 0;
   z-index: 5000;
-  display: flex;
-  flex-direction: row;
   overflow: hidden;
 }
 
-/* ─── SIDES ───────────────────────────────────────────────────────────────── */
+/* ─── MAIN CANVAS (full screen, both animations) ──────────────────────────── */
 
-.clash-side {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: flex 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  min-width: 0;
-}
-
-.clash-side--doubt  { background: #080000; }
-.clash-side--believe { background: #FFFDF0; }
-
-/* ─── CANVAS ──────────────────────────────────────────────────────────────── */
-
-.clash-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* ─── VIGNETTE ────────────────────────────────────────────────────────────── */
-
-.clash-vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.clash-vignette--doubt {
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.78) 100%);
-}
-
-.clash-vignette--believe {
-  background: radial-gradient(ellipse at center, rgba(255,253,240,0.05) 0%, rgba(255,248,200,0.68) 100%);
-}
-
-/* ─── DIVIDER ─────────────────────────────────────────────────────────────── */
-
-.clash-divider {
-  width: clamp(80px, 9vw, 130px);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.clash-divider-canvas {
+.clash-main-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+  z-index: 1;
 }
 
-.clash-divider-timer {
-  position: relative;
+/* ─── TEXT LAYOUT (transparent flex over the canvas) ─────────────────────── */
+
+.clash-layout {
+  position: absolute;
+  inset: 0;
   z-index: 2;
-  font-family: 'Courier New', monospace;
-  font-size: clamp(0.6rem, 1.1vw, 0.82rem);
-  font-weight: bold;
-  letter-spacing: 0.12em;
-  color: #ffffff;
-  /* black outline via text-shadow */
-  text-shadow:
-    -1px -1px 0 #000,
-     1px -1px 0 #000,
-    -1px  1px 0 #000,
-     1px  1px 0 #000,
-     0    0   6px rgba(0,0,0,0.9);
-  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
   pointer-events: none;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  letter-spacing: 0.18em;
+}
+
+.clash-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
 }
 
 /* ─── SIDE CONTENT ────────────────────────────────────────────────────────── */
@@ -104,11 +46,8 @@
   align-items: center;
   gap: 0;
   padding: 2rem 1.5rem;
-  position: relative;
-  z-index: 2;
   text-align: center;
   min-width: 0;
-  pointer-events: none;
 }
 
 /* ─── LABELS ──────────────────────────────────────────────────────────────── */
@@ -118,12 +57,11 @@
   font-size: clamp(1.4rem, 3.5vw, 2.6rem);
   letter-spacing: 0.55em;
   font-weight: 400;
-  /* gradient text */
   background: linear-gradient(180deg, #ff2a2a 0%, #6B0000 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 14px rgba(200, 0, 0, 0.65));
+  filter: drop-shadow(0 0 14px rgba(200,0,0,0.65));
   animation: doubtLabelPulse 4s ease-in-out infinite;
   margin-bottom: 0.15em;
 }
@@ -143,7 +81,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 12px rgba(200, 164, 0, 0.55));
+  filter: drop-shadow(0 0 12px rgba(200,164,0,0.55));
   animation: believeLabelPulse 4s ease-in-out infinite;
   margin-bottom: 0.1em;
 }
@@ -153,7 +91,7 @@
   50%       { filter: drop-shadow(0 0 24px rgba(255,215,0,0.85)); }
 }
 
-/* ─── COUNTS (hero numbers) ───────────────────────────────────────────────── */
+/* ─── COUNTS ──────────────────────────────────────────────────────────────── */
 
 .clash-count--doubt {
   font-family: 'Bebas Neue', 'Courier New', sans-serif;
@@ -165,7 +103,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 22px rgba(180, 0, 0, 0.7));
+  filter: drop-shadow(0 0 22px rgba(180,0,0,0.7));
   animation: doubtCountPulse 5s ease-in-out infinite;
 }
 
@@ -184,7 +122,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 18px rgba(200, 164, 0, 0.65));
+  filter: drop-shadow(0 0 18px rgba(200,164,0,0.65));
   animation: believeCountPulse 5s ease-in-out infinite;
 }
 
@@ -210,7 +148,6 @@
 .clash-pct--believe {
   font-family: 'Bebas Neue', 'Courier New', sans-serif;
   font-size: clamp(1rem, 2.2vw, 1.6rem);
-  font-weight: 400;
   letter-spacing: 0.3em;
   margin-top: 0.3em;
   background: linear-gradient(90deg, #7a5a00 0%, #C8A400 50%, #7a5a00 100%);
@@ -226,13 +163,12 @@
   font-family: 'Bebas Neue', 'Courier New', sans-serif;
   font-size: clamp(0.7rem, 1.4vw, 0.95rem);
   letter-spacing: 0.4em;
-  font-weight: 400;
   margin-top: 0.9em;
   padding: 0.35rem 1.1rem;
   color: #ff4444;
-  border: 1px solid rgba(139, 0, 0, 0.6);
-  background: rgba(80, 0, 0, 0.25);
-  filter: drop-shadow(0 0 6px rgba(180, 0, 0, 0.5));
+  border: 1px solid rgba(139,0,0,0.6);
+  background: rgba(80,0,0,0.25);
+  filter: drop-shadow(0 0 6px rgba(180,0,0,0.5));
   animation: badgePulseDark 2.5s ease-in-out infinite;
 }
 
@@ -250,15 +186,40 @@
   margin-top: 0.9em;
   padding: 0.35rem 1.1rem;
   color: #C8A400;
-  border: 1px solid rgba(200, 164, 0, 0.45);
-  background: rgba(200, 164, 0, 0.08);
-  filter: drop-shadow(0 0 5px rgba(200, 164, 0, 0.4));
+  border: 1px solid rgba(200,164,0,0.45);
+  background: rgba(200,164,0,0.08);
+  filter: drop-shadow(0 0 5px rgba(200,164,0,0.4));
   animation: badgePulseGold 2.5s ease-in-out infinite;
 }
 
 @keyframes badgePulseGold {
   0%, 100% { filter: drop-shadow(0 0 5px rgba(200,164,0,0.35)); }
   50%       { filter: drop-shadow(0 0 12px rgba(255,215,0,0.7)); }
+}
+
+/* ─── BOUNDARY TIMER ──────────────────────────────────────────────────────── */
+
+.clash-boundary-timer {
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.55rem, 1vw, 0.78rem);
+  font-weight: bold;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0    0  8px rgba(0,0,0,0.95);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: translate(-50%, -50%) rotate(180deg);
+  pointer-events: none;
 }
 
 /* ─── BACK BUTTON ─────────────────────────────────────────────────────────── */
@@ -268,7 +229,7 @@
   top: 1.2rem;
   left: 1.2rem;
   z-index: 6000;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0,0,0,0.65);
   border: 1px solid #444;
   color: #aaa;
   font-family: 'Bebas Neue', 'Courier New', sans-serif;
@@ -283,7 +244,7 @@
 .clash-back:hover {
   border-color: #888;
   color: #fff;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0,0,0,0.85);
 }
 
 /* ─── LIVE INDICATOR ──────────────────────────────────────────────────────── */
@@ -300,7 +261,7 @@
   font-size: 0.8rem;
   letter-spacing: 0.25em;
   color: #888;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   padding: 0.38rem 0.8rem;
   backdrop-filter: blur(4px);
 }
@@ -310,7 +271,7 @@
   height: 6px;
   border-radius: 50%;
   background: #ff4444;
-  box-shadow: 0 0 6px rgba(255, 68, 68, 0.8);
+  box-shadow: 0 0 6px rgba(255,68,68,0.8);
   animation: livePulse 1.5s ease-in-out infinite;
 }
 
