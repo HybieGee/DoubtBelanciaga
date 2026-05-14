@@ -11,7 +11,7 @@ const AUTO_SEQUENCE = [
   {
     id: 'boot',
     delay: 400,
-    text: `FAITH_CHRONICLE v1.0.0 — ONLINE
+    text: `FAITH_CHRONICLE v1.0.0 - ONLINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 > Loading memecoin_believer_archives...
 > Scanning wallets that held through the doubt...
@@ -24,7 +24,7 @@ THE FAITHFUL HAVE ALWAYS BEEN REWARDED.`,
   {
     id: 'doge',
     delay: 5000,
-    text: `✦ CHRONICLE: DOGE BELIEVERS — 2020 TO 2021 ✦
+    text: `✦ CHRONICLE: DOGE BELIEVERS 2020-2021 ✦
 
 While the world laughed, they held.
 While the media mocked, they accumulated.
@@ -41,7 +41,7 @@ CONVICTION IN THE COMMUNITY.`,
   {
     id: 'shib',
     delay: 13000,
-    text: `✦ CHRONICLE: SHIB BELIEVERS — 2021 ✦
+    text: `✦ CHRONICLE: SHIB BELIEVERS 2021 ✦
 
 They bought a coin with no roadmap.
 An anonymous developer. Half the supply sent to Vitalik.
@@ -61,7 +61,7 @@ FAITH CONVERTS CATASTROPHE INTO OPPORTUNITY.`,
   {
     id: 'pepe',
     delay: 22000,
-    text: `✦ CHRONICLE: PEPE BELIEVERS — APRIL 2023 ✦
+    text: `✦ CHRONICLE: PEPE BELIEVERS APRIL 2023 ✦
 
 The frog had been dead since 2017.
 The creator reclaimed it. The internet adopted it.
@@ -81,10 +81,10 @@ IT DID.`,
   {
     id: 'bonk_wif',
     delay: 31000,
-    text: `✦ CHRONICLE: BONK + WIF BELIEVERS — 2023 ✦
+    text: `✦ CHRONICLE: BONK + WIF BELIEVERS 2023 ✦
 
 BONK believers airdropped during the worst week
-in crypto history — the FTX collapse.
+in crypto history, the FTX collapse.
 They held when Solana was -96%.
 They believed when no one else would.
 +50,000% from launch to peak.
@@ -274,7 +274,7 @@ The early believers were fastest.`,
 
 A derivative of DOGE.
 The believers understood that in memecoin culture,
-derivatives are not weaknesses — they are expansions.
+derivatives are not weaknesses; they are expansions.
 
 DOGE was the father.
 Baby DOGE was the faith that anything
@@ -698,7 +698,7 @@ const BelieveTerminal = ({ onClose }) => {
               className="bt-input"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder={rateLimitLeft > 0 ? `rate limited — ${rateLimitLeft}s remaining` : 'query the chronicles...'}
+              placeholder={rateLimitLeft > 0 ? `rate limited - ${rateLimitLeft}s remaining` : 'query the chronicles...'}
               disabled={isProcessing || rateLimitLeft > 0}
               autoComplete="off"
               spellCheck={false}

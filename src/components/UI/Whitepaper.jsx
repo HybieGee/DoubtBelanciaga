@@ -174,7 +174,7 @@ const Whitepaper = ({ onClose }) => {
             <div style={{ maxWidth: '800px' }}>
               <h2 style={h2Style}>THE DIVISION</h2>
               <p style={pStyle}>
-                Before markets. Before coins. Before the chain — there was doubt and belief.
+                Before markets. Before coins. Before the chain, there was doubt and belief.
                 They have always existed in opposition. They always will.
               </p>
               <p style={pStyle}>

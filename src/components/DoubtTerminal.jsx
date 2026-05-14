@@ -11,7 +11,7 @@ const AUTO_SEQUENCE = [
   {
     id: 'boot',
     delay: 400,
-    text: `DOUBT_ORACLE v6.6.6 — ONLINE
+    text: `DOUBT_ORACLE v6.6.6 - ONLINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 > Loading memecoin_doubt_archives...
 > Scanning 10,000+ "this is worthless" posts...
@@ -24,11 +24,11 @@ DATABASE ONLINE. BEGIN TRANSMISSION.`,
   {
     id: 'doge',
     delay: 5000,
-    text: `▓▓▓ ARCHIVE: DOGE — 2013 TO 2021 ▓▓▓
+    text: `▓▓▓ ARCHIVE: DOGE 2013-2021 ▓▓▓
 
 "It's literally a joke. A dog meme coin.
  It has no utility. It will go to zero."
-— Every serious investor, 2013–2020
+- Every serious investor, 2013-2020
 
 MARKET CAP AT PEAK RIDICULE: $0
 MARKET CAP AT PEAK FAITH: $88,000,000,000
@@ -44,11 +44,11 @@ DOUBT IS THE PRICE OF ENTRY.`,
   {
     id: 'shib',
     delay: 13000,
-    text: `▓▓▓ ARCHIVE: SHIB — 2020 TO 2021 ▓▓▓
+    text: `▓▓▓ ARCHIVE: SHIB 2020-2021 ▓▓▓
 
 "A worthless Dogecoin clone made by an anonymous dev."
 "No utility. No team. No roadmap."
-"Vitalik got 50% of supply — this is OVER."
+"Vitalik got 50% of supply - this is OVER."
 
 Vitalik burned his share to charity.
 Price response: +400% in 30 days.
@@ -65,7 +65,7 @@ DOUBT CREATES THE DIP. FAITH CAPTURES THE RIP.`,
   {
     id: 'pepe',
     delay: 22000,
-    text: `▓▓▓ ARCHIVE: PEPE — APRIL 2023 ▓▓▓
+    text: `▓▓▓ ARCHIVE: PEPE APRIL 2023 ▓▓▓
 
 "A dead 4chan frog meme."
 "No team. No utility. No purpose."
@@ -85,14 +85,14 @@ THE MEME IS THE FUNDAMENTAL.`,
   {
     id: 'bonk_wif',
     delay: 31000,
-    text: `▓▓▓ ARCHIVE: BONK + WIF — 2023 ▓▓▓
+    text: `▓▓▓ ARCHIVE: BONK + WIF 2023 ▓▓▓
 
-BONK — airdropped during the FTX collapse.
+BONK - airdropped during the FTX collapse.
 "Desperate. Worthless. A last ditch hail mary."
 Peak market cap: $2.6 billion.
 Revived Solana's entire DEX ecosystem.
 
-WIF — a dog. With a hat.
+WIF - a dog. With a hat.
 "This is the most idiotic thing ever tokenized."
 Peak market cap: $4.7 billion.
 $1,000 early = $400,000+ at peak.
@@ -316,7 +316,7 @@ const DEFAULT_RESPONSES = [
 The oracle holds no specific record of that doubt.
 But the pattern is universal:
 
-If enough people laughed at it — and it survived —
+If enough people laughed at it, and it survived,
 it became a memecoin legend.
 
 Ask about: DOGE, SHIB, PEPE, BONK, WIF, MOG,
@@ -341,7 +341,7 @@ The oracle will be waiting.`,
 
 // ─── DECRYPT TEXT UTILITY ────────────────────────────────────────────────────
 
-const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#$%@ΔΞ₿◆▲0123456789ABCDEF'.split('')
+const SCRAMBLE_CHARS = '!<>-_\\/[]{}=+*^?#$%@ΔΞ₿◆▲0123456789ABCDEF'.split('')
 
 function decryptText(targetText, onUpdate, onComplete) {
   const total = targetText.length
@@ -704,7 +704,7 @@ const DoubtTerminal = ({ onClose }) => {
               className="dt-input"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder={rateLimitLeft > 0 ? `rate limited — ${rateLimitLeft}s remaining` : 'query the oracle...'}
+              placeholder={rateLimitLeft > 0 ? `rate limited - ${rateLimitLeft}s remaining` : 'query the oracle...'}
               disabled={isProcessing || rateLimitLeft > 0}
               autoComplete="off"
               spellCheck={false}
