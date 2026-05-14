@@ -215,7 +215,7 @@
      1px  1px 0 #000,
      0    0  8px rgba(0,0,0,0.95);
   white-space: nowrap;
-  transform: translate(-50%, -50%) rotate(-90deg);
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
