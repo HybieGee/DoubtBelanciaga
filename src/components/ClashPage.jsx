@@ -79,7 +79,6 @@ function initDoubtCanvas(canvas) {
       if (y > canvas.height && Math.random() > 0.975) drops[i] = 0
     })
 
-    // Falling upside-down Petrine crosses
     crosses.forEach((c) => {
       c.y += c.speed
       if (c.y > canvas.height + c.size) {
@@ -164,7 +163,6 @@ function initBelieveCanvas(canvas) {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctx.font = `${fontSize}px 'Courier New', monospace`
 
-    // Ascending gold chars
     drops.forEach((drop, i) => {
       const char = goldChars[Math.floor(Math.random() * goldChars.length)]
       const x = i * fontSize
@@ -189,7 +187,6 @@ function initBelieveCanvas(canvas) {
       }
     })
 
-    // Rising right-side-up crosses
     crosses.forEach((c) => {
       c.y -= c.speed
       if (c.y < -c.size * 2) {
@@ -213,7 +210,6 @@ function initBelieveCanvas(canvas) {
       ctx.restore()
     })
 
-    // Sparkles
     sparkles.forEach((s) => {
       s.y -= s.speed
       s.alpha += s.fadeSpeed * (Math.random() > 0.5 ? 1 : -1)
@@ -246,17 +242,108 @@ function initBelieveCanvas(canvas) {
   }
 }
 
+// ─── DIVIDER CANVAS: organic living boundary between the two sides ────────────
+
+function initDividerCanvas(canvas) {
+  const ctx = canvas.getContext('2d')
+
+  const resize = () => {
+    canvas.width = canvas.offsetWidth || 120
+    canvas.height = canvas.offsetHeight || window.innerHeight
+  }
+  resize()
+
+  let t = 0
+  let animId
+
+  const draw = () => {
+    const w = canvas.width
+    const h = canvas.height
+
+    ctx.clearRect(0, 0, w, h)
+
+    const cx = w / 2
+    const segments = 60
+    const points = []
+
+    for (let i = 0; i <= segments; i++) {
+      const y = (i / segments) * h
+      // Layered sine waves at different frequencies — gives organic, non-repeating feel
+      const x = cx
+        + Math.sin(y * 0.022 + t * 0.65)  * w * 0.22
+        + Math.sin(y * 0.058 + t * 1.15)  * w * 0.12
+        + Math.sin(y * 0.009 + t * 0.3)   * w * 0.32
+        + Math.sin(y * 0.1   + t * 2.1)   * w * 0.06
+      points.push({ x: Math.max(2, Math.min(w - 2, x)), y })
+    }
+
+    // Doubt side (dark) — left of boundary
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    points.forEach(p => ctx.lineTo(p.x, p.y))
+    ctx.lineTo(0, h)
+    ctx.closePath()
+    ctx.fillStyle = '#080000'
+    ctx.fill()
+
+    // Believe side (cream) — right of boundary
+    ctx.beginPath()
+    ctx.moveTo(w, 0)
+    points.forEach(p => ctx.lineTo(p.x, p.y))
+    ctx.lineTo(w, h)
+    ctx.closePath()
+    ctx.fillStyle = '#FFFDF0'
+    ctx.fill()
+
+    // Red glow edge (doubt side bleeds into boundary)
+    ctx.beginPath()
+    ctx.moveTo(points[0].x, points[0].y)
+    points.forEach(p => ctx.lineTo(p.x, p.y))
+    ctx.shadowBlur = 18
+    ctx.shadowColor = 'rgba(160, 0, 0, 0.9)'
+    ctx.strokeStyle = 'rgba(180, 0, 0, 0.75)'
+    ctx.lineWidth = 2.5
+    ctx.lineJoin = 'round'
+    ctx.stroke()
+
+    // Gold glow edge (belief side bleeds into boundary)
+    ctx.shadowColor = 'rgba(200, 164, 0, 0.7)'
+    ctx.shadowBlur = 12
+    ctx.strokeStyle = 'rgba(200, 150, 0, 0.45)'
+    ctx.lineWidth = 1.2
+    ctx.stroke()
+
+    ctx.shadowBlur = 0
+
+    t += 0.006
+    animId = requestAnimationFrame(draw)
+  }
+
+  const onResize = () => resize()
+  window.addEventListener('resize', onResize)
+  draw()
+
+  return () => {
+    cancelAnimationFrame(animId)
+    window.removeEventListener('resize', onResize)
+  }
+}
+
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 const ClashPage = () => {
   const setShowClash = useGameStore((s) => s.setShowClash)
   const joinedSide = useGameStore((s) => s.joinedSide)
+  const roundEndTime = useGameStore((s) => s.roundEndTime)
 
   const doubtCanvasRef = useRef(null)
   const believeCanvasRef = useRef(null)
+  const dividerCanvasRef = useRef(null)
 
   const [stats, setStats] = useState({ doubtCount: 0, believeCount: 0 })
+  const [timeLeft, setTimeLeft] = useState('--:--:--')
 
+  // Live stats polling
   useEffect(() => {
     const poll = async () => {
       try { const d = await getRoundStats(); setStats(d) } catch {}
@@ -265,6 +352,26 @@ const ClashPage = () => {
     const iv = setInterval(poll, 15000)
     return () => clearInterval(iv)
   }, [])
+
+  // Round countdown — falls back to next UTC midnight if no roundEndTime from backend
+  useEffect(() => {
+    const endTime = roundEndTime || (() => {
+      const now = new Date()
+      return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1)
+    })()
+
+    const tick = () => {
+      const ms = endTime - Date.now()
+      if (ms <= 0) { setTimeLeft('00:00:00'); return }
+      const h = Math.floor(ms / 3600000)
+      const m = Math.floor((ms % 3600000) / 60000)
+      const s = Math.floor((ms % 60000) / 1000)
+      setTimeLeft(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`)
+    }
+    tick()
+    const iv = setInterval(tick, 1000)
+    return () => clearInterval(iv)
+  }, [roundEndTime])
 
   useEffect(() => {
     const canvas = doubtCanvasRef.current
@@ -276,6 +383,12 @@ const ClashPage = () => {
     const canvas = believeCanvasRef.current
     if (!canvas) return
     return initBelieveCanvas(canvas)
+  }, [])
+
+  useEffect(() => {
+    const canvas = dividerCanvasRef.current
+    if (!canvas) return
+    return initDividerCanvas(canvas)
   }, [])
 
   const total = (stats.doubtCount || 0) + (stats.believeCount || 0)
@@ -307,8 +420,11 @@ const ClashPage = () => {
         </div>
       </div>
 
-      {/* DIVIDER */}
-      <div className="clash-divider" />
+      {/* ORGANIC DIVIDER */}
+      <div className="clash-divider">
+        <canvas ref={dividerCanvasRef} className="clash-divider-canvas" />
+        <div className="clash-divider-timer">{timeLeft}</div>
+      </div>
 
       {/* BELIEVE SIDE */}
       <div className="clash-side clash-side--believe" style={{ flex: believePct }}>

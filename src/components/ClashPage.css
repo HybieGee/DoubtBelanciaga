@@ -56,21 +56,44 @@
 /* ─── DIVIDER ─────────────────────────────────────────────────────────────── */
 
 .clash-divider {
-  width: 2px;
+  width: clamp(80px, 9vw, 130px);
   flex-shrink: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #8B0000 20%,
-    #FFD700 50%,
-    #8B0000 80%,
-    transparent 100%
-  );
-  box-shadow:
-    -5px 0 20px rgba(139, 0, 0, 0.55),
-     5px 0 20px rgba(255, 215, 0, 0.45);
-  z-index: 10;
   position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clash-divider-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.clash-divider-timer {
+  position: relative;
+  z-index: 2;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.6rem, 1.1vw, 0.82rem);
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  /* black outline via text-shadow */
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0    0   6px rgba(0,0,0,0.9);
+  white-space: nowrap;
+  pointer-events: none;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  letter-spacing: 0.18em;
 }
 
 /* ─── SIDE CONTENT ────────────────────────────────────────────────────────── */
