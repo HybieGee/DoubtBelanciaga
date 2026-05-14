@@ -6,17 +6,28 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
 body {
   margin: 0;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
   background: #000;
   color: #fff;
+  overscroll-behavior: none;
 }
 
 #root {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 /* Custom cursor */

@@ -2,20 +2,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { useGameStore } from '../../store/gameStore'
 import { submitChoice } from '../../api/game'
-import ParallaxGallery from '../ParallaxGallery'
 import DoubtTerminal from '../DoubtTerminal'
+import BelieveTerminal from '../BelieveTerminal'
 
 const ChoicePrompt = () => {
   const makeChoice = useGameStore((state) => state.makeChoice)
   const fingerprint = useGameStore((state) => state.fingerprint)
-  const [galleryOpen, setGalleryOpen] = useState(null) // 'believe' or null
   const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
+  const [believeTerminalOpen, setBelieveTerminalOpen] = useState(false)
 
   const handleChoice = async (choice) => {
     if (choice === 'doubt') {
       setDoubtTerminalOpen(true)
     } else {
-      setGalleryOpen(choice)
+      setBelieveTerminalOpen(true)
     }
   }
 
@@ -29,12 +29,11 @@ const ChoicePrompt = () => {
     }
   }
 
-  const handleGalleryClose = async () => {
-    const choice = galleryOpen
-    setGalleryOpen(null)
-    makeChoice(choice)
+  const handleBelieveClose = async () => {
+    setBelieveTerminalOpen(false)
+    makeChoice('believe')
     try {
-      await submitChoice(fingerprint, choice)
+      await submitChoice(fingerprint, 'believe')
     } catch (error) {
       console.error('Failed to submit choice:', error)
     }
@@ -42,20 +41,15 @@ const ChoicePrompt = () => {
 
   return (
     <>
-      {/* Doubt Terminal Overlay */}
       <AnimatePresence>
         {doubtTerminalOpen && (
           <DoubtTerminal onClose={handleDoubtClose} />
         )}
       </AnimatePresence>
 
-      {/* Parallax Gallery Overlay (believe side) */}
       <AnimatePresence>
-        {galleryOpen && (
-          <ParallaxGallery
-            type={galleryOpen}
-            onClose={handleGalleryClose}
-          />
+        {believeTerminalOpen && (
+          <BelieveTerminal onClose={handleBelieveClose} />
         )}
       </AnimatePresence>
 

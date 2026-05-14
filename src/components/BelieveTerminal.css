@@ -1,0 +1,263 @@
+/* ─── OVERLAY ─────────────────────────────────────────────────────────────── */
+
+.bt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bt-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: #FFFDF0;
+}
+
+.bt-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,253,240,0.1) 0%, rgba(255,248,200,0.75) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── TERMINAL WINDOW ─────────────────────────────────────────────────────── */
+
+.bt-window {
+  position: relative;
+  z-index: 2;
+  width: min(780px, 94vw);
+  height: min(600px, 88vh);
+  background: rgba(255, 254, 245, 0.97);
+  border: 1px solid #C8A400;
+  box-shadow:
+    0 0 0 1px rgba(200, 164, 0, 0.2),
+    0 0 30px rgba(200, 164, 0, 0.3),
+    0 0 80px rgba(255, 215, 0, 0.1),
+    inset 0 0 60px rgba(255, 248, 200, 0.3);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  overflow: hidden;
+}
+
+/* Subtle warm shimmer */
+.bt-window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 215, 0, 0.015);
+  animation: warmShimmer 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes warmShimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ─── TITLE BAR ───────────────────────────────────────────────────────────── */
+
+.bt-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem;
+  background: linear-gradient(90deg, rgba(200,164,0,0.12) 0%, rgba(255,215,0,0.08) 100%);
+  border-bottom: 1px solid rgba(200, 164, 0, 0.4);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
+}
+
+.bt-traffic {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.bt-traffic-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E8E0C0;
+  border: 1px solid #C8A400;
+}
+
+.bt-traffic-dot--active {
+  background: #FFD700;
+  border-color: #C8A400;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+  animation: goldPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(255,215,0,0.8); }
+  50% { opacity: 0.6; box-shadow: 0 0 2px rgba(255,215,0,0.3); }
+}
+
+.bt-titlebar-text {
+  flex: 1;
+  font-size: 0.67rem;
+  color: #8B6914;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(200, 164, 0, 0.5);
+  user-select: none;
+}
+
+.bt-close {
+  background: transparent;
+  border: 1px solid #C8A400;
+  color: #8B6914;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.bt-close:hover {
+  background: #FFD700;
+  color: #3a2800;
+  border-color: #FFD700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* ─── MESSAGE BODY ────────────────────────────────────────────────────────── */
+
+.bt-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  position: relative;
+  z-index: 11;
+}
+
+.bt-body::-webkit-scrollbar { width: 3px; }
+.bt-body::-webkit-scrollbar-track { background: transparent; }
+.bt-body::-webkit-scrollbar-thumb { background: #C8A400; border-radius: 2px; opacity: 0.4; }
+
+.bt-msg {
+  display: flex;
+}
+
+/* Oracle messages */
+.bt-oracle {
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.78rem;
+  line-height: 1.75;
+  color: #2D1A00;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-shadow: 0 0 8px rgba(200, 164, 0, 0.2);
+  animation: warmGlow 6s ease-in-out infinite;
+}
+
+@keyframes warmGlow {
+  0%, 100% { text-shadow: 0 0 8px rgba(200,164,0,0.2); }
+  50% { text-shadow: 0 0 12px rgba(200,164,0,0.4), 0 0 25px rgba(255,215,0,0.1); }
+}
+
+/* User messages */
+.bt-user {
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: #999;
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+
+/* System */
+.bt-msg--system {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.bt-processing {
+  font-size: 0.73rem;
+  color: #C8A400;
+  letter-spacing: 0.2em;
+  animation: blink 1.1s step-end infinite;
+}
+
+.bt-dots {
+  font-size: 0.73rem;
+  color: #C8A400;
+  letter-spacing: 0.1em;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── INPUT ROW ───────────────────────────────────────────────────────────── */
+
+.bt-inputrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 1.3rem;
+  border-top: 1px solid rgba(200, 164, 0, 0.3);
+  background: rgba(255, 252, 230, 0.8);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
+}
+
+.bt-cursor {
+  color: #C8A400;
+  font-size: 0.88rem;
+  text-shadow: 0 0 6px rgba(200, 164, 0, 0.8);
+  user-select: none;
+  flex-shrink: 0;
+  animation: cursorGlow 1.8s ease-in-out infinite;
+}
+
+@keyframes cursorGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.bt-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #2D1A00;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  caret-color: #C8A400;
+}
+
+.bt-input::placeholder {
+  color: #C8A400;
+  opacity: 0.45;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.bt-input:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

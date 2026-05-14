@@ -10,104 +10,113 @@ const AUTO_SEQUENCE = [
     delay: 400,
     text: `DOUBT_ORACLE v6.6.6 — ONLINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> Loading crypto_doubt_archives...
-> Cross-referencing 476 Bitcoin obituaries...
-> Cataloguing 2,847 doubt events (2009-2026)...
+> Loading memecoin_doubt_archives...
+> Scanning 10,000+ "this is worthless" posts...
+> Cataloguing every "dog coins are dead" tweet...
 > Survivor probability matrix: LOADED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 DATABASE ONLINE. BEGIN TRANSMISSION.`,
   },
   {
-    id: 'btc',
-    delay: 5000,
-    text: `▓▓▓ ARCHIVE: BTC — 2011 ▓▓▓
-
-"Bitcoin is a Ponzi scheme."
-"It will be worthless by next year."
-"No serious person uses this."
-— Bloomberg, Forbes, Wall Street, 2011
-
-PRICE AT MAXIMUM DOUBT: $0.30
-PRICE 10 YEARS LATER: $68,000
-
-The doubters wrote the articles.
-The believers wrote the wallets.
-
-DOUBT 0 — FAITH 1`,
-  },
-  {
     id: 'doge',
-    delay: 12000,
-    text: `▓▓▓ ARCHIVE: DOGE — 2020 ▓▓▓
+    delay: 5000,
+    text: `▓▓▓ ARCHIVE: DOGE — 2013 TO 2021 ▓▓▓
 
-A literal joke. A meme with no utility.
-A dog. A Shibe. A waste of mining power.
-"Invest in DOGE? Are you stupid?"
+"It's literally a joke. A dog meme coin.
+ It has no utility. It will go to zero."
+— Every serious investor, 2013–2020
 
-MARKET CAP AT TIME OF RIDICULE: ~$300M
-MARKET CAP AT PEAK: $88,000,000,000
+MARKET CAP AT PEAK RIDICULE: $0
+MARKET CAP AT PEAK FAITH: $88,000,000,000
 
 Eighty-eight. Billion. Dollars.
-For the dog coin they said was worthless.
+For the dog they said was worthless.
+
+A $1,000 investment in 2017 became $640,000.
+The doubters lost nothing. Except everything.
 
 DOUBT IS THE PRICE OF ENTRY.`,
   },
   {
-    id: 'eth',
-    delay: 20000,
-    text: `▓▓▓ ARCHIVE: ETH — 2016 ▓▓▓
+    id: 'shib',
+    delay: 13000,
+    text: `▓▓▓ ARCHIVE: SHIB — 2020 TO 2021 ▓▓▓
 
-"Vitalik is too young."
-"Smart contracts are a legal nightmare."
-"It cannot scale. It will never scale."
-"The DAO hack proved Ethereum is broken."
+"A worthless Dogecoin clone made by an anonymous dev."
+"No utility. No team. No roadmap."
+"Vitalik got 50% of supply — this is OVER."
 
-ETH PRICE AFTER DAO HACK: $0.54
-ETH PRICE AT ALL-TIME HIGH: $4,891
-DeFi TOTAL VALUE LOCKED AT PEAK: $180B
+Vitalik burned his share to charity.
+Price response: +400% in 30 days.
 
-They forked. They rebuilt. They dominated.
-$180 billion in finance runs on what
-they declared irreparably broken.
+Peak market cap: $40 BILLION
+$100 invested at launch: $8,800,000
 
-THE MACHINE DOES NOT CARE ABOUT YOUR DOUBT.`,
+The community called Vitalik's donation
+the most bullish event in memecoin history.
+They were correct.
+
+DOUBT CREATES THE DIP. FAITH CAPTURES THE RIP.`,
   },
   {
-    id: 'shib',
-    delay: 29000,
-    text: `▓▓▓ ARCHIVE: SHIB & PEPE ▓▓▓
+    id: 'pepe',
+    delay: 22000,
+    text: `▓▓▓ ARCHIVE: PEPE — APRIL 2023 ▓▓▓
 
-SHIB: "A worthless Dogecoin clone."
-Vitalik burned 40% of the supply to charity.
-They said it was over.
-+400% the following month.
+"A dead 4chan frog meme."
+"No team. No utility. No purpose."
+"This is the most brainless coin ever launched."
 
-PEPE: "An old dead meme from 4chan."
-"Frogs don't have fundamentals."
-Market cap crossed $1 BILLION in weeks.
+Week 1: $0 to $1 billion market cap.
+Week 3: $1.6 billion.
 
-The doubters were the fundamentals.
-Their sell pressure was the floor.
+Verified on-chain wallets turned $5,000 into $5,000,000.
+In three weeks.
 
-DOUBT CREATES THE DIP.
-FAITH CAPTURES THE RIP.`,
+The doubters had better analysis.
+The believers had better accounts.
+
+THE MEME IS THE FUNDAMENTAL.`,
+  },
+  {
+    id: 'bonk_wif',
+    delay: 31000,
+    text: `▓▓▓ ARCHIVE: BONK + WIF — 2023 ▓▓▓
+
+BONK — airdropped during the FTX collapse.
+"Desperate. Worthless. A last ditch hail mary."
+Peak market cap: $2.6 billion.
+Revived Solana's entire DEX ecosystem.
+
+WIF — a dog. With a hat.
+"This is the most idiotic thing ever tokenized."
+Peak market cap: $4.7 billion.
+$1,000 early = $400,000+ at peak.
+
+The doubters had arguments.
+The believers had wallets.
+
+MEMECOINS DO NOT NEED YOUR PERMISSION TO MOON.`,
   },
   {
     id: 'final',
-    delay: 38000,
+    delay: 40000,
     text: `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ORACLE TRANSMISSION COMPLETE
 
-Every coin you have ever doubted
-is either dead or richer than your doubt.
+You cannot value what you do not understand.
+The doubters understood finance.
+The believers understood culture.
+
+Culture always wins.
+
+Every memecoin that survived was laughed at first.
+Every memecoin graveyard is full of coins
+that nobody laughed at hard enough.
 
 You have chosen DOUBT.
-You have chosen to question.
-That is the oldest form of wisdom.
-
-Now confirm your conviction.
-Or return and choose BELIEF instead.
+The oracle respects that.
 
 > Type a coin ticker to query the archives
 > Press [ESC] or click X to CONFIRM DOUBT
@@ -116,186 +125,150 @@ Or return and choose BELIEF instead.
 ]
 
 const QUERY_RESPONSES = {
-  bitcoin: `▓▓▓ QUERYING: BITCOIN ▓▓▓
+  doge: `▓▓▓ QUERYING: DOGECOIN ▓▓▓
 
-476 obituaries written since 2010.
-100% survival rate.
+Jackson Palmer (co-creator) publicly called it a scam.
+He was correct about everything structural.
+It mooned anyway.
 
-"Bitcoin is dead" — declared at $0.01, $1, $100,
-$1,000, $10,000, $30,000, $15,000 again.
+$1,000 in 2017 → $640,000 in 2021.
+$1,000 in 2020 → $70,000 in 4 months.
 
-It absorbed every funeral and called it Tuesday.
+The fundamentals said zero.
+The community said otherwise.
+The community was right.
 
-The blockchain does not read newspapers.`,
-
-  btc: `▓▓▓ QUERYING: BITCOIN ▓▓▓
-
-476 obituaries written since 2010.
-100% survival rate.
-
-It was declared dead at every price.
-It survived every declaration.
-
-THE MACHINE PERSISTS.`,
-
-  ethereum: `▓▓▓ QUERYING: ETHEREUM ▓▓▓
-
-Survived: DAO hack, scaling wars, competitor
-chains, "flippening" predictions, four 90%+ drawdowns.
-
-$180 billion in DeFi built on what
-they said was a centralized toy.
-
-Vitalik was 19 when they said he was too young.
-The doubters are now using his technology.`,
-
-  eth: `▓▓▓ QUERYING: ETHEREUM ▓▓▓
-
-Survived: DAO hack, scaling wars, competitor
-chains, "flippening" predictions, four 90%+ drawdowns.
-
-Vitalik was 19 when they said he was too young.
-The doubters are now using his technology.`,
-
-  solana: `▓▓▓ QUERYING: SOLANA ▓▓▓
-
-"Centralized garbage."
-"FTX will kill it."
-"It goes down every week."
-
-FTX did fall. SOL fell with it. -96%.
-Then it came back. Hit $260.
-
-The doubters stopped counting the outages.
-Solana stopped having them.
-
-NETWORKS, LIKE COINS, SURVIVE THEIR DEATHS.`,
-
-  sol: `▓▓▓ QUERYING: SOLANA ▓▓▓
-
-FTX collapsed. SOL fell -96%.
-Then it came back. Hit all-time highs.
-
-The network survived its darkest sponsor.
-That is the definition of antifragile.`,
+DOGE does not care about your thesis.`,
 
   dogecoin: `▓▓▓ QUERYING: DOGECOIN ▓▓▓
 
 Started as a joke between two developers.
-Made it to TIME magazine.
-Made it to SNL.
-Made it to $88 billion market cap.
+Made it to TIME magazine. SNL. $88 billion.
 
-Jackson Palmer (co-creator) said it was a scam.
-He was right about everything.
-And it still mooned.
-
-DOGE does not care about your thesis.`,
-
-  doge: `▓▓▓ QUERYING: DOGECOIN ▓▓▓
-
-Started as a joke between two developers.
-Made it to $88 billion market cap.
-
-The joke became real.
-The real became the joke.
+The joke became the culture.
+The culture became the money.
 
 That is how memecoins work.`,
 
   shib: `▓▓▓ QUERYING: SHIBA INU ▓▓▓
 
-Vitalik burned 40% of total supply.
-Donated the rest to COVID relief in India.
+Anonymous developer. No roadmap. Half the supply to Vitalik.
+Every red flag. Every reason to doubt.
 
-They said: "It is over. Project is dead."
+Vitalik burned his allocation. Donated the rest.
+Community: "Most bullish event in history."
 
-Price next 30 days: +400%
-Peak market cap: $40 billion
+They were right.
+$100 at launch: $8,800,000 at peak.
 
-The community called Vitalik's donation
-"the most bullish event in SHIB history."
-They were correct.`,
+THE COMMUNITY IS THE ROADMAP.`,
 
-  'shiba': `▓▓▓ QUERYING: SHIBA INU ▓▓▓
+  shiba: `▓▓▓ QUERYING: SHIBA INU ▓▓▓
 
-Vitalik burned 40% of total supply to charity.
-The community called it the most bullish event.
-They were correct.
+Every red flag. Every reason to doubt.
+Peak market cap: $40 billion anyway.
 
-Peak market cap: $40 billion.
-For the coin they said was over.`,
+The community was the whitepaper.
+The doubt was the floor.`,
 
   pepe: `▓▓▓ QUERYING: PEPE ▓▓▓
 
-"Frogs have no fundamentals."
-"It is based on a 4chan meme."
-"There is nothing behind it."
+A frog from 4chan. No team. No utility.
+$0 to $1.6 billion in three weeks.
 
-$1 billion market cap. In weeks.
+On-chain data confirmed:
+Multiple wallets turned $5,000 into $5,000,000.
 
-The meme IS the fundamental.
-The community IS the utility.
-The doubt IS the floor.`,
+The doubters had better models.
+The believers had better accounts.
+
+THE MEME IS THE FUNDAMENTAL.`,
 
   bonk: `▓▓▓ QUERYING: BONK ▓▓▓
 
-Airdropped as a Solana "hail mary"
-during the FTX collapse.
+Launched during the FTX collapse.
+The worst possible timing. The most doubted launch.
 
-"Desperate charity coin." "Worth zero."
+"Desperate. Worthless. A charity case."
 
-Fueled a Solana NFT renaissance.
-DEX volume on Solana +1000% post-BONK.
+Peak market cap: $2.6 billion.
+Triggered a Solana DEX revival.
+Entire ecosystem volume +1000% post-BONK.
 
-The joke became the catalyst.
-The catalyst became the recovery.`,
+THE JOKE BECAME THE CATALYST.`,
 
-  xrp: `▓▓▓ QUERYING: XRP ▓▓▓
+  wif: `▓▓▓ QUERYING: WIF ▓▓▓
 
-SEC lawsuit. 3 years of litigation.
-"XRP is a security." "Ripple will lose."
-"Crypto is finished."
+A dog. With a hat.
+The premise was so stupid it was genius.
 
-Judge ruled: XRP is NOT a security
-on secondary markets.
+"This is the most idiotic thing tokenized."
+Peak market cap: $4.7 billion.
+Early holders: 400x returns.
 
-The price remembered.
-The doubters forgot.
+The simpler the meme, the harder it hits.`,
 
-REGULATORY DOUBT IS STILL JUST DOUBT.`,
+  dogwifhat: `▓▓▓ QUERYING: WIF ▓▓▓
 
-  ripple: `▓▓▓ QUERYING: XRP/RIPPLE ▓▓▓
+A dog. With a hat. $4.7 billion.
+The doubters were not wrong about what it was.
+They were wrong about what it could become.
 
-3 years. SEC lawsuit. Declared dead weekly.
+There is a difference.`,
 
-Judge ruled: NOT a security.
-Price remembered. Doubters forgot.
+  mog: `▓▓▓ QUERYING: MOG COIN ▓▓▓
 
-DOUBT IS TEMPORARY. BLOCKCHAIN IS PERMANENT.`,
+"A cope coin for people who missed PEPE."
+"Derivative. Late. Going nowhere."
 
-  bnb: `▓▓▓ QUERYING: BNB ▓▓▓
+Listed on major exchanges within months.
+Top 100 market cap.
 
-"Dies when Binance dies."
-"CZ will be arrested."
-"It is all manipulation."
+Every cycle produces coins the doubters dismiss
+as "late" or "derivative."
+Every cycle those coins find their believers.`,
 
-CZ was arrested.
-Binance paid a $4.3 billion fine.
-BNB survived. Hit new all-time highs.
+  brett: `▓▓▓ QUERYING: BRETT ▓▓▓
 
-The oracle does not know why.
-The oracle only knows: it survived.`,
+A character from a meme comic. Nothing more.
+"This has even less behind it than PEPE."
+
+BASE chain's breakout memecoin.
+Multi-billion dollar market cap.
+
+The doubters were looking for reasons.
+The believers were looking for charts.`,
+
+  floki: `▓▓▓ QUERYING: FLOKI ▓▓▓
+
+Named after Elon's dog. Celebrity adjacent.
+"Elon doesn't endorse this. It's riding hype."
+
+100x from launch. Massive marketing campaign.
+Still one of the longest-lived named memecoins.
+
+Celebrity doubt is still just doubt.
+The chart does not care who disapproves.`,
+
+  babydoge: `▓▓▓ QUERYING: BABY DOGE ▓▓▓
+
+A derivative of a derivative.
+"This is getting ridiculous. A baby dog coin?"
+
+Top 100 at peak. Billions in market cap.
+Proof that the market will go further
+than any doubter thinks possible.`,
 
   safemoon: `▓▓▓ QUERYING: SAFEMOON ▓▓▓
 
 The oracle must be honest with you.
 
 SAFEMOON did not survive.
-It was a ponzi. It collapsed.
-Developers were charged with fraud.
+It was a structured fraud. It collapsed.
+Developers charged. Funds stolen.
 
 Not every coin that faces doubt perseveres.
-Some die. Some are murdered.
+Some were designed to fail.
 
 DOUBT IS SOMETIMES CORRECT.
 WISDOM IS KNOWING THE DIFFERENCE.`,
@@ -305,53 +278,58 @@ WISDOM IS KNOWING THE DIFFERENCE.`,
 The oracle must be honest with you.
 
 LUNA did not survive.
-UST depegged. $40 billion evaporated.
-In 72 hours.
+$40 billion evaporated in 72 hours.
 
-Do Kwon fled. Was arrested in Montenegro.
+This is what happens when the mechanism is broken
+and the faith is misplaced.
 
-This is what happens when doubt is correct
-and faith is misplaced.
+THE MACHINE IS NOT ALWAYS KIND.
+SOME DOUBTS WERE RIGHT.`,
 
-THE MACHINE IS NOT ALWAYS KIND.`,
+  spx: `▓▓▓ QUERYING: SPX6900 ▓▓▓
 
-  floki: `▓▓▓ QUERYING: FLOKI ▓▓▓
+"To flip the S&P 500. In market cap. A meme coin."
+The ambition was called delusional.
 
-Named after Elon Musk's dog.
-Marketed as the "people's cryptocurrency."
+The audacity of the goal attracted believers.
+Believers attracted volume. Volume attracted price.
 
-"Elon does not actually endorse this."
-"It is riding celebrity hype."
+CONVICTION IS CONTAGIOUS.`,
 
-It was. And it still made 100x from launch.
+  bome: `▓▓▓ QUERYING: BOOK OF MEME ▓▓▓
 
-Celebrity doubt is still just doubt.
-The chart does not care who disapproves.`,
+A book. Of memes. On Solana.
+"What does this even do."
+
+Binance listing within weeks of launch.
+Market cap: billions.
+
+The simpler the doubt, the louder the signal.`,
 }
 
 const DEFAULT_RESPONSES = [
   `ARCHIVE QUERY: NO MATCH FOUND
 
 The oracle holds no specific record of that doubt.
-But the pattern remains constant:
+But the pattern is universal:
 
-If enough people doubted it and it survived —
-it became legend.
+If enough people laughed at it — and it survived —
+it became a memecoin legend.
 
-Ask about: BTC, ETH, SOL, DOGE, SHIB, PEPE,
-BONK, XRP, BNB, FLOKI, LUNA, SAFEMOON`,
+Ask about: DOGE, SHIB, PEPE, BONK, WIF, MOG,
+BRETT, FLOKI, SPX, BOME, SAFEMOON, LUNA`,
 
-  `UNKNOWN QUERY RECEIVED.
+  `UNKNOWN QUERY.
 
-The oracle knows only survivors and cautionary tales.
-The living coins are deafening.
-The dead coins are silent.
+The oracle knows only what the market has judged.
+The living memecoins are deafening.
+The dead ones are silent.
 
 Type a coin name to query the archives.`,
 
-  `CLASSIFICATION: RESTRICTED
+  `CLASSIFICATION: UNRESOLVED
 
-This doubt event has not yet resolved.
+This doubt event has not yet concluded.
 The market has not spoken its final word.
 
 Return when the chart has made its judgement.
