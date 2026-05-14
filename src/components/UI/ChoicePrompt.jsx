@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useGameStore } from '../../store/gameStore'
 import DoubtTerminal from '../DoubtTerminal'
 import BelieveTerminal from '../BelieveTerminal'
+import { CONTRACT_ADDRESS } from '../../config'
 
 const ChoicePrompt = () => {
   const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
@@ -55,6 +56,35 @@ const ChoicePrompt = () => {
       >
         PICK A FAITH
       </motion.h2>
+
+      {/* CA display */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        style={{
+          position: 'fixed',
+          top: 'calc(15% + clamp(2rem, 6vw, 4rem) + 1rem)',
+          left: '0',
+          right: '0',
+          margin: '0 auto',
+          textAlign: 'center',
+          pointerEvents: 'none',
+          zIndex: 100,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: 'monospace',
+            fontSize: 'clamp(0.65rem, 1.4vw, 0.9rem)',
+            letterSpacing: '0.2em',
+            color: '#888',
+            textShadow: '0 0 10px rgba(0,0,0,0.8)',
+          }}
+        >
+          CA: {CONTRACT_ADDRESS}
+        </span>
+      </motion.div>
 
       {/* DOUBT button - centered in left half */}
       <motion.button
