@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { useGameStore } from '../store/gameStore'
+import { connectWallet } from '../utils/wallet'
+import { getRoundStats, joinSide as joinSideAPI } from '../api/game'
 import './BelieveTerminal.css'
 
 // ─── LORE DATABASE ────────────────────────────────────────────────────────────
@@ -499,6 +502,17 @@ const BelieveTerminal = ({ onClose }) => {
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
+  const [rateLimitEnd, setRateLimitEnd] = useState(null)
+  const [rateLimitLeft, setRateLimitLeft] = useState(0)
+  const [stats, setStats] = useState({ doubtCount: 0, believeCount: 0 })
+  const [isJoining, setIsJoining] = useState(false)
+
+  const walletAddress = useGameStore((s) => s.walletAddress)
+  const setWalletAddress = useGameStore((s) => s.setWalletAddress)
+  const fingerprint = useGameStore((s) => s.fingerprint)
+  const joinedSide = useGameStore((s) => s.joinedSide)
+  const setJoinedSide = useGameStore((s) => s.setJoinedSide)
+  const setShowClash = useGameStore((s) => s.setShowClash)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -507,8 +521,8 @@ const BelieveTerminal = ({ onClose }) => {
   }, [])
 
   useEffect(() => {
-    if (!isProcessing) inputRef.current?.focus()
-  }, [isProcessing])
+    if (!isProcessing && rateLimitLeft === 0) inputRef.current?.focus()
+  }, [isProcessing, rateLimitLeft])
 
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose() }
@@ -520,25 +534,40 @@ const BelieveTerminal = ({ onClose }) => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages])
 
+  // 90s rate limit countdown
+  useEffect(() => {
+    if (!rateLimitEnd) return
+    const tick = setInterval(() => {
+      const left = Math.max(0, Math.ceil((rateLimitEnd - Date.now()) / 1000))
+      setRateLimitLeft(left)
+      if (left === 0) { setRateLimitEnd(null); clearInterval(tick) }
+    }, 500)
+    return () => clearInterval(tick)
+  }, [rateLimitEnd])
+
+  // Live stats polling
+  useEffect(() => {
+    const poll = async () => {
+      try { const d = await getRoundStats(); setStats(d) } catch {}
+    }
+    poll()
+    const iv = setInterval(poll, 30000)
+    return () => clearInterval(iv)
+  }, [])
+
   const addMessage = useCallback((text, type = 'oracle') => {
     return new Promise((resolve) => {
       const id = `${Date.now()}-${Math.random()}`
-
       if (type === 'user') {
         setMessages((prev) => [...prev, { id, text, type }])
         resolve()
         return
       }
-
       setMessages((prev) => [...prev, { id, text: '', type }])
-
       typeText(
         text,
         (display) => setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text: display } : m)),
-        () => {
-          setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text } : m))
-          resolve()
-        },
+        () => { setMessages((prev) => prev.map((m) => m.id === id ? { ...m, text } : m)); resolve() },
       )
     })
   }, [])
@@ -546,48 +575,72 @@ const BelieveTerminal = ({ onClose }) => {
   useEffect(() => {
     let alive = true
     const timers = []
-
     AUTO_SEQUENCE.forEach((entry) => {
-      const t = setTimeout(() => {
-        if (!alive) return
-        addMessage(entry.text, 'oracle')
-      }, entry.delay)
+      const t = setTimeout(() => { if (!alive) return; addMessage(entry.text, 'oracle') }, entry.delay)
       timers.push(t)
     })
-
-    return () => {
-      alive = false
-      timers.forEach(clearTimeout)
-    }
+    return () => { alive = false; timers.forEach(clearTimeout) }
   }, [addMessage])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const query = inputValue.trim()
-    if (!query || isProcessing) return
+    if (!query || isProcessing || rateLimitLeft > 0) return
 
     setInputValue('')
     setIsProcessing(true)
-
     await addMessage(`> ${query}`, 'user')
     await new Promise((r) => setTimeout(r, 600))
 
     const q = query.toLowerCase().replace(/[^a-z0-9]/g, '')
     let response = null
-
     for (const [key, val] of Object.entries(QUERY_RESPONSES)) {
-      if (q.includes(key.replace(/[^a-z0-9]/g, ''))) {
-        response = val
-        break
-      }
+      if (q.includes(key.replace(/[^a-z0-9]/g, ''))) { response = val; break }
     }
-
-    if (!response) {
-      response = DEFAULT_RESPONSES[Math.floor(Math.random() * DEFAULT_RESPONSES.length)]
-    }
+    if (!response) response = DEFAULT_RESPONSES[Math.floor(Math.random() * DEFAULT_RESPONSES.length)]
 
     await addMessage(response, 'oracle')
     setIsProcessing(false)
+    setRateLimitEnd(Date.now() + 90000)
+    setRateLimitLeft(90)
+  }
+
+  const handleConnectWallet = async () => {
+    try { const addr = await connectWallet(); setWalletAddress(addr) }
+    catch (e) { console.error('Wallet connect failed:', e) }
+  }
+
+  const handleJoin = async () => {
+    if (!walletAddress || isJoining) return
+    setIsJoining(true)
+    try {
+      await joinSideAPI(walletAddress, fingerprint, 'believe')
+      setJoinedSide('believe')
+      setShowClash(true)
+      onClose()
+    } catch (e) { console.error('Join failed:', e) }
+    setIsJoining(false)
+  }
+
+  const renderJoinButton = () => {
+    if (!walletAddress) {
+      return (
+        <button className="bt-join-btn bt-join-btn--wallet" onClick={handleConnectWallet}>
+          CONNECT WALLET TO JOIN
+        </button>
+      )
+    }
+    if (joinedSide === 'believe') {
+      return <div className="bt-join-status bt-join-status--self">YOU ARE WITH THE BELIEVERS ✦</div>
+    }
+    if (joinedSide === 'doubt') {
+      return <div className="bt-join-status bt-join-status--other">YOU HAVE CHOSEN DOUBT</div>
+    }
+    return (
+      <button className="bt-join-btn bt-join-btn--active" onClick={handleJoin} disabled={isJoining}>
+        {isJoining ? 'JOINING...' : 'JOIN THE BELIEF'}
+      </button>
+    )
   }
 
   return (
@@ -601,48 +654,62 @@ const BelieveTerminal = ({ onClose }) => {
       <canvas ref={canvasRef} className="bt-canvas" />
       <div className="bt-vignette" />
 
-      <div className="bt-window">
-        <div className="bt-titlebar">
-          <div className="bt-traffic">
-            <span className="bt-traffic-dot bt-traffic-dot--active" />
-            <span className="bt-traffic-dot" />
-            <span className="bt-traffic-dot" />
+      <div className="bt-stack">
+        <div className="bt-window">
+          <div className="bt-titlebar">
+            <button className="bt-back-btn" onClick={onClose}>&#8592; BACK</button>
+            <div className="bt-traffic">
+              <span className="bt-traffic-dot bt-traffic-dot--active" />
+              <span className="bt-traffic-dot" />
+              <span className="bt-traffic-dot" />
+            </div>
+            <span className="bt-titlebar-text">FAITH_CHRONICLE v1.0.0</span>
+            <button className="bt-close" onClick={onClose} aria-label="Close">&#10005;</button>
           </div>
-          <span className="bt-titlebar-text">FAITH_CHRONICLE v1.0.0 — MEMECOIN BELIEF ARCHIVE</span>
-          <button className="bt-close" onClick={onClose} aria-label="Close">✕</button>
+
+          <div className="bt-stats-bar">
+            <span className="bt-stat bt-stat--doubt">DOUBTERS: {stats.doubtCount}</span>
+            <span className="bt-stat-sep">|</span>
+            <span className="bt-stat bt-stat--believe">BELIEVERS: {stats.believeCount}</span>
+            <span className="bt-live-dot" />
+          </div>
+
+          <div className="bt-body" ref={bodyRef}>
+            {messages.map((msg) => (
+              <div key={msg.id} className={`bt-msg bt-msg--${msg.type}`}>
+                {msg.type === 'oracle'
+                  ? <pre className="bt-oracle">{msg.text || ' '}</pre>
+                  : <span className="bt-user">{msg.text}</span>
+                }
+              </div>
+            ))}
+            {isProcessing && (
+              <div className="bt-msg bt-msg--system">
+                <span className="bt-processing">CONSULTING THE CHRONICLES</span>
+                <span className="bt-dots">...</span>
+              </div>
+            )}
+          </div>
+
+          <form className="bt-inputrow" onSubmit={handleSubmit}>
+            <span className="bt-cursor">{'>'}</span>
+            <input
+              ref={inputRef}
+              className="bt-input"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder={rateLimitLeft > 0 ? `rate limited — ${rateLimitLeft}s remaining` : 'query the chronicles...'}
+              disabled={isProcessing || rateLimitLeft > 0}
+              autoComplete="off"
+              spellCheck={false}
+            />
+            {rateLimitLeft > 0 && <span className="bt-rate-timer">&#9201; {rateLimitLeft}s</span>}
+          </form>
         </div>
 
-        <div className="bt-body" ref={bodyRef}>
-          {messages.map((msg) => (
-            <div key={msg.id} className={`bt-msg bt-msg--${msg.type}`}>
-              {msg.type === 'oracle'
-                ? <pre className="bt-oracle">{msg.text || ' '}</pre>
-                : <span className="bt-user">{msg.text}</span>
-              }
-            </div>
-          ))}
-
-          {isProcessing && (
-            <div className="bt-msg bt-msg--system">
-              <span className="bt-processing">CONSULTING THE CHRONICLES</span>
-              <span className="bt-dots">...</span>
-            </div>
-          )}
+        <div className="bt-join-panel">
+          {renderJoinButton()}
         </div>
-
-        <form className="bt-inputrow" onSubmit={handleSubmit}>
-          <span className="bt-cursor">{'>'}</span>
-          <input
-            ref={inputRef}
-            className="bt-input"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="query the chronicles... or press ESC to confirm belief"
-            disabled={isProcessing}
-            autoComplete="off"
-            spellCheck={false}
-          />
-        </form>
       </div>
     </motion.div>
   )

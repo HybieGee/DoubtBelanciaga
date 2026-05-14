@@ -1,0 +1,258 @@
+/* ─── OVERLAY ─────────────────────────────────────────────────────────────── */
+
+.clash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+/* ─── SIDES ───────────────────────────────────────────────────────────────── */
+
+.clash-side {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: flex 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.clash-side--doubt {
+  background: #080000;
+  /* CRT scanlines */
+  background-image:
+    repeating-linear-gradient(
+      transparent 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.12) 3px,
+      rgba(0, 0, 0, 0.12) 4px
+    );
+  background-color: #080000;
+}
+
+.clash-side--doubt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(107, 0, 0, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.clash-side--believe {
+  background: #FFFDF0;
+}
+
+.clash-side--believe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ─── DIVIDER ─────────────────────────────────────────────────────────────── */
+
+.clash-divider {
+  width: 2px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #8B0000 20%,
+    #FFD700 50%,
+    #8B0000 80%,
+    transparent 100%
+  );
+  box-shadow:
+    -4px 0 16px rgba(139, 0, 0, 0.5),
+    4px 0 16px rgba(255, 215, 0, 0.4);
+  z-index: 10;
+  position: relative;
+}
+
+/* ─── SIDE CONTENT ────────────────────────────────────────────────────────── */
+
+.clash-side-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  min-width: 0;
+}
+
+/* ─── LABELS ──────────────────────────────────────────────────────────────── */
+
+.clash-label {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(1.1rem, 3vw, 2.2rem);
+  font-weight: bold;
+  letter-spacing: 0.35em;
+  white-space: nowrap;
+}
+
+.clash-label--doubt {
+  color: #8B0000;
+  text-shadow:
+    0 0 20px rgba(139, 0, 0, 0.8),
+    0 0 40px rgba(139, 0, 0, 0.3);
+  animation: doubtGlow 4s ease-in-out infinite;
+}
+
+@keyframes doubtGlow {
+  0%, 100% { text-shadow: 0 0 20px rgba(139,0,0,0.8), 0 0 40px rgba(139,0,0,0.3); }
+  50% { text-shadow: 0 0 30px rgba(139,0,0,1), 0 0 60px rgba(139,0,0,0.5); }
+}
+
+.clash-label--believe {
+  color: #8B6914;
+  text-shadow:
+    0 0 16px rgba(200, 164, 0, 0.7),
+    0 0 32px rgba(255, 215, 0, 0.2);
+  animation: believeGlow 4s ease-in-out infinite;
+}
+
+@keyframes believeGlow {
+  0%, 100% { text-shadow: 0 0 16px rgba(200,164,0,0.7), 0 0 32px rgba(255,215,0,0.2); }
+  50% { text-shadow: 0 0 24px rgba(200,164,0,1), 0 0 48px rgba(255,215,0,0.4); }
+}
+
+/* ─── COUNTS ──────────────────────────────────────────────────────────────── */
+
+.clash-count {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.clash-count--doubt {
+  color: #c42b2b;
+  text-shadow: 0 0 15px rgba(196, 43, 43, 0.6);
+}
+
+.clash-count--believe {
+  color: #C8A400;
+  text-shadow: 0 0 15px rgba(200, 164, 0, 0.5);
+}
+
+/* ─── PERCENTAGES ─────────────────────────────────────────────────────────── */
+
+.clash-pct {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  letter-spacing: 0.15em;
+}
+
+.clash-pct--doubt {
+  color: #4a0000;
+}
+
+.clash-pct--believe {
+  color: #8B6914;
+  opacity: 0.7;
+}
+
+/* ─── YOUR SIDE BADGE ─────────────────────────────────────────────────────── */
+
+.clash-badge {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.55rem, 1.1vw, 0.72rem);
+  letter-spacing: 0.2em;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+  margin-top: 0.4rem;
+  white-space: nowrap;
+}
+
+.clash-badge--doubt {
+  color: #ff4444;
+  border: 1px solid #8B0000;
+  background: rgba(107, 0, 0, 0.2);
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+  animation: badgePulseDark 2s ease-in-out infinite;
+}
+
+@keyframes badgePulseDark {
+  0%, 100% { box-shadow: 0 0 8px rgba(139, 0, 0, 0.4); }
+  50% { box-shadow: 0 0 16px rgba(139, 0, 0, 0.8); }
+}
+
+.clash-badge--believe {
+  color: #8B6914;
+  border: 1px solid #C8A400;
+  background: rgba(200, 164, 0, 0.1);
+  text-shadow: 0 0 8px rgba(200, 164, 0, 0.4);
+  animation: badgePulseGold 2s ease-in-out infinite;
+}
+
+@keyframes badgePulseGold {
+  0%, 100% { box-shadow: 0 0 8px rgba(200, 164, 0, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(200, 164, 0, 0.6); }
+}
+
+/* ─── BACK BUTTON ─────────────────────────────────────────────────────────── */
+
+.clash-back {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 6000;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #444;
+  color: #aaa;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  backdrop-filter: blur(4px);
+}
+
+.clash-back:hover {
+  border-color: #888;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* ─── LIVE INDICATOR ──────────────────────────────────────────────────────── */
+
+.clash-live {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 6000;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: #888;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.4rem 0.75rem;
+  backdrop-filter: blur(4px);
+}
+
+.clash-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff4444;
+  box-shadow: 0 0 6px rgba(255, 68, 68, 0.8);
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

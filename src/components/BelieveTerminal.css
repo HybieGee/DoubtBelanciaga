@@ -261,3 +261,173 @@
   opacity: 0.3;
   cursor: not-allowed;
 }
+
+/* ─── RATE TIMER ──────────────────────────────────────────────────────────── */
+
+.bt-rate-timer {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  color: #C8A400;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 6px rgba(200, 164, 0, 0.7);
+  animation: blink 1.4s step-end infinite;
+  white-space: nowrap;
+}
+
+/* ─── STACK + WINDOW SIZING OVERRIDE ─────────────────────────────────────── */
+
+.bt-stack {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(780px, 94vw);
+}
+
+.bt-stack .bt-window {
+  width: 100%;
+  height: min(540px, 80vh);
+}
+
+/* ─── BACK BUTTON ─────────────────────────────────────────────────────────── */
+
+.bt-back-btn {
+  background: transparent;
+  border: 1px solid rgba(200, 164, 0, 0.35);
+  color: #8B6914;
+  padding: 0.2rem 0.55rem;
+  font-family: inherit;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.bt-back-btn:hover {
+  background: rgba(200, 164, 0, 0.12);
+  border-color: #C8A400;
+  color: #C8A400;
+  text-shadow: 0 0 6px rgba(200, 164, 0, 0.6);
+}
+
+/* ─── STATS BAR ───────────────────────────────────────────────────────────── */
+
+.bt-stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.32rem 1.3rem;
+  background: rgba(255, 252, 230, 0.6);
+  border-bottom: 1px solid rgba(200, 164, 0, 0.2);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
+}
+
+.bt-stat {
+  font-size: 0.63rem;
+  letter-spacing: 0.12em;
+  font-family: inherit;
+}
+
+.bt-stat--doubt {
+  color: #999;
+}
+
+.bt-stat--believe {
+  color: #8B6914;
+  text-shadow: 0 0 6px rgba(200, 164, 0, 0.4);
+}
+
+.bt-stat-sep {
+  color: #C8A400;
+  opacity: 0.4;
+  font-size: 0.6rem;
+}
+
+.bt-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFD700;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.9);
+  margin-left: auto;
+  animation: goldPulse 2s ease-in-out infinite;
+}
+
+/* ─── JOIN PANEL ──────────────────────────────────────────────────────────── */
+
+.bt-join-panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.bt-join-btn {
+  width: 100%;
+  padding: 0.85rem 2rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.bt-join-btn--active {
+  background: #C8A400;
+  color: #1a0d00;
+  text-shadow: none;
+  box-shadow: 0 0 20px rgba(200, 164, 0, 0.45), inset 0 0 10px rgba(255, 255, 200, 0.1);
+}
+
+.bt-join-btn--active:hover:not(:disabled) {
+  background: #FFD700;
+  color: #0d0600;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 255, 200, 0.15);
+}
+
+.bt-join-btn--active:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bt-join-btn--wallet {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid rgba(200, 164, 0, 0.25) !important;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.bt-join-btn--wallet:hover {
+  border-color: #C8A400 !important;
+  color: #8B6914;
+}
+
+.bt-join-status {
+  width: 100%;
+  text-align: center;
+  padding: 0.85rem 2rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  font-weight: bold;
+}
+
+.bt-join-status--self {
+  color: #8B6914;
+  text-shadow: 0 0 8px rgba(200, 164, 0, 0.4);
+  background: rgba(200, 164, 0, 0.08);
+  border: 1px solid rgba(200, 164, 0, 0.25);
+}
+
+.bt-join-status--other {
+  color: #888;
+  background: rgba(200, 164, 0, 0.04);
+  border: 1px solid rgba(200, 164, 0, 0.15);
+}
