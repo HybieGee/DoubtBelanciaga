@@ -23,35 +23,37 @@
 
 .clash-side--doubt {
   background: #080000;
-  /* CRT scanlines */
-  background-image:
-    repeating-linear-gradient(
-      transparent 0px,
-      transparent 3px,
-      rgba(0, 0, 0, 0.12) 3px,
-      rgba(0, 0, 0, 0.12) 4px
-    );
-  background-color: #080000;
-}
-
-.clash-side--doubt::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(107, 0, 0, 0.22) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .clash-side--believe {
   background: #FFFDF0;
 }
 
-.clash-side--believe::after {
-  content: '';
+/* ─── CANVAS ──────────────────────────────────────────────────────────────── */
+
+.clash-canvas {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+  width: 100%;
+  height: 100%;
   pointer-events: none;
+}
+
+/* ─── VIGNETTE ────────────────────────────────────────────────────────────── */
+
+.clash-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.clash-vignette--doubt {
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.72) 100%);
+}
+
+.clash-vignette--believe {
+  background: radial-gradient(ellipse at center, rgba(255,253,240,0.08) 0%, rgba(255,248,200,0.65) 100%);
 }
 
 /* ─── DIVIDER ─────────────────────────────────────────────────────────────── */
@@ -86,6 +88,7 @@
   z-index: 2;
   text-align: center;
   min-width: 0;
+  pointer-events: none;
 }
 
 /* ─── LABELS ──────────────────────────────────────────────────────────────── */
