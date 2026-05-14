@@ -175,11 +175,11 @@
 }
 
 .clash-count--believe {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Bebas Neue', 'Courier New', sans-serif;
   font-size: clamp(5rem, 16vw, 12rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.88;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   background: linear-gradient(180deg, #FFD700 0%, #C8A400 45%, #7a5a00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -208,10 +208,10 @@
 }
 
 .clash-pct--believe {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Bebas Neue', 'Courier New', sans-serif;
   font-size: clamp(1rem, 2.2vw, 1.6rem);
-  font-weight: 600;
-  letter-spacing: 0.25em;
+  font-weight: 400;
+  letter-spacing: 0.3em;
   margin-top: 0.3em;
   background: linear-gradient(90deg, #7a5a00 0%, #C8A400 50%, #7a5a00 100%);
   -webkit-background-clip: text;
