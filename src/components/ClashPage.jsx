@@ -280,6 +280,12 @@ const ClashPage = () => {
   const [timeLeft, setTimeLeft] = useState('--:--:--')
   const [holders,  setHolders]  = useState([])
 
+  // Stable per-session fake count offset — makes both sides look more active
+  const [fakeOffset] = useState(() => ({
+    doubt:   Math.floor(Math.random() * 6) + 5,
+    believe: Math.floor(Math.random() * 6) + 5,
+  }))
+
   useEffect(() => {
     const poll = async () => {
       try { const d = await getRoundStats(); setStats(d) } catch {}
@@ -316,11 +322,16 @@ const ClashPage = () => {
     return () => clearInterval(iv)
   }, [roundEndTime])
 
-  const total        = (stats.doubtCount || 0) + (stats.believeCount || 0)
-  const rawDoubtPct  = total > 0 ? (stats.doubtCount  / total) * 100 : 50
-  const rawBelievePct = total > 0 ? (stats.believeCount / total) * 100 : 50
-  const doubtPct     = Math.min(92, Math.max(8, rawDoubtPct))
-  const believePct   = 100 - doubtPct
+  const realDoubt   = stats.doubtCount   || 0
+  const realBelieve = stats.believeCount || 0
+  const dispDoubt   = realDoubt   + fakeOffset.doubt
+  const dispBelieve = realBelieve + fakeOffset.believe
+
+  const total         = realDoubt + realBelieve
+  const rawDoubtPct   = total > 0 ? (realDoubt   / total) * 100 : 50
+  const rawBelievePct = total > 0 ? (realBelieve / total) * 100 : 50
+  const doubtPct      = Math.min(92, Math.max(8, rawDoubtPct))
+  const believePct    = 100 - doubtPct
 
   // Keep ref in sync so canvas loop always has the latest value
   doubtPctRef.current = doubtPct
@@ -357,7 +368,7 @@ const ClashPage = () => {
         <div className="clash-panel" style={{ flex: doubtPct }}>
           <div className="clash-side-content">
             <div className="clash-label clash-label--doubt">DOUBT</div>
-            <div className="clash-count clash-count--doubt">{stats.doubtCount}</div>
+            <div className="clash-count clash-count--doubt">{dispDoubt}</div>
             <div className="clash-pct clash-pct--doubt">{rawDoubtPct.toFixed(1)}%</div>
             {joinedSide === 'doubt' && (
               <div className="clash-badge clash-badge--doubt">YOUR SIDE</div>
@@ -368,7 +379,7 @@ const ClashPage = () => {
         <div className="clash-panel" style={{ flex: believePct }}>
           <div className="clash-side-content">
             <div className="clash-label clash-label--believe">BELIEF</div>
-            <div className="clash-count clash-count--believe">{stats.believeCount}</div>
+            <div className="clash-count clash-count--believe">{dispBelieve}</div>
             <div className="clash-pct clash-pct--believe">{rawBelievePct.toFixed(1)}%</div>
             {joinedSide === 'believe' && (
               <div className="clash-badge clash-badge--believe">YOUR SIDE</div>
