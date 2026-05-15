@@ -43,13 +43,13 @@ export const getRoundStats = async () => {
     return await response.json()
   } catch (error) {
     console.error('Error fetching stats:', error)
-    // Fallback mock data for development
+    // No backend yet — return zeros so fake offset is the only display value
     return {
-      doubtCount: Math.floor(Math.random() * 100) + 50,
-      believeCount: Math.floor(Math.random() * 100) + 50,
-      totalPool: (Math.random() * 5 + 1).toFixed(4),
-      currentPrice: 2000 + Math.random() * 100,
-      priceChange: (Math.random() * 10 - 5).toFixed(2),
+      doubtCount: 0,
+      believeCount: 0,
+      totalPool: '0.0000',
+      currentPrice: 0,
+      priceChange: '0.00',
     }
   }
 }
