@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGameStore } from '../../store/gameStore'
 import DoubtTerminal from '../DoubtTerminal'
 import BelieveTerminal from '../BelieveTerminal'
@@ -9,6 +9,14 @@ import MarketCapDisplay from './MarketCapDisplay'
 const ChoicePrompt = () => {
   const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
   const [believeTerminalOpen, setBelieveTerminalOpen] = useState(false)
+  const [mob, setMob] = useState(false)
+
+  useEffect(() => {
+    const check = () => setMob(window.innerHeight < 520 && window.innerWidth > window.innerHeight)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const joinedSide  = useGameStore((s) => s.joinedSide)
   const setShowClash = useGameStore((s) => s.setShowClash)
@@ -97,14 +105,14 @@ const ChoicePrompt = () => {
         onClick={() => handleChoice('doubt')}
         style={{
           position: 'fixed',
-          top: '50%',
-          left: 'calc(25% - 12.5vw)',
+          top:      mob ? '57%' : '50%',
+          left:     mob ? 'calc(22% - 8vw)' : 'calc(25% - 12.5vw)',
           transform: 'translateY(-50%)',
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
           padding: 0,
-          width: 'clamp(200px, 25vw, 400px)',
+          width: mob ? 'clamp(100px, 16vw, 180px)' : 'clamp(200px, 25vw, 400px)',
           height: 'auto',
           zIndex: 100,
         }}
@@ -131,14 +139,14 @@ const ChoicePrompt = () => {
         onClick={() => handleChoice('believe')}
         style={{
           position: 'fixed',
-          top: '50%',
-          left: 'calc(75% - 6.25vw)',
+          top:      mob ? '57%' : '50%',
+          left:     mob ? 'calc(75% - 8vw)' : 'calc(75% - 6.25vw)',
           transform: 'translateY(-50%)',
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
           padding: 0,
-          width: 'clamp(200px, 25vw, 400px)',
+          width: mob ? 'clamp(100px, 16vw, 180px)' : 'clamp(200px, 25vw, 400px)',
           height: 'auto',
           zIndex: 100,
         }}

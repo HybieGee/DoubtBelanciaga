@@ -434,43 +434,50 @@
 
 /* ─── MOBILE LANDSCAPE ──────────────────────────────────────────────────── */
 @media (max-height: 500px) and (orientation: landscape) {
+  .bt-overlay {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 0.3rem 0;
+  }
+
   .bt-stack {
-    gap: 0.35rem;
+    gap: 0.2rem;
+    margin: auto;
   }
 
   .bt-stack .bt-window {
-    height: min(420px, 72vh);
+    height: min(265px, 55vh);
   }
 
   .bt-titlebar {
-    padding: 0.3rem 0.7rem;
+    padding: 0.25rem 0.7rem;
   }
 
   .bt-stats-bar {
-    padding: 0.18rem 0.8rem;
+    padding: 0.12rem 0.8rem;
   }
 
   .bt-body {
-    padding: 0.65rem 0.9rem;
-    gap: 0.65rem;
+    padding: 0.45rem 0.9rem;
+    gap: 0.45rem;
   }
 
   .bt-oracle {
-    font-size: 0.72rem;
-    line-height: 1.55;
+    font-size: 0.68rem;
+    line-height: 1.4;
   }
 
   .bt-inputrow {
-    padding: 0.4rem 0.9rem;
+    padding: 0.3rem 0.9rem;
   }
 
   .bt-join-btn {
-    padding: 0.55rem 1rem;
-    font-size: 0.7rem;
+    padding: 0.38rem 1rem;
+    font-size: 0.65rem;
   }
 
   .bt-join-status {
-    padding: 0.55rem 1rem;
-    font-size: 0.68rem;
+    padding: 0.38rem 1rem;
+    font-size: 0.62rem;
   }
 }
