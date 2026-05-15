@@ -316,7 +316,7 @@ const Whitepaper = ({ onClose }) => {
         {/* Social */}
         <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <motion.a
-            href="https://twitter.com/doubtandbelief"
+            href="https://x.com/doubtnbelief"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1, rotate: 5 }}

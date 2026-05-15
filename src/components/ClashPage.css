@@ -276,3 +276,104 @@
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.25; }
 }
+
+/* ─── LEADERBOARD ─────────────────────────────────────────────────────────── */
+
+/* Make panels clip children at their boundary — creates the organic movement */
+.clash-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.clash-leaderboard {
+  position: absolute;
+  bottom: 2.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.52rem, 0.85vw, 0.70rem);
+  line-height: 1.65;
+  pointer-events: none;
+  width: calc(100% - 3rem);
+}
+
+.clash-leaderboard--doubt {
+  left: 1.5rem;
+  text-align: left;
+}
+
+.clash-leaderboard--believe {
+  right: 1.5rem;
+  text-align: left;
+}
+
+.clash-lb-title {
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5em;
+  font-size: 0.85em;
+  white-space: nowrap;
+  opacity: 0.55;
+}
+
+.clash-leaderboard--doubt  .clash-lb-title { color: #cc2222; }
+.clash-leaderboard--believe .clash-lb-title { color: #9a7a00; }
+
+.clash-lb-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
+  white-space: nowrap;
+  opacity: 0.82;
+  transition: opacity 0.2s;
+}
+
+.clash-lb-rank {
+  width: 2.8em;
+  flex-shrink: 0;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.clash-lb-rank--doubt   { color: #cc2222; }
+.clash-lb-rank--believe { color: #C8A400; }
+
+.clash-lb-addr {
+  color: rgba(200, 200, 200, 0.65);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: clip;
+  font-size: 0.88em;
+  letter-spacing: 0.02em;
+}
+
+.clash-lb-amt {
+  flex-shrink: 0;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+
+.clash-lb-amt--doubt   { color: #ff5555; }
+.clash-lb-amt--believe { color: #FFD700; }
+
+.clash-lb-pct {
+  flex-shrink: 0;
+  opacity: 0.5;
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+}
+
+.clash-lb-pct--doubt   { color: #aa2222; }
+.clash-lb-pct--believe { color: #9a7a00; }
+
+/* Scanline overlay effect on the leaderboard */
+.clash-leaderboard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.08) 3px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+}

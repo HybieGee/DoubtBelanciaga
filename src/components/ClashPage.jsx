@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { getRoundStats } from '../api/game'
+import { getTopHolders } from '../api/holders'
 import './ClashPage.css'
 
 // ─── UNIFIED CANVAS ───────────────────────────────────────────────────────────
@@ -276,6 +277,7 @@ const ClashPage = () => {
 
   const [stats,    setStats]    = useState({ doubtCount: 0, believeCount: 0 })
   const [timeLeft, setTimeLeft] = useState('--:--:--')
+  const [holders,  setHolders]  = useState([])
 
   useEffect(() => {
     const poll = async () => {
@@ -283,6 +285,15 @@ const ClashPage = () => {
     }
     poll()
     const iv = setInterval(poll, 15000)
+    return () => clearInterval(iv)
+  }, [])
+
+  useEffect(() => {
+    const fetch = async () => {
+      try { setHolders(await getTopHolders(10)) } catch {}
+    }
+    fetch()
+    const iv = setInterval(fetch, 60000)
     return () => clearInterval(iv)
   }, [])
 
@@ -313,6 +324,16 @@ const ClashPage = () => {
   // Keep ref in sync so canvas loop always has the latest value
   doubtPctRef.current = doubtPct
 
+  const truncAddr = (addr) => addr ? `${addr.slice(0, 6)}…${addr.slice(-4)}` : '??????'
+  const fmtBal = (bal) => {
+    const n = parseFloat(bal || 0)
+    if (n >= 1e12) return `${(n / 1e12).toFixed(1)}T`
+    if (n >= 1e9)  return `${(n / 1e9).toFixed(1)}B`
+    if (n >= 1e6)  return `${(n / 1e6).toFixed(1)}M`
+    if (n >= 1e3)  return `${(n / 1e3).toFixed(1)}K`
+    return n.toFixed(0)
+  }
+
   useEffect(() => {
     const canvas = mainCanvasRef.current
     if (!canvas) return
@@ -341,6 +362,20 @@ const ClashPage = () => {
               <div className="clash-badge clash-badge--doubt">YOUR SIDE</div>
             )}
           </div>
+
+          {holders.length > 0 && (
+            <div className="clash-leaderboard clash-leaderboard--doubt">
+              <div className="clash-lb-title">&gt; TOP HOLDERS [#01–05]_</div>
+              {holders.slice(0, 5).map((h, i) => (
+                <div className="clash-lb-row" key={i}>
+                  <span className="clash-lb-rank clash-lb-rank--doubt">#{String(i + 1).padStart(2, '0')}</span>
+                  <span className="clash-lb-addr">{truncAddr(h.owner_address)}</span>
+                  <span className="clash-lb-amt clash-lb-amt--doubt">{fmtBal(h.balance_formatted)}</span>
+                  <span className="clash-lb-pct clash-lb-pct--doubt">{(h.percentage_relative_to_total_supply || 0).toFixed(2)}%</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="clash-panel" style={{ flex: believePct }}>
@@ -352,6 +387,20 @@ const ClashPage = () => {
               <div className="clash-badge clash-badge--believe">YOUR SIDE</div>
             )}
           </div>
+
+          {holders.length > 0 && (
+            <div className="clash-leaderboard clash-leaderboard--believe">
+              <div className="clash-lb-title">&gt; TOP HOLDERS [#06–10]_</div>
+              {holders.slice(5, 10).map((h, i) => (
+                <div className="clash-lb-row" key={i}>
+                  <span className="clash-lb-rank clash-lb-rank--believe">#{String(i + 6).padStart(2, '0')}</span>
+                  <span className="clash-lb-addr">{truncAddr(h.owner_address)}</span>
+                  <span className="clash-lb-amt clash-lb-amt--believe">{fmtBal(h.balance_formatted)}</span>
+                  <span className="clash-lb-pct clash-lb-pct--believe">{(h.percentage_relative_to_total_supply || 0).toFixed(2)}%</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
