@@ -164,7 +164,7 @@ const ChoicePrompt = () => {
           position:  'fixed',
           bottom:    '1rem',
           left:      '50%',
-          transform: 'translateX(-50%)',
+          transform: 'translateX(-50%) translateY(20%)',
           zIndex:    100,
         }}
       >

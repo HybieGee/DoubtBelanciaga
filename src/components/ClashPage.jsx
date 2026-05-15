@@ -389,13 +389,9 @@ const ClashPage = () => {
         </div>
       </div>
 
-      {/* Boundary panel — timer + market cap + leaderboard, tracked by canvas to the organic line */}
+      {/* Boundary panel — timer → leaderboard → market cap, tracks organic line */}
       <div ref={timerRef} className="clash-boundary-panel" style={{ left: '50%' }}>
         <div className="clash-boundary-timer">{timeLeft}</div>
-
-        <div style={{ marginTop: '0.5rem', display: 'flex', justifyContent: 'center' }}>
-          <MarketCapDisplay />
-        </div>
 
         {holders.length > 0 && (
           <div className="clash-leaderboard">
@@ -418,6 +414,10 @@ const ClashPage = () => {
             })}
           </div>
         )}
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <MarketCapDisplay />
+        </div>
       </div>
 
       <button className="clash-back" onClick={() => setShowClash(false)}>
