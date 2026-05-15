@@ -43,13 +43,10 @@ export const getRoundStats = async () => {
     return await response.json()
   } catch (error) {
     console.error('Error fetching stats:', error)
-    // No backend yet — return zeros so fake offset is the only display value
     return {
-      doubtCount: 0,
-      believeCount: 0,
-      totalPool: '0.0000',
-      currentPrice: 0,
-      priceChange: '0.00',
+      doubtCount: 0, believeCount: 0,
+      totalPool: '0.0000', currentPrice: 0, priceChange: '0.00',
+      startMarketCap: null,
     }
   }
 }
@@ -110,11 +107,6 @@ export const getPriceData = async () => {
     return await response.json()
   } catch (error) {
     console.error('Error fetching price:', error)
-    // Fallback mock data for development
-    return {
-      current: 2000 + Math.random() * 100,
-      previous: 2000 + Math.random() * 100,
-      change: (Math.random() * 10 - 5).toFixed(2),
-    }
+    return { priceUsd: 0, marketCap: 0, priceChange1h: 0, priceChange24h: 0 }
   }
 }

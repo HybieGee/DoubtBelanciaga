@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { getRoundStats } from '../api/game'
 import { getTopHolders } from '../api/holders'
+import MarketCapDisplay from './UI/MarketCapDisplay'
 import './ClashPage.css'
 
 // ─── UNIFIED CANVAS ───────────────────────────────────────────────────────────
@@ -276,7 +277,7 @@ const ClashPage = () => {
   const doubtPctRef   = useRef(50)
   const timerRef      = useRef(null)
 
-  const [stats,    setStats]    = useState({ doubtCount: 0, believeCount: 0 })
+  const [stats,    setStats]    = useState({ doubtCount: 0, believeCount: 0, startMarketCap: null })
   const [timeLeft, setTimeLeft] = useState('--:--:--')
   const [holders,  setHolders]  = useState([])
 
@@ -413,6 +414,18 @@ const ClashPage = () => {
             })}
           </div>
         )}
+      </div>
+
+      {/* Market cap display — fixed bottom centre */}
+      <div style={{
+        position: 'fixed',
+        bottom: '1.5rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10,
+        pointerEvents: 'none',
+      }}>
+        <MarketCapDisplay startMarketCap={stats.startMarketCap} />
       </div>
 
       <button className="clash-back" onClick={() => setShowClash(false)}>
