@@ -65,7 +65,7 @@ const ChoicePrompt = () => {
         transition={{ duration: 1, delay: 0.8 }}
         style={{
           position: 'fixed',
-          top: 'calc(15% + clamp(2rem, 6vw, 4rem) + 1rem)',
+          top: '0.75rem',
           left: '0',
           right: '0',
           margin: '0 auto',
@@ -79,8 +79,9 @@ const ChoicePrompt = () => {
             fontFamily: 'monospace',
             fontSize: 'clamp(0.65rem, 1.4vw, 0.9rem)',
             letterSpacing: '0.2em',
-            color: '#888',
-            textShadow: '0 0 10px rgba(0,0,0,0.8)',
+            color: '#ffffff',
+            WebkitTextStroke: '1px #000',
+            textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
           }}
         >
           CA: {CONTRACT_ADDRESS}
