@@ -5,6 +5,7 @@ import Timer from './Timer'
 import WalletButton from './WalletButton'
 import Results from './Results'
 import Whitepaper from './Whitepaper'
+import AudioToggle from './AudioToggle'
 import { useState } from 'react'
 
 const UI = () => {
@@ -140,6 +141,8 @@ const UI = () => {
       >
         v4.4
       </div>
+
+      <AudioToggle />
     </>
   )
 }
