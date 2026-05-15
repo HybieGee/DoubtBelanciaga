@@ -328,9 +328,9 @@ const ClashPage = () => {
   const dispDoubt   = realDoubt   + fakeOffset.doubt
   const dispBelieve = realBelieve + fakeOffset.believe
 
-  const total         = realDoubt + realBelieve
-  const rawDoubtPct   = total > 0 ? (realDoubt   / total) * 100 : 50
-  const rawBelievePct = total > 0 ? (realBelieve / total) * 100 : 50
+  const total         = dispDoubt + dispBelieve
+  const rawDoubtPct   = total > 0 ? (dispDoubt   / total) * 100 : 50
+  const rawBelievePct = total > 0 ? (dispBelieve / total) * 100 : 50
   const doubtPct      = Math.min(92, Math.max(8, rawDoubtPct))
   const believePct    = 100 - doubtPct
 
