@@ -4,16 +4,16 @@ export async function onRequestGet({ request, env }) {
     'Content-Type': 'application/json',
   }
 
-  const { searchParams } = new URL(request.url)
-  const mint  = searchParams.get('mint')
-  const limit = Math.min(parseInt(searchParams.get('limit') || '10'), 20)
-
-  if (!mint) {
-    return new Response(JSON.stringify({ error: 'mint param required' }), { status: 400, headers: cors })
+  if (!env.HELIUS_API_KEY) {
+    return new Response(JSON.stringify({ error: 'HELIUS_API_KEY not configured' }), { status: 500, headers: cors })
   }
 
-  if (!env.HELIUS_API_KEY) {
-    return new Response(JSON.stringify({ error: 'HELIUS_API_KEY secret not configured' }), { status: 500, headers: cors })
+  // TOKEN_MINT is set as a Cloudflare env variable — never touches the frontend bundle
+  const mint  = env.TOKEN_MINT
+  const limit = 10
+
+  if (!mint) {
+    return new Response(JSON.stringify({ error: 'TOKEN_MINT env variable not set' }), { status: 500, headers: cors })
   }
 
   const rpc = async (method, params) => {
@@ -28,27 +28,33 @@ export async function onRequestGet({ request, env }) {
   }
 
   try {
-    // Run these two in parallel — neither depends on the other
     const [largest, supplyRes] = await Promise.all([
       rpc('getTokenLargestAccounts', [mint]),
       rpc('getTokenSupply', [mint]),
     ])
 
     const accounts    = largest.value.slice(0, limit)
-    const totalSupply = parseFloat(supplyRes.value.uiAmountString || supplyRes.value.uiAmount || '0')
+    const totalSupply = parseFloat(supplyRes.value.uiAmountString || '0')
+    const decimals    = supplyRes.value.decimals ?? 6
 
-    // Resolve all owner wallets in one batched call
     const addresses = accounts.map((a) => a.address)
     const infos     = await rpc('getMultipleAccounts', [addresses, { encoding: 'jsonParsed' }])
 
     const holders = accounts.map((acc, i) => {
       const parsed = infos.value[i]?.data?.parsed?.info
       const owner  = parsed?.owner ?? acc.address
-      const amount = acc.uiAmount ?? 0
+
+      // uiAmount can be null on some tokens — fall back to raw ÷ decimals
+      const amount = acc.uiAmount != null
+        ? acc.uiAmount
+        : parseFloat(acc.amount) / Math.pow(10, decimals)
+
+      const pct = totalSupply > 0 ? (amount / totalSupply) * 100 : 0
+
       return {
         owner_address: owner,
         balance_formatted: String(amount),
-        percentage_relative_to_total_supply: totalSupply > 0 ? (amount / totalSupply) * 100 : 0,
+        percentage_relative_to_total_supply: pct,
       }
     })
 

@@ -267,9 +267,10 @@ function initMainCanvas(canvas, getPct, getTimerEl) {
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 const ClashPage = () => {
-  const setShowClash = useGameStore((s) => s.setShowClash)
-  const joinedSide  = useGameStore((s) => s.joinedSide)
-  const roundEndTime = useGameStore((s) => s.roundEndTime)
+  const setShowClash  = useGameStore((s) => s.setShowClash)
+  const joinedSide    = useGameStore((s) => s.joinedSide)
+  const roundEndTime  = useGameStore((s) => s.roundEndTime)
+  const walletAddress = useGameStore((s) => s.walletAddress)
 
   const mainCanvasRef = useRef(null)
   const doubtPctRef   = useRef(50)
@@ -289,11 +290,11 @@ const ClashPage = () => {
   }, [])
 
   useEffect(() => {
-    const fetch = async () => {
-      try { setHolders(await getTopHolders(10)) } catch {}
+    const load = async () => {
+      try { setHolders(await getTopHolders()) } catch {}
     }
-    fetch()
-    const iv = setInterval(fetch, 60000)
+    load()
+    const iv = setInterval(load, 120000)
     return () => clearInterval(iv)
   }, [])
 
@@ -362,20 +363,6 @@ const ClashPage = () => {
               <div className="clash-badge clash-badge--doubt">YOUR SIDE</div>
             )}
           </div>
-
-          {holders.length > 0 && (
-            <div className="clash-leaderboard clash-leaderboard--doubt">
-              <div className="clash-lb-title">&gt; TOP HOLDERS [#01–05]_</div>
-              {holders.slice(0, 5).map((h, i) => (
-                <div className="clash-lb-row" key={i}>
-                  <span className="clash-lb-rank clash-lb-rank--doubt">#{String(i + 1).padStart(2, '0')}</span>
-                  <span className="clash-lb-addr">{truncAddr(h.owner_address)}</span>
-                  <span className="clash-lb-amt clash-lb-amt--doubt">{fmtBal(h.balance_formatted)}</span>
-                  <span className="clash-lb-pct clash-lb-pct--doubt">{(h.percentage_relative_to_total_supply || 0).toFixed(2)}%</span>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         <div className="clash-panel" style={{ flex: believePct }}>
@@ -387,26 +374,34 @@ const ClashPage = () => {
               <div className="clash-badge clash-badge--believe">YOUR SIDE</div>
             )}
           </div>
-
-          {holders.length > 0 && (
-            <div className="clash-leaderboard clash-leaderboard--believe">
-              <div className="clash-lb-title">&gt; TOP HOLDERS [#06–10]_</div>
-              {holders.slice(5, 10).map((h, i) => (
-                <div className="clash-lb-row" key={i}>
-                  <span className="clash-lb-rank clash-lb-rank--believe">#{String(i + 6).padStart(2, '0')}</span>
-                  <span className="clash-lb-addr">{truncAddr(h.owner_address)}</span>
-                  <span className="clash-lb-amt clash-lb-amt--believe">{fmtBal(h.balance_formatted)}</span>
-                  <span className="clash-lb-pct clash-lb-pct--believe">{(h.percentage_relative_to_total_supply || 0).toFixed(2)}%</span>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
 
-      {/* Timer — position driven each frame by the canvas smoothPct */}
-      <div ref={timerRef} className="clash-boundary-timer" style={{ left: '50%' }}>
-        {timeLeft}
+      {/* Boundary panel — timer + leaderboard, both tracked by canvas to the organic line */}
+      <div ref={timerRef} className="clash-boundary-panel" style={{ left: '50%' }}>
+        <div className="clash-boundary-timer">{timeLeft}</div>
+
+        {holders.length > 0 && (
+          <div className="clash-leaderboard">
+            <div className="clash-lb-header">TOP 10 HOLDERS</div>
+            {holders.map((h, i) => {
+              const isMe = walletAddress && h.owner_address === walletAddress
+              return (
+                <div className="clash-lb-row" key={i}>
+                  <span className="clash-lb-rank">#{String(i + 1).padStart(2, '0')}</span>
+                  <span className="clash-lb-addr">{truncAddr(h.owner_address)}</span>
+                  <span className="clash-lb-amt">{fmtBal(h.balance_formatted)}</span>
+                  <span className="clash-lb-pct">{(h.percentage_relative_to_total_supply || 0).toFixed(1)}%</span>
+                  {isMe && joinedSide && (
+                    <span className={`clash-lb-side clash-lb-side--${joinedSide}`}>
+                      [{joinedSide.toUpperCase()}]
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       <button className="clash-back" onClick={() => setShowClash(false)}>

@@ -200,9 +200,6 @@
 /* ─── BOUNDARY TIMER ──────────────────────────────────────────────────────── */
 
 .clash-boundary-timer {
-  position: fixed;
-  top: 50%;
-  z-index: 10;
   font-family: 'Courier New', monospace;
   font-size: clamp(0.55rem, 1vw, 0.78rem);
   font-weight: bold;
@@ -215,7 +212,6 @@
      1px  1px 0 #000,
      0    0  8px rgba(0,0,0,0.95);
   white-space: nowrap;
-  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
@@ -277,103 +273,85 @@
   50%       { opacity: 0.25; }
 }
 
+/* ─── BOUNDARY PANEL (timer + leaderboard, tracks organic line) ───────────── */
+
+.clash-boundary-panel {
+  position: fixed;
+  top: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* ─── LEADERBOARD ─────────────────────────────────────────────────────────── */
 
-/* Make panels clip children at their boundary — creates the organic movement */
-.clash-panel {
-  position: relative;
-  overflow: hidden;
-}
-
 .clash-leaderboard {
-  position: absolute;
-  bottom: 2.5rem;
+  background: rgba(0, 0, 0, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  padding: 0.55rem 0.9rem;
   font-family: 'Courier New', monospace;
-  font-size: clamp(0.52rem, 0.85vw, 0.70rem);
-  line-height: 1.65;
-  pointer-events: none;
-  width: calc(100% - 3rem);
+  font-size: clamp(0.62rem, 0.9vw, 0.76rem);
+  line-height: 1.7;
+  min-width: 280px;
+  max-width: 340px;
 }
 
-.clash-leaderboard--doubt {
-  left: 1.5rem;
-  text-align: left;
+.clash-lb-header {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.8em;
+  letter-spacing: 0.18em;
+  text-align: center;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.3rem;
 }
-
-.clash-leaderboard--believe {
-  right: 1.5rem;
-  text-align: left;
-}
-
-.clash-lb-title {
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5em;
-  font-size: 0.85em;
-  white-space: nowrap;
-  opacity: 0.55;
-}
-
-.clash-leaderboard--doubt  .clash-lb-title { color: #cc2222; }
-.clash-leaderboard--believe .clash-lb-title { color: #9a7a00; }
 
 .clash-lb-row {
   display: flex;
   align-items: baseline;
-  gap: 0.55em;
+  gap: 0.5em;
   white-space: nowrap;
-  opacity: 0.82;
-  transition: opacity 0.2s;
 }
 
 .clash-lb-rank {
-  width: 2.8em;
+  width: 2.6em;
   flex-shrink: 0;
-  font-weight: bold;
-  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.85em;
 }
 
-.clash-lb-rank--doubt   { color: #cc2222; }
-.clash-lb-rank--believe { color: #C8A400; }
-
 .clash-lb-addr {
-  color: rgba(200, 200, 200, 0.65);
   flex: 1;
-  overflow: hidden;
-  text-overflow: clip;
-  font-size: 0.88em;
-  letter-spacing: 0.02em;
+  color: rgba(200, 200, 200, 0.75);
+  font-size: 0.92em;
+  letter-spacing: 0.01em;
 }
 
 .clash-lb-amt {
   flex-shrink: 0;
+  color: #ffffff;
   font-weight: bold;
-  letter-spacing: 0.04em;
 }
-
-.clash-lb-amt--doubt   { color: #ff5555; }
-.clash-lb-amt--believe { color: #FFD700; }
 
 .clash-lb-pct {
   flex-shrink: 0;
-  opacity: 0.5;
+  color: rgba(255, 255, 255, 0.35);
   font-size: 0.85em;
-  letter-spacing: 0.02em;
+  min-width: 3.5em;
+  text-align: right;
 }
 
-.clash-lb-pct--doubt   { color: #aa2222; }
-.clash-lb-pct--believe { color: #9a7a00; }
-
-/* Scanline overlay effect on the leaderboard */
-.clash-leaderboard::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    rgba(0, 0, 0, 0.08) 3px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
-  pointer-events: none;
+.clash-lb-side {
+  flex-shrink: 0;
+  font-size: 0.8em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
+
+.clash-lb-side--doubt   { color: #ff4444; }
+.clash-lb-side--believe { color: #C8A400; }
