@@ -4,6 +4,7 @@ import { useGameStore } from '../../store/gameStore'
 import DoubtTerminal from '../DoubtTerminal'
 import BelieveTerminal from '../BelieveTerminal'
 import { CONTRACT_ADDRESS } from '../../config'
+import MarketCapDisplay from './MarketCapDisplay'
 
 const ChoicePrompt = () => {
   const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
@@ -153,6 +154,22 @@ const ChoicePrompt = () => {
           }}
         />
       </motion.button>
+
+      {/* Market cap display — bottom centre */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.8 }}
+        style={{
+          position:  'fixed',
+          bottom:    '3.5rem',
+          left:      '50%',
+          transform: 'translateX(-50%)',
+          zIndex:    100,
+        }}
+      >
+        <MarketCapDisplay />
+      </motion.div>
 
       {/* Subtitle */}
       <motion.p

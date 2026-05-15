@@ -425,7 +425,7 @@ const ClashPage = () => {
         zIndex: 10,
         pointerEvents: 'none',
       }}>
-        <MarketCapDisplay startMarketCap={stats.startMarketCap} />
+        <MarketCapDisplay />
       </div>
 
       <button className="clash-back" onClick={() => setShowClash(false)}>
