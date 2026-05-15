@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 
-const TARGET_VOL = 0.4
+const TARGET_VOL = 0.02
 const FADE_MS    = 1000
 const FADE_STEPS = 40
 
