@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen'
 import MainExperience from './components/MainExperience'
+import AudioToggle from './components/UI/AudioToggle'
 import { useGameStore } from './store/gameStore'
 import { initFingerprint } from './utils/fingerprint'
 
@@ -21,13 +22,16 @@ function App() {
   }, [setFingerprint])
 
   return (
-    <AnimatePresence mode="wait">
-      {loading ? (
-        <LoadingScreen key="loading" />
-      ) : (
-        <MainExperience key="experience" />
-      )}
-    </AnimatePresence>
+    <>
+      <AudioToggle />
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <LoadingScreen key="loading" />
+        ) : (
+          <MainExperience key="experience" />
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 
