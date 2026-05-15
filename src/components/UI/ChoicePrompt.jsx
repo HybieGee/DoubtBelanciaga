@@ -77,10 +77,9 @@ const ChoicePrompt = () => {
         <span
           style={{
             fontFamily: 'monospace',
-            fontSize: 'clamp(0.65rem, 1.4vw, 0.9rem)',
+            fontSize: 'clamp(0.9rem, 1.8vw, 1.2rem)',
             letterSpacing: '0.2em',
             color: '#ffffff',
-            WebkitTextStroke: '1px #000',
             textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
           }}
         >
