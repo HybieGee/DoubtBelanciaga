@@ -132,7 +132,7 @@ const ChoicePrompt = () => {
         style={{
           position: 'fixed',
           top: '50%',
-          left: 'calc(75% - 11.25vw)',
+          left: 'calc(75% - 6.25vw)',
           transform: 'translateY(-50%)',
           background: 'transparent',
           border: 'none',
