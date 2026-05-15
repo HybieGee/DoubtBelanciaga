@@ -173,6 +173,7 @@ const ChoicePrompt = () => {
 
       {/* Subtitle */}
       <motion.p
+        className="choice-subtitle"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}

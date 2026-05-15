@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen'
 import MainExperience from './components/MainExperience'
 import AudioToggle from './components/UI/AudioToggle'
+import PortraitBlock from './components/UI/PortraitBlock'
 import { useGameStore } from './store/gameStore'
 import { initFingerprint } from './utils/fingerprint'
 
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+      <PortraitBlock />
       <AudioToggle />
       <AnimatePresence mode="wait">
         {loading ? (

@@ -69,7 +69,7 @@ const MarketCapDisplay = () => {
   const hasChange = startMC && startMC > 0 && !loading
 
   return (
-    <div style={{
+    <div className="market-cap-display" style={{
       position:       'relative',
       width:          'clamp(330px, 33vw, 450px)',
       aspectRatio:    '3 / 1',

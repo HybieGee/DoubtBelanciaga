@@ -439,3 +439,46 @@
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid #1a1a1a;
 }
+
+/* ─── MOBILE LANDSCAPE ──────────────────────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .dt-stack {
+    gap: 0.35rem;
+  }
+
+  .dt-stack .dt-window {
+    height: min(420px, 72vh);
+  }
+
+  .dt-titlebar {
+    padding: 0.3rem 0.7rem;
+  }
+
+  .dt-stats-bar {
+    padding: 0.18rem 0.8rem;
+  }
+
+  .dt-body {
+    padding: 0.65rem 0.9rem;
+    gap: 0.65rem;
+  }
+
+  .dt-oracle {
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+
+  .dt-inputrow {
+    padding: 0.4rem 0.9rem;
+  }
+
+  .dt-join-btn {
+    padding: 0.55rem 1rem;
+    font-size: 0.7rem;
+  }
+
+  .dt-join-status {
+    padding: 0.55rem 1rem;
+    font-size: 0.68rem;
+  }
+}

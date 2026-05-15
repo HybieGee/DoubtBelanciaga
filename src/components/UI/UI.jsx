@@ -17,6 +17,7 @@ const UI = () => {
     <>
       {/* Top bar */}
       <div
+        className="ui-topbar"
         style={{
           position: 'fixed',
           top: 0,
@@ -30,8 +31,9 @@ const UI = () => {
           background: 'linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%)',
         }}
       >
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <div className="ui-topbar-left" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <h1
+            className="ui-topbar-title"
             style={{
               fontSize: '1.5rem',
               fontWeight: 'bold',
@@ -43,6 +45,7 @@ const UI = () => {
             <span style={{ color: '#fff' }}>BELIEF</span>
           </h1>
           <button
+            className="ui-topbar-btn"
             onClick={() => setShowWhitepaper(true)}
             style={{
               padding: '0.5rem 1rem',
@@ -68,6 +71,7 @@ const UI = () => {
 
           {joinedSide && (
             <button
+              className="ui-topbar-btn"
               onClick={() => setShowClash(true)}
               style={{
                 padding: '0.5rem 1rem',
@@ -93,7 +97,7 @@ const UI = () => {
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+        <div className="ui-topbar-right" style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           <Timer />
           <WalletButton />
         </div>

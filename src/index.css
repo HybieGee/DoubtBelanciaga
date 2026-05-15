@@ -52,3 +52,53 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #888;
 }
+
+/* ─── PORTRAIT BLOCK ────────────────────────────────────────────────────────── */
+@keyframes portraitSpin {
+  0%   { transform: rotate(0deg);   }
+  40%  { transform: rotate(90deg);  }
+  60%  { transform: rotate(90deg);  }
+  100% { transform: rotate(90deg);  }
+}
+
+.portrait-block {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Show rotate prompt for portrait phones/tablets up to 1024px */
+@media (orientation: portrait) and (max-width: 1024px) {
+  .portrait-block { display: flex; }
+}
+
+/* ─── MOBILE TOP BAR (landscape phones) ──────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .ui-topbar {
+    padding: 0.4rem 0.9rem !important;
+  }
+  .ui-topbar-title {
+    font-size: 1rem !important;
+    letter-spacing: 0.12em !important;
+  }
+  .ui-topbar-btn {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.65rem !important;
+  }
+  .ui-topbar-left {
+    gap: 0.5rem !important;
+  }
+  .ui-topbar-right {
+    gap: 0.8rem !important;
+  }
+  /* Hide subtitle on Pick a Faith to avoid overlap */
+  .choice-subtitle { display: none !important; }
+  /* Shrink market cap on mobile */
+  .market-cap-display {
+    width: clamp(180px, 28vw, 280px) !important;
+  }
+}
