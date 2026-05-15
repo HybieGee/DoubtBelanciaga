@@ -596,12 +596,25 @@ const DoubtTerminal = ({ onClose }) => {
     setInputValue('')
     setIsProcessing(true)
     await addMessage(`> ${query}`, 'user')
-    await new Promise((r) => setTimeout(r, 700))
 
-    const q = query.toLowerCase().replace(/[^a-z0-9]/g, '')
     let response = null
-    for (const [key, val] of Object.entries(QUERY_RESPONSES)) {
-      if (q.includes(key.replace(/[^a-z0-9]/g, ''))) { response = val; break }
+    try {
+      const res = await fetch('/api/terminal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query, side: 'doubt' }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.response) response = data.response
+      }
+    } catch {}
+
+    if (!response) {
+      const q = query.toLowerCase().replace(/[^a-z0-9]/g, '')
+      for (const [key, val] of Object.entries(QUERY_RESPONSES)) {
+        if (q.includes(key.replace(/[^a-z0-9]/g, ''))) { response = val; break }
+      }
     }
     if (!response) response = DEFAULT_RESPONSES[Math.floor(Math.random() * DEFAULT_RESPONSES.length)]
 
