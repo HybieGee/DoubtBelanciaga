@@ -132,7 +132,7 @@ const ChoicePrompt = () => {
         style={{
           position: 'fixed',
           top: '50%',
-          left: 'calc(75% - 12.5vw)',
+          left: 'calc(75% - 11.25vw)',
           transform: 'translateY(-50%)',
           background: 'transparent',
           border: 'none',
@@ -162,7 +162,7 @@ const ChoicePrompt = () => {
         transition={{ duration: 1, delay: 1.8 }}
         style={{
           position:  'fixed',
-          bottom:    '3.5rem',
+          bottom:    '1rem',
           left:      '50%',
           transform: 'translateX(-50%)',
           zIndex:    100,
