@@ -1,61 +1,94 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
-const TARGET_VOL  = 0.3
-const FADE_STEPS  = 40
-const FADE_MS     = 1000
+const TARGET_VOL = 0.4
+const FADE_MS    = 1000
+const FADE_STEPS = 40
 
 const AudioToggle = () => {
-  const [enabled, setEnabled] = useState(false)
+  const [muted,   setMuted]   = useState(false)
+  const [playing, setPlaying] = useState(false)
   const audioRef  = useRef(null)
   const fadeRef   = useRef(null)
 
-  useEffect(() => {
-    const audio   = new Audio('/background.mp3')
-    audio.loop    = true
-    audio.volume  = 0
-    audioRef.current = audio
-    return () => { audio.pause(); audio.src = '' }
-  }, [])
-
   const clearFade = () => { if (fadeRef.current) { clearInterval(fadeRef.current); fadeRef.current = null } }
 
-  const fadeIn = useCallback(() => {
+  const fadeTo = useCallback((target) => {
     const audio = audioRef.current
-    audio.play().catch(() => {})
+    if (!audio) return
     clearFade()
-    const step = TARGET_VOL / FADE_STEPS
+    const current  = audio.volume
+    const diff     = target - current
+    const step     = diff / FADE_STEPS
     fadeRef.current = setInterval(() => {
-      audio.volume = Math.min(TARGET_VOL, parseFloat((audio.volume + step).toFixed(4)))
-      if (audio.volume >= TARGET_VOL) clearFade()
+      const next = parseFloat((audio.volume + step).toFixed(4))
+      audio.volume = target > current ? Math.min(target, next) : Math.max(target, next)
+      if (audio.volume === target) clearFade()
     }, FADE_MS / FADE_STEPS)
   }, [])
 
-  const fadeOut = useCallback(() => {
+  const start = useCallback(() => {
     const audio = audioRef.current
-    clearFade()
-    const step = TARGET_VOL / FADE_STEPS
-    fadeRef.current = setInterval(() => {
-      audio.volume = Math.max(0, parseFloat((audio.volume - step).toFixed(4)))
-      if (audio.volume <= 0) { clearFade(); audio.pause() }
-    }, FADE_MS / FADE_STEPS)
-  }, [])
+    if (!audio || playing) return
+    audio.volume = 0
+    audio.play().then(() => {
+      setPlaying(true)
+      fadeTo(TARGET_VOL)
+    }).catch(() => {})
+  }, [playing, fadeTo])
+
+  // Set up audio and try to play immediately; fall back to first interaction
+  useEffect(() => {
+    const audio    = new Audio('/background.mp3')
+    audio.loop     = true
+    audio.volume   = 0
+    audioRef.current = audio
+
+    // Try autoplay first
+    audio.play().then(() => {
+      setPlaying(true)
+      fadeTo(TARGET_VOL)
+    }).catch(() => {
+      // Blocked — start on first user interaction anywhere on page
+      const onInteract = () => {
+        start()
+        document.removeEventListener('click',      onInteract)
+        document.removeEventListener('keydown',    onInteract)
+        document.removeEventListener('touchstart', onInteract)
+      }
+      document.addEventListener('click',      onInteract)
+      document.addEventListener('keydown',    onInteract)
+      document.addEventListener('touchstart', onInteract)
+    })
+
+    return () => {
+      clearFade()
+      audio.pause()
+      audio.src = ''
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggle = useCallback(() => {
-    if (!enabled) { fadeIn();  setEnabled(true)  }
-    else          { fadeOut(); setEnabled(false) }
-  }, [enabled, fadeIn, fadeOut])
+    if (!playing) { start(); return }
+    if (muted) {
+      fadeTo(TARGET_VOL)
+      setMuted(false)
+    } else {
+      fadeTo(0)
+      setMuted(true)
+    }
+  }, [muted, playing, start, fadeTo])
 
   return (
     <button
       onClick={toggle}
-      title={enabled ? 'Mute music' : 'Play music'}
+      title={muted ? 'Unmute music' : 'Mute music'}
       style={{
         position:      'fixed',
         bottom:        '10px',
         left:          '10px',
         background:    'rgba(0,0,0,0.35)',
-        border:        `1px solid ${enabled ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.12)'}`,
-        color:         enabled ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.28)',
+        border:        `1px solid ${(!muted && playing) ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.12)'}`,
+        color:         (!muted && playing) ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.28)',
         fontFamily:    'monospace',
         fontSize:      '11px',
         letterSpacing: '0.12em',
@@ -66,7 +99,7 @@ const AudioToggle = () => {
         userSelect:    'none',
       }}
     >
-      {enabled ? '♪ ON' : '♪ OFF'}
+      {(!muted && playing) ? '♪ ON' : '♪ OFF'}
     </button>
   )
 }
