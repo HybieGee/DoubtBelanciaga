@@ -71,7 +71,7 @@ const MarketCapDisplay = () => {
   return (
     <div style={{
       position:       'relative',
-      width:          'clamp(220px, 22vw, 300px)',
+      width:          'clamp(330px, 33vw, 450px)',
       aspectRatio:    '3 / 1',
       display:        'flex',
       alignItems:     'center',
@@ -91,28 +91,19 @@ const MarketCapDisplay = () => {
         zIndex:     1,
       }}>
         <div style={{
-          fontSize:      'clamp(0.45rem, 0.65vw, 0.6rem)',
-          letterSpacing: '0.2em',
-          color:         'rgba(255,255,255,0.4)',
-          marginBottom:  '0.15em',
-        }}>
-          MARKET CAP
-        </div>
-
-        <div style={{
-          fontSize:   'clamp(0.85rem, 1.4vw, 1.1rem)',
-          fontWeight: 'bold',
+          fontSize:      'clamp(1.275rem, 2.1vw, 1.65rem)',
+          fontWeight:    'bold',
           letterSpacing: '0.06em',
-          color:      loading ? 'rgba(255,255,255,0.3)' : color,
-          transition: 'color 1s ease',
-          textShadow: loading ? 'none' : `0 0 18px ${color}`,
+          color:         loading ? 'rgba(255,255,255,0.3)' : color,
+          transition:    'color 1s ease',
+          textShadow:    loading ? 'none' : `0 0 18px ${color}`,
         }}>
           {loading ? '···' : fmtMC(currentMC)}
         </div>
 
         {hasChange && (
           <div style={{
-            fontSize:      'clamp(0.45rem, 0.65vw, 0.58rem)',
+            fontSize:      'clamp(0.675rem, 0.975vw, 0.87rem)',
             letterSpacing: '0.1em',
             color,
             marginTop:     '0.1em',
