@@ -101,9 +101,9 @@ const ChoicePrompt = () => {
 
       {/* DOUBT button - centered in left half */}
       <motion.button
-        initial={{ opacity: 0, x: -50 }}
+        initial={{ opacity: 1, x: 0 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
+        transition={{ duration: 0 }}
         whileHover={{ scale: 1.07, y: 4 }}
         whileTap={{ scale: 0.93, y: 6 }}
         onClick={() => handleChoice('doubt')}
@@ -130,9 +130,9 @@ const ChoicePrompt = () => {
           alt="DOUBT"
           animate={{
             filter: doubtTap
-              ? 'drop-shadow(0 0 14px rgba(220,20,20,1)) brightness(0.6) contrast(1.3)'
+              ? 'drop-shadow(0 0 14px rgba(220,20,20,0.55)) brightness(0.6) contrast(1.3)'
               : doubtHover
-                ? 'drop-shadow(0 0 30px rgba(180,0,0,0.9)) drop-shadow(0 0 8px rgba(180,0,0,0.6)) brightness(0.82)'
+                ? 'drop-shadow(0 0 30px rgba(180,0,0,0.45)) drop-shadow(0 0 8px rgba(180,0,0,0.3)) brightness(0.82)'
                 : 'drop-shadow(0 0 20px rgba(0,0,0,0.5))',
           }}
           transition={{ duration: 0.18 }}
@@ -142,9 +142,9 @@ const ChoicePrompt = () => {
 
       {/* BELIEVE button - centered in right half */}
       <motion.button
-        initial={{ opacity: 0, x: 50 }}
+        initial={{ opacity: 1, x: 0 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
+        transition={{ duration: 0 }}
         whileHover={{ scale: 1.07, y: -4 }}
         whileTap={{ scale: 0.93, y: -2 }}
         onClick={() => handleChoice('believe')}
@@ -171,9 +171,9 @@ const ChoicePrompt = () => {
           alt="BELIEVE"
           animate={{
             filter: beliTap
-              ? 'drop-shadow(0 0 40px rgba(255,255,255,1)) drop-shadow(0 0 16px rgba(255,215,0,1)) brightness(1.6)'
+              ? 'drop-shadow(0 0 40px rgba(255,255,255,0.55)) drop-shadow(0 0 16px rgba(255,235,180,0.4)) brightness(1.6)'
               : beliHover
-                ? 'drop-shadow(0 0 30px rgba(255,215,0,0.95)) drop-shadow(0 0 10px rgba(255,255,255,0.6)) brightness(1.25)'
+                ? 'drop-shadow(0 0 30px rgba(255,255,255,0.45)) drop-shadow(0 0 10px rgba(255,235,180,0.25)) brightness(1.25)'
                 : 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
           }}
           transition={{ duration: 0.18 }}
