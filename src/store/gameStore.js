@@ -1,9 +1,13 @@
 import { create } from 'zustand'
 
+// Restore wallet + side from previous session
+const _savedWallet = localStorage.getItem('last_wallet')
+const _savedSide   = _savedWallet ? localStorage.getItem(`joined_${_savedWallet}`) : null
+
 export const useGameStore = create((set, get) => ({
   // User identification
   fingerprint: null,
-  walletAddress: null,
+  walletAddress: _savedWallet || null,
 
   // Game state
   gamePhase: 'choosing', // 'choosing', 'walking', 'waiting', 'results'
@@ -28,7 +32,7 @@ export const useGameStore = create((set, get) => ({
   tokenReady: false,
 
   // Join state (wallet-keyed, persisted in localStorage)
-  joinedSide: null, // 'doubt' | 'believe' | null
+  joinedSide: _savedSide || null,
   showClash: false,
 
   // Actions
@@ -37,6 +41,7 @@ export const useGameStore = create((set, get) => ({
 
   setWalletAddress: (address) => {
     const existing = localStorage.getItem(`joined_${address}`)
+    localStorage.setItem('last_wallet', address)
     set({ walletAddress: address, joinedSide: existing || null })
   },
 
