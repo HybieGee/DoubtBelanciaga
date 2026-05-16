@@ -62,9 +62,7 @@ const MarketCapDisplay = () => {
     return () => clearInterval(iv)
   }, [])
 
-  const color     = getMcColor(pctChange)
-  const sign      = pctChange >= 0 ? '+' : ''
-  const hasChange = startMC && startMC > 0 && !loading
+  const color = getMcColor(pctChange)
 
   return (
     <div className="market-cap-display" style={{
@@ -97,17 +95,6 @@ const MarketCapDisplay = () => {
         }}>
           {loading ? '···' : fmtMC(currentMC)}
         </div>
-        {hasChange && (
-          <div style={{
-            fontSize:      'clamp(0.675rem, 0.975vw, 0.87rem)',
-            letterSpacing: '0.1em',
-            color,
-            marginTop:     '0.1em',
-            opacity:       0.75,
-          }}>
-            {sign}{pctChange.toFixed(2)}% since open
-          </div>
-        )}
       </div>
     </div>
   )
