@@ -4,18 +4,13 @@
 
 const CACHE_TTL = 2 // seconds
 
-async function ensureCacheTable(db) {
-  await db.prepare(`
-    CREATE TABLE IF NOT EXISTS price_cache (
-      id         INTEGER PRIMARY KEY DEFAULT 1,
-      data       TEXT    NOT NULL,
-      fetched_at INTEGER NOT NULL
-    )
-  `).run()
-}
-
 export async function onRequestGet({ env }) {
-  const cors = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
+  const cors = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-store, no-cache, must-revalidate',
+    'Pragma': 'no-cache',
+  }
 
   const mint = env.TOKEN_MINT
   if (!mint || mint === 'TBA') {
@@ -25,11 +20,10 @@ export async function onRequestGet({ env }) {
   // ── Serve from D1 cache if fresh ─────────────────────────────────────────
   if (env.DB) {
     try {
-      await ensureCacheTable(env.DB)
       const cached = await env.DB.prepare('SELECT data, fetched_at FROM price_cache WHERE id = 1').first()
       if (cached && (Math.floor(Date.now() / 1000) - cached.fetched_at) < CACHE_TTL) {
         return new Response(cached.data, {
-          headers: { ...cors, 'Cache-Control': 'no-store', 'X-Cache': 'HIT' },
+          headers: { ...cors, 'X-Cache': 'HIT' },
         })
       }
     } catch {}
@@ -66,7 +60,7 @@ export async function onRequestGet({ env }) {
     }
 
     return new Response(payload, {
-      headers: { ...cors, 'Cache-Control': 'no-store', 'X-Cache': 'MISS' },
+      headers: { ...cors, 'X-Cache': 'MISS' },
     })
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: cors })

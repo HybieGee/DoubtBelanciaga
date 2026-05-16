@@ -47,7 +47,7 @@ const MarketCapDisplay = () => {
   useEffect(() => {
     const poll = async () => {
       try {
-        const res  = await fetch('/api/price', { cache: 'no-store' })
+        const res  = await fetch(`/api/price?_=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) return
         const data = await res.json()
         if (data.marketCap) {

@@ -22,3 +22,9 @@ CREATE TABLE IF NOT EXISTS votes (
 );
 
 CREATE INDEX IF NOT EXISTS idx_votes_round_side ON votes(round_id, side);
+
+CREATE TABLE IF NOT EXISTS price_cache (
+  id         INTEGER PRIMARY KEY DEFAULT 1,
+  data       TEXT    NOT NULL,
+  fetched_at INTEGER NOT NULL
+);
