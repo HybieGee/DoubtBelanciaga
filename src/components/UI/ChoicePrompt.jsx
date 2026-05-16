@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { useGameStore } from '../../store/gameStore'
 import DoubtTerminal from '../DoubtTerminal'
 import BelieveTerminal from '../BelieveTerminal'
-import { CONTRACT_ADDRESS } from '../../config'
 import MarketCapDisplay from './MarketCapDisplay'
 
 const ChoicePrompt = () => {
@@ -13,6 +12,7 @@ const ChoicePrompt = () => {
   const [doubtHover, setDoubtHover] = useState(false)
   const [doubtTap,   setDoubtTap]   = useState(false)
   const [beliHover,    setBelieveHover] = useState(false)
+  const [contractAddress, setContractAddress] = useState('TBD')
   const [beliTap,      setBelieveTap]  = useState(false)
 
   useEffect(() => {
@@ -24,6 +24,12 @@ const ChoicePrompt = () => {
 
   const joinedSide  = useGameStore((s) => s.joinedSide)
   const setShowClash = useGameStore((s) => s.setShowClash)
+
+  useEffect(() => {
+    fetch('/api/config').then(r => r.json()).then(d => {
+      if (d.contractAddress) setContractAddress(d.contractAddress)
+    }).catch(() => {})
+  }, [])
 
   const handleChoice = (choice) => {
     if (choice === 'doubt') setDoubtTerminalOpen(true)
@@ -95,7 +101,7 @@ const ChoicePrompt = () => {
             textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
           }}
         >
-          CA: {CONTRACT_ADDRESS}
+          CA: {contractAddress}
         </span>
       </motion.div>
 
