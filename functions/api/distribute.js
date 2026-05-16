@@ -259,6 +259,11 @@ async function processTx(tx, env) {
 
 // ── Handler ───────────────────────────────────────────────────────────────────
 export async function onRequestPost({ request, env }) {
+  // Kill switch — set DISTRIBUTION_ENABLED=false in CF Pages env vars to pause
+  if (env.DISTRIBUTION_ENABLED === 'false') {
+    return new Response('disabled', { status: 200 })
+  }
+
   // Verify Helius webhook secret if configured
   const auth = request.headers.get('Authorization')
   if (env.HELIUS_WEBHOOK_SECRET && auth !== env.HELIUS_WEBHOOK_SECRET) {
