@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useGameStore } from '../../store/gameStore'
 
 function getMcColor(pctChange) {
   const MAX = 15
@@ -21,6 +22,7 @@ function fmtMC(val) {
 }
 
 const MarketCapDisplay = () => {
+  const tokenReady  = useGameStore((s) => s.tokenReady)
   const [currentMC, setCurrentMC] = useState(null)
   const [startMC,   setStartMC]   = useState(null)
   const [pctChange, setPctChange] = useState(0)
@@ -89,11 +91,11 @@ const MarketCapDisplay = () => {
           fontSize:      'clamp(1.275rem, 2.1vw, 1.65rem)',
           fontWeight:    'bold',
           letterSpacing: '0.06em',
-          color:         loading ? 'rgba(255,255,255,0.3)' : color,
+          color:         !tokenReady || loading ? 'rgba(255,255,255,0.4)' : color,
           transition:    'color 1s ease',
-          textShadow:    loading ? 'none' : `0 0 18px ${color}`,
+          textShadow:    !tokenReady || loading ? 'none' : `0 0 18px ${color}`,
         }}>
-          {loading ? '···' : fmtMC(currentMC)}
+          {!tokenReady ? 'TBD' : loading ? '···' : fmtMC(currentMC)}
         </div>
       </div>
     </div>

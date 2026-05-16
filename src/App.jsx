@@ -10,6 +10,13 @@ import { initFingerprint } from './utils/fingerprint'
 function App() {
   const [loading, setLoading] = useState(true)
   const setFingerprint = useGameStore((state) => state.setFingerprint)
+  const setTokenReady  = useGameStore((state) => state.setTokenReady)
+
+  useEffect(() => {
+    fetch('/api/config').then(r => r.json()).then(d => {
+      setTokenReady(d.tokenReady === true)
+    }).catch(() => {})
+  }, [setTokenReady])
 
   useEffect(() => {
     // Version marker to confirm deployment

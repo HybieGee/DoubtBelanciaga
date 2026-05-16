@@ -1,7 +1,9 @@
 // GET /api/config — returns public config values from CF env vars
 export async function onRequestGet({ env }) {
+  const mint = env.TOKEN_MINT || 'TBD'
   return new Response(JSON.stringify({
-    contractAddress: env.TOKEN_MINT || 'TBD',
+    contractAddress: mint,
+    tokenReady: mint !== 'TBD' && mint.length > 10,
   }), {
     headers: {
       'Content-Type': 'application/json',

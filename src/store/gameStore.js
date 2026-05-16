@@ -24,11 +24,15 @@ export const useGameStore = create((set, get) => ({
   believeCount: 0,
   totalPool: 0,
 
+  // Token readiness — false until TOKEN_MINT is a real address
+  tokenReady: false,
+
   // Join state (wallet-keyed, persisted in localStorage)
   joinedSide: null, // 'doubt' | 'believe' | null
   showClash: false,
 
   // Actions
+  setTokenReady: (v) => set({ tokenReady: v }),
   setFingerprint: (fp) => set({ fingerprint: fp }),
 
   setWalletAddress: (address) => {
