@@ -281,11 +281,7 @@ const ClashPage = () => {
   const [timeLeft, setTimeLeft] = useState('--:--:--')
   const [holders,  setHolders]  = useState([])
 
-  // Stable per-session fake count offset — makes both sides look more active
-  const [fakeOffset] = useState(() => ({
-    doubt:   Math.floor(Math.random() * 6) + 5,
-    believe: Math.floor(Math.random() * 6) + 5,
-  }))
+  const fakeOffset = { doubt: 3, believe: 5 }
 
   useEffect(() => {
     const poll = async () => {
