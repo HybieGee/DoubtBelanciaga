@@ -2,9 +2,10 @@
 // Requires D1 binding named DB (set in CF Pages dashboard → Functions → D1 bindings)
 
 function todayBoundaries() {
-  const now  = new Date()
-  const start = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-  const end   = start + 86400000
+  const SIX_HOURS = 6 * 60 * 60 * 1000
+  const now   = Date.now()
+  const start = Math.floor(now / SIX_HOURS) * SIX_HOURS
+  const end   = start + SIX_HOURS
   return { start: Math.floor(start / 1000), end: Math.floor(end / 1000) }
 }
 

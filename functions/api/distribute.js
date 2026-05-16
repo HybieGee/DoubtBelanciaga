@@ -142,8 +142,8 @@ function rpc(apiKey) {
 
 // ── Round + winning side ──────────────────────────────────────────────────────
 async function getWinningSide(db) {
-  const now   = new Date()
-  const start = Math.floor(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 1000)
+  const SIX_HOURS = 6 * 60 * 60
+  const start = Math.floor(Date.now() / (SIX_HOURS * 1000)) * SIX_HOURS
 
   const round = await db.prepare('SELECT id FROM rounds WHERE start_time = ?').bind(start).first()
   if (!round) return null

@@ -387,10 +387,27 @@ const ClashPage = () => {
       <div ref={timerRef} className="clash-boundary-panel" style={{ left: '50%' }}>
         <div className="clash-boundary-timer">{timeLeft}</div>
 
-        <div className="clash-leaderboard">
-          <div className="clash-lb-header">TOP 10 HOLDERS</div>
-          <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', fontSize: '0.85rem', padding: '0.5rem 0' }}>TBD</div>
-        </div>
+        {holders.length > 0 && (
+          <div className="clash-leaderboard">
+            <div className="clash-lb-header">TOP 10 HOLDERS</div>
+            {holders.map((h, i) => {
+              const isMe = walletAddress && h.owner_address === walletAddress
+              return (
+                <div className="clash-lb-row" key={i}>
+                  <span className="clash-lb-rank">#{String(i + 1).padStart(2, '0')}</span>
+                  <span className="clash-lb-addr">{truncAddr(h.owner_address)}</span>
+                  <span className="clash-lb-amt">{fmtBal(h.balance_formatted)}</span>
+                  <span className="clash-lb-pct">{(h.percentage_relative_to_total_supply || 0).toFixed(1)}%</span>
+                  {isMe && joinedSide && (
+                    <span className={`clash-lb-side clash-lb-side--${joinedSide}`}>
+                      [{joinedSide.toUpperCase()}]
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )}
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <MarketCapDisplay />
