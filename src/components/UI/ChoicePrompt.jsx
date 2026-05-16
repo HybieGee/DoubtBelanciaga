@@ -171,9 +171,9 @@ const ChoicePrompt = () => {
           alt="BELIEVE"
           animate={{
             filter: beliTap
-              ? 'drop-shadow(0 0 40px rgba(255,255,255,0.55)) drop-shadow(0 0 16px rgba(255,235,180,0.4)) brightness(1.6)'
+              ? 'drop-shadow(0 0 18px rgba(200,180,120,0.6)) drop-shadow(0 0 6px rgba(180,150,80,0.5))'
               : beliHover
-                ? 'drop-shadow(0 0 30px rgba(255,255,255,0.45)) drop-shadow(0 0 10px rgba(255,235,180,0.25)) brightness(1.25)'
+                ? 'drop-shadow(0 0 14px rgba(200,180,120,0.45)) drop-shadow(0 0 4px rgba(180,150,80,0.35))'
                 : 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
           }}
           transition={{ duration: 0.18 }}
