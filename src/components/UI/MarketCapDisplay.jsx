@@ -95,7 +95,7 @@ const MarketCapDisplay = () => {
           transition:    'color 1s ease',
           textShadow:    !tokenReady || loading ? 'none' : `0 0 18px ${color}`,
         }}>
-          {!tokenReady ? 'TBD' : loading ? '···' : fmtMC(currentMC)}
+          {!tokenReady ? 'TBA' : loading ? '···' : fmtMC(currentMC)}
         </div>
       </div>
     </div>

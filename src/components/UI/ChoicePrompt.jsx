@@ -12,7 +12,7 @@ const ChoicePrompt = () => {
   const [doubtHover, setDoubtHover] = useState(false)
   const [doubtTap,   setDoubtTap]   = useState(false)
   const [beliHover,    setBelieveHover] = useState(false)
-  const [contractAddress, setContractAddress] = useState('TBD')
+  const [contractAddress, setContractAddress] = useState('TBA')
   const [beliTap,      setBelieveTap]  = useState(false)
 
   useEffect(() => {

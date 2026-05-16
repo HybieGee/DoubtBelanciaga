@@ -391,7 +391,7 @@ const ClashPage = () => {
         <div className="clash-leaderboard">
           <div className="clash-lb-header">TOP 10 HOLDERS</div>
           {!tokenReady ? (
-            <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', fontSize: '0.85rem', padding: '0.5rem 0' }}>TBD</div>
+            <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', fontSize: '0.85rem', padding: '0.5rem 0' }}>TBA</div>
           ) : holders.length > 0 ? holders.map((h, i) => {
             const isMe = walletAddress && h.owner_address === walletAddress
             return (
