@@ -306,12 +306,10 @@ const ClashPage = () => {
   }, [])
 
   useEffect(() => {
-    const endTime = roundEndTime || (() => {
-      const now = new Date()
-      return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1)
-    })()
+    const SIX_HOURS = 6 * 60 * 60 * 1000
+    const getEnd = () => Math.ceil(Date.now() / SIX_HOURS) * SIX_HOURS
     const tick = () => {
-      const ms = endTime - Date.now()
+      const ms = Math.max(0, getEnd() - Date.now())
       if (ms <= 0) { setTimeLeft('00:00:00'); return }
       const h = Math.floor(ms / 3600000)
       const m = Math.floor((ms % 3600000) / 60000)
@@ -321,7 +319,7 @@ const ClashPage = () => {
     tick()
     const iv = setInterval(tick, 1000)
     return () => clearInterval(iv)
-  }, [roundEndTime])
+  }, [])
 
   const realDoubt   = stats.doubtCount   || 0
   const realBelieve = stats.believeCount || 0
