@@ -60,7 +60,7 @@ const MarketCapDisplay = () => {
       } catch {}
     }
     poll()
-    const iv = setInterval(poll, 30000)
+    const iv = setInterval(poll, 5000)
     return () => clearInterval(iv)
   }, [])
 
