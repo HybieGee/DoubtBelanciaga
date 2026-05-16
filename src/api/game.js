@@ -82,15 +82,14 @@ export const claimReward = async (fingerprint, walletAddress) => {
 
 export const joinSide = async (walletAddress, fingerprint, side) => {
   try {
-    const response = await fetch(`${API_BASE}/join`, {
+    const response = await fetch(`${API_BASE}/choice`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ walletAddress, fingerprint, side, timestamp: Date.now() }),
+      body: JSON.stringify({ walletAddress, fingerprint, choice: side }),
     })
     if (!response.ok) throw new Error('Failed to join')
     return await response.json()
   } catch (error) {
-    // Fallback: persist locally until backend is live
     localStorage.setItem(`joined_${walletAddress}`, side)
     return { success: true, side }
   }
