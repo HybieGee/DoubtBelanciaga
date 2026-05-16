@@ -12,9 +12,9 @@ export async function onRequestGet({ request, env }) {
     return new Response('Unauthorized', { status: 401 })
   }
 
-  if (!env.DB) {
-    return json({ error: 'No DB bound' })
-  }
+  if (!env.DB) return json({ error: 'No DB bound' })
+
+  try {
 
   // Current round
   const now   = new Date()
@@ -121,7 +121,10 @@ export async function onRequestGet({ request, env }) {
     }))
   } catch {}
 
-  return json({ round: roundInfo, topHoldersOnWinningSide: recipients, distributionHistory: history })
+    return json({ round: roundInfo, topHoldersOnWinningSide: recipients, distributionHistory: history })
+  } catch (e) {
+    return json({ error: e.message })
+  }
 }
 
 function json(data) {
