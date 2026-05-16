@@ -5,10 +5,10 @@ function getMcColor(pctChange) {
   const MAX = 15
   const t   = Math.max(-1, Math.min(1, pctChange / MAX))
   if (t <= 0) {
-    const c = Math.round(255 * (1 + t))
+    const c = Math.round(255 + 127 * t)  // 255 → 128
     return `rgb(255, ${c}, ${c})`
   } else {
-    const c = Math.round(255 * (1 - t))
+    const c = Math.round(255 - 127 * t)  // 255 → 128
     return `rgb(${c}, 255, ${c})`
   }
 }
