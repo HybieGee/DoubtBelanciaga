@@ -1,17 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useGameStore } from '../../store/gameStore'
-
-function getMcColor(pctChange) {
-  const MAX = 15
-  const t   = Math.max(-1, Math.min(1, pctChange / MAX))
-  if (t <= 0) {
-    const c = Math.round(255 + 127 * t)  // 255 → 128
-    return `rgb(255, ${c}, ${c})`
-  } else {
-    const c = Math.round(255 - 127 * t)  // 255 → 128
-    return `rgb(${c}, 255, ${c})`
-  }
-}
 
 function fmtMC(val) {
   if (!val || val === 0) return '--'
@@ -24,25 +12,7 @@ function fmtMC(val) {
 const MarketCapDisplay = () => {
   const tokenReady  = useGameStore((s) => s.tokenReady)
   const [currentMC, setCurrentMC] = useState(null)
-  const [startMC,   setStartMC]   = useState(null)
-  const [pctChange, setPctChange] = useState(0)
   const [loading,   setLoading]   = useState(true)
-  const startMCRef = useRef(null)
-
-  useEffect(() => {
-    const fetchStart = async () => {
-      try {
-        const res  = await fetch('/api/stats')
-        if (!res.ok) return
-        const data = await res.json()
-        if (data.startMarketCap) {
-          setStartMC(data.startMarketCap)
-          startMCRef.current = data.startMarketCap
-        }
-      } catch {}
-    }
-    fetchStart()
-  }, [])
 
   useEffect(() => {
     const poll = async () => {
@@ -52,9 +22,6 @@ const MarketCapDisplay = () => {
         const data = await res.json()
         if (data.marketCap) {
           setCurrentMC(data.marketCap)
-          if (startMCRef.current && startMCRef.current > 0) {
-            setPctChange(((data.marketCap - startMCRef.current) / startMCRef.current) * 100)
-          }
           setLoading(false)
         }
       } catch {}
@@ -63,8 +30,6 @@ const MarketCapDisplay = () => {
     const iv = setInterval(poll, 5000)
     return () => clearInterval(iv)
   }, [])
-
-  const color = getMcColor(pctChange)
 
   return (
     <div className="market-cap-display" style={{
@@ -91,9 +56,7 @@ const MarketCapDisplay = () => {
           fontSize:      'clamp(1.275rem, 2.1vw, 1.65rem)',
           fontWeight:    'bold',
           letterSpacing: '0.06em',
-          color:         !tokenReady || loading ? 'rgba(255,255,255,0.4)' : color,
-          transition:    'color 1s ease',
-          textShadow:    !tokenReady || loading ? 'none' : `0 0 18px ${color}`,
+          color:         !tokenReady || loading ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.9)',
         }}>
           {!tokenReady ? 'TBA' : loading ? '···' : fmtMC(currentMC)}
         </div>
