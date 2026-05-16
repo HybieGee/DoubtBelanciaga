@@ -10,6 +10,10 @@ const ChoicePrompt = () => {
   const [doubtTerminalOpen, setDoubtTerminalOpen] = useState(false)
   const [believeTerminalOpen, setBelieveTerminalOpen] = useState(false)
   const [mob, setMob] = useState(false)
+  const [doubtHover, setDoubtHover] = useState(false)
+  const [doubtTap,   setDoubtTap]   = useState(false)
+  const [beliHover,    setBelieveHover] = useState(false)
+  const [beliTap,      setBelieveTap]  = useState(false)
 
   useEffect(() => {
     const check = () => setMob(window.innerHeight < 520 && window.innerWidth > window.innerHeight)
@@ -100,9 +104,13 @@ const ChoicePrompt = () => {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.07, y: 4 }}
+        whileTap={{ scale: 0.93, y: 6 }}
         onClick={() => handleChoice('doubt')}
+        onMouseEnter={() => setDoubtHover(true)}
+        onMouseLeave={() => { setDoubtHover(false); setDoubtTap(false) }}
+        onMouseDown={() => setDoubtTap(true)}
+        onMouseUp={() => setDoubtTap(false)}
         style={{
           position: 'fixed',
           top:      mob ? '57%' : '50%',
@@ -117,15 +125,18 @@ const ChoicePrompt = () => {
           zIndex: 100,
         }}
       >
-        <img
+        <motion.img
           src="/button-doubt.png"
           alt="DOUBT"
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-            filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.5))',
+          animate={{
+            filter: doubtTap
+              ? 'drop-shadow(0 0 14px rgba(220,20,20,1)) brightness(0.6) contrast(1.3)'
+              : doubtHover
+                ? 'drop-shadow(0 0 30px rgba(180,0,0,0.9)) drop-shadow(0 0 8px rgba(180,0,0,0.6)) brightness(0.82)'
+                : 'drop-shadow(0 0 20px rgba(0,0,0,0.5))',
           }}
+          transition={{ duration: 0.18 }}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
         />
       </motion.button>
 
@@ -134,9 +145,13 @@ const ChoicePrompt = () => {
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.07, y: -4 }}
+        whileTap={{ scale: 0.93, y: -2 }}
         onClick={() => handleChoice('believe')}
+        onMouseEnter={() => setBelieveHover(true)}
+        onMouseLeave={() => { setBelieveHover(false); setBelieveTap(false) }}
+        onMouseDown={() => setBelieveTap(true)}
+        onMouseUp={() => setBelieveTap(false)}
         style={{
           position: 'fixed',
           top:      mob ? '57%' : '50%',
@@ -151,15 +166,18 @@ const ChoicePrompt = () => {
           zIndex: 100,
         }}
       >
-        <img
+        <motion.img
           src="/button-believe.png"
           alt="BELIEVE"
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-            filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
+          animate={{
+            filter: beliTap
+              ? 'drop-shadow(0 0 40px rgba(255,255,255,1)) drop-shadow(0 0 16px rgba(255,215,0,1)) brightness(1.6)'
+              : beliHover
+                ? 'drop-shadow(0 0 30px rgba(255,215,0,0.95)) drop-shadow(0 0 10px rgba(255,255,255,0.6)) brightness(1.25)'
+                : 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
           }}
+          transition={{ duration: 0.18 }}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
         />
       </motion.button>
 
