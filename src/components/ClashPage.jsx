@@ -363,7 +363,7 @@ const ClashPage = () => {
       <div className="clash-layout">
         <div className="clash-panel" style={{ flex: doubtPct }}>
           <div className="clash-side-content">
-            <div className="clash-label clash-label--doubt">DOUBT</div>
+            <div className="clash-label clash-label--doubt">DOUBTERS</div>
             <div className="clash-count clash-count--doubt">{dispDoubt}</div>
             <div className="clash-pct clash-pct--doubt">{rawDoubtPct.toFixed(1)}%</div>
             {joinedSide === 'doubt' && (
@@ -374,7 +374,7 @@ const ClashPage = () => {
 
         <div className="clash-panel" style={{ flex: believePct }}>
           <div className="clash-side-content">
-            <div className="clash-label clash-label--believe">BELIEF</div>
+            <div className="clash-label clash-label--believe">BELIEVERS</div>
             <div className="clash-count clash-count--believe">{dispBelieve}</div>
             <div className="clash-pct clash-pct--believe">{rawBelievePct.toFixed(1)}%</div>
             {joinedSide === 'believe' && (
