@@ -40,9 +40,7 @@ const UI = () => {
               letterSpacing: '0.2em',
             }}
           >
-            <span style={{ color: '#fff' }}>DOUBT</span>
-            <span style={{ color: '#666' }}> & </span>
-            <span style={{ color: '#fff' }}>BELIEF</span>
+            <span style={{ color: '#fff' }}>SCHISM</span>
           </h1>
           <button
             className="ui-topbar-btn"
