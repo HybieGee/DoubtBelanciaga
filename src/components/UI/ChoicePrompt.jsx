@@ -73,7 +73,7 @@ const ChoicePrompt = () => {
           zIndex: 100,
         }}
       >
-        PICK A FAITH
+        CHOOSE YOUR SIDE
       </motion.h2>
 
       {/* CA display */}

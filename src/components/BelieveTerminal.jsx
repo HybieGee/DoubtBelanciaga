@@ -11,7 +11,7 @@ const AUTO_SEQUENCE = [
   {
     id: 'boot',
     delay: 400,
-    text: `FAITH_CHRONICLE v1.0.0 - ONLINE
+    text: `SCHISM_LIGHT v1.0.0 - ONLINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 > Loading memecoin_believer_archives...
 > Scanning wallets that held through the doubt...
@@ -676,7 +676,7 @@ const BelieveTerminal = ({ onClose }) => {
               <span className="bt-traffic-dot" />
               <span className="bt-traffic-dot" />
             </div>
-            <span className="bt-titlebar-text">FAITH_CHRONICLE v1.0.0</span>
+            <span className="bt-titlebar-text">SCHISM_LIGHT v1.0.0</span>
             <button className="bt-close" onClick={onClose} aria-label="Close">&#10005;</button>
           </div>
 

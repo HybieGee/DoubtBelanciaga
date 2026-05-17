@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     // Version marker to confirm deployment
-    console.log('%c🚀 DOUBT & BELIEF v2.1 - Build: 2026-01-25-21:15', 'background: #000; color: #0f0; font-size: 14px; padding: 5px;')
+    console.log('%c⚡ SCHISM v1.0', 'background: #000; color: #0f0; font-size: 14px; padding: 5px;')
 
     // Initialize fingerprint on load
     initFingerprint().then((fp) => {

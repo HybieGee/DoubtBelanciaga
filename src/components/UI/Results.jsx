@@ -84,7 +84,7 @@ const Results = () => {
 
       <p style={{ fontSize: '1.2rem', marginBottom: '2rem', color: '#fff' }}>
         {winner
-          ? 'Your faith was rewarded'
+          ? 'Your side was right'
           : 'Your conviction was tested'}
       </p>
 

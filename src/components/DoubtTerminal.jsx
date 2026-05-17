@@ -11,7 +11,7 @@ const AUTO_SEQUENCE = [
   {
     id: 'boot',
     delay: 400,
-    text: `DOUBT_ORACLE v6.6.6 - ONLINE
+    text: `SCHISM_VOID v6.6.6 - ONLINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 > Loading memecoin_doubt_archives...
 > Scanning 10,000+ "this is worthless" posts...
@@ -682,7 +682,7 @@ const DoubtTerminal = ({ onClose }) => {
               <span className="dt-traffic-dot" />
               <span className="dt-traffic-dot dt-traffic-dot--active" />
             </div>
-            <span className="dt-titlebar-text">DOUBT_ORACLE v6.6.6</span>
+            <span className="dt-titlebar-text">SCHISM_VOID v6.6.6</span>
             <button className="dt-close" onClick={onClose} aria-label="Close">&#10005;</button>
           </div>
 

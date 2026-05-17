@@ -153,7 +153,7 @@ const Whitepaper = ({ onClose }) => {
                   textShadow: '0 0 30px rgba(255,255,255,0.3)',
                 }}
               >
-                THE TESTAMENT
+                THE SCHISM
               </motion.h1>
               <motion.p
                 initial={{ y: 50, opacity: 0 }}
@@ -174,8 +174,8 @@ const Whitepaper = ({ onClose }) => {
             <div style={{ maxWidth: '800px' }}>
               <h2 style={h2Style}>THE DIVISION</h2>
               <p style={pStyle}>
-                Before markets. Before coins. Before the chain, there was doubt and belief.
-                They have always existed in opposition. They always will.
+                Before markets. Before coins. Before the chain, there was a split.
+                Two sides. Always in opposition. Always will be.
               </p>
               <p style={pStyle}>
                 In the space between them, something is decided each cycle.
@@ -280,7 +280,7 @@ const Whitepaper = ({ onClose }) => {
               <p style={{ ...pStyle, color: '#555', fontStyle: 'italic' }}>
                 Align only what you are willing to surrender.
                 The mechanism was not designed with mercy in mind.
-                The faithful and the faithless have both been consumed before.
+                Both sides have been consumed before.
               </p>
 
               <div style={{ marginTop: '4rem', textAlign: 'center', color: '#444', fontSize: '0.85rem', paddingBottom: '2rem', letterSpacing: '0.1em' }}>
@@ -306,7 +306,7 @@ const Whitepaper = ({ onClose }) => {
                     transition: 'all 0.2s',
                   }}
                 >
-                  ← RETURN TO THE FAITH
+                  ← RETURN
                 </motion.button>
               </div>
             </div>
